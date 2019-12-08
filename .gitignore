@@ -3,7 +3,7 @@
 */node_modules
 */unpackage
 */dist
-
+*/conf/db.conf.ts
 
 # local env files
 .env.local
