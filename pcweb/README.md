@@ -1,65 +1,78 @@
-# react-admin([尝试一下](https://codesandbox.io/s/react-admin-u9kdb))
+## 云生活超市管理系统（完整的后台管理系统）
+React后台项目：react + react-router4 + redux + antd + axios + sass
+##### (项目迭代滚动中，如果有喜欢这个的小哥哥小姐姐，送我一个start，谢谢！如果您有什么建议修改之类的，请疯狂的pull request or create issue.)
+##### 先放一些图片哈
+* 登录页
+![登录页](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/signin_page.png)
+* 主页
+![主页](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/dashboard.png)
+* 用户管理
+![用户页面](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/users.png)
+* 商品管理
+![商品](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/goods.png)
+* 商品二级分类
+![商品二级分类](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/categories.png)
+* 订单查询
+![订单查询](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/order_query.png)
+* 订单派送管理
+![订单派送管理](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/order_dispatch.png)
+* 广告信息管理
+![广告管理](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/advs.png)
+### 技术栈
+1. react 16.2.0
+2. react-router-dom 4.2.2 (react-router 4)
+3. redux
+4. ant-design
+5. axios
+6. sass
+7. es6 + babel ( 配了babel-plugin-transform-decorator-legacy 装饰器)
 
-react-admin system solution
+使用了create-react-app搭建项目。 服务器端我是用springboot+mybatis编写的，仓库地址是：[服务器端代码](https://github.com/dekvos123/backend_cloud_commodity)
 
-### cli 安装和使用 react-admin 🔥
+作者想说：其实是想用React-native做一个超市的app，取名云生活超市（名字很难听各位轻吐槽），既然有app，那就得有一个后台，就是这个了。附上app端仓库地址：[云生活app](https://github.com/dekvos123/community_e_commerce)
 
-使用 react-admin-creator 快速安装和下载 react-admin 模板来开发项目：
+### 环境
+* 我自己使用ubuntu16.04，建议在linux或者mac os系统下运行
+* 因为项目依赖了sass，如果用windows，有一定的可能会出现很奇妙的问题哈
 
-```js
-npm i -g react-admin-creator
-
-react-admin-creator myapp
+### 项目启动
+1. ***首先你可以安装一下yarn，并使用taobao registry***
+```bash
+npm install -g yarn
+yarn config set registry https://registry.npm.taobao.org --global
+yarn config set disturl https://npm.taobao.org/dist --global
 ```
-
-### 依赖模块
-
-<span style="color: rgb(184,49,47);">项目是用 create-react-app 创建的，主要还是列出新加的功能依赖包</span>
-
-<span style="color: rgb(184,49,47);">点击名称可跳转相关网站 😄😄</span>
-
--   [react](https://facebook.github.io/react/)
--   [react-router](https://react-guide.github.io/react-router-cn/)(<span style="color: rgb(243,121,52);">react 路由，4.x 的版本，如果还使用 3.x 的版本，请切换分支（ps:分支不再维护）</span>)
--   [redux](https://redux.js.org/)(基础用法，但是封装了通用 action 和 reducer，demo 中主要用于权限控制（ps：目前可以用 16.x 的 context api 代替），可以简单了解下)
--   [antd](https://ant.design/index-cn)(<span style="color: rgb(243,121,52);">蚂蚁金服开源的 react ui 组件框架</span>)
--   [axios](https://github.com/mzabriskie/axios)(<span style="color: rgb(243,121,52);">http 请求模块，可用于前端任何场景，很强大 👍</span>)
--   [echarts-for-react](https://github.com/hustcc/echarts-for-react)(<span style="color: rgb(243,121,52);">可视化图表，别人基于 react 对 echarts 的封装，足够用了</span>)
--   [recharts](http://recharts.org/#/zh-CN/)(<span style="color: rgb(243,121,52);">另一个基于 react 封装的图表，个人觉得是没有 echarts 好用</span>)
--   [nprogress](https://github.com/rstacruz/nprogress)(<span style="color: rgb(243,121,52);">顶部加载条，蛮好用 👍</span>)
--   [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg)(<span style="color: rgb(243,121,52);">别人基于 react 的富文本封装，如果找到其他更好的可以替换</span>)
--   [react-draggable](https://github.com/mzabriskie/react-draggable)(<span style="color: rgb(243,121,52);">拖拽模块，找了个简单版的</span>)
--   [screenfull](https://github.com/sindresorhus/screenfull.js/)(<span style="color: rgb(243,121,52);">全屏插件</span>)
--   [photoswipe](https://github.com/dimsemenov/photoswipe)(<span style="color: rgb(243,121,52);">图片弹层查看插件，不依赖 jQuery，还是蛮好用 👍</span>)
--   [animate.css](http://daneden.me/animate)(<span style="color: rgb(243,121,52);">css 动画库</span>)
--   [react-loadable](https://github.com/jamiebuilds/react-loadable)(代码拆分，按需加载，预加载，样样都行，具体见其文档，推荐使用)
--   [redux-alita](https://github.com/yezihaohao/redux-alita) 极简的 redux2react 工具
--   其他小细节省略
-
-### 功能模块
-
-<span style="color: rgb(184,49,47);">备注：项目只引入了 ant-design 的部分组件，其他的组件 antd 官网有源码，可以直接复制到项目中使用，后续有时间补上全部组件。</span>
-
-<span style="color: rgb(184,49,47);">项目使用了 antd 的自定义主题功能-->黑色，若想替换其他颜色，具体操作请查看 antd 官网</span>
-
-
-
-
-### 安装运行
-
-```js
-// 首推荐使用yarn装包
-yarn or npm i
+2. ***克隆项目并安装环境***
+```bash
+git clone https://github.com/dekvos123/cms_community_e_commerce.git
+cd cms_community_e_commerce
+yarn
 ```
-
-##### 3.启动项目
-
-```js
-yarn start or npm start
+3. ***直接运行***
+```bash
+npm start
 ```
+5. ***服务器监听3000端口，直接访问 http://localhost:3000***
 
-##### 4.打包项目
-
+### 目录结构介绍
 ```js
-yarn build or npm run build
+### 目录结构介绍
+***├── config                              // webpack配置文件***
+***├── public                              ***
+***├── dist                                ***
+***├── node_modules                        // 项目的包依赖***
+***├── src                                 // 源码目录***
+***│   ├── assets                          // 存放项目的一些资源和SCSS文件***
+***│   ├── components                      // 页面组件***
+***│   ├── containers                      // 页面（容器） ***
+***│   ├── constants                       // 项目全局配置***
+***│   ├── services                        // 服务器端接口数据映射***
+***│   ├── reducers                        // reducers***
+***│   ├── actions                         // actions***
+***│   ├── utils                           // 封装的一些常用工具 ***
+***│   ├── Routes.js                       // 页面路由 ***
+***│   ├── index.js                        // 程序入口文件，加载各种公共组件***
+***├── .babelrc                            // babel配置文件 ***
 ```
-
+### 使用说明
+* 管理员默认账号：admin 密码：admin
