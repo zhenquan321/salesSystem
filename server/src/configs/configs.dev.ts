@@ -3,7 +3,7 @@ import commonConfigs from './configs.common';
 export default {
   production: false,
   ...commonConfigs,
-  port: '3000',
+  port: '3100',
   dbConnection: {
     host: '127.0.0.1', // 数据库IP
     port: 3306, // 数据库端口

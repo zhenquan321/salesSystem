@@ -2,17 +2,6 @@
 
 react-admin system solution
 
-<img src="https://raw.githubusercontent.com/yezihaohao/react-admin/master/screenshots/logo.png" alt="logo" width="150" height="53" />
-
-![travis-ci](https://travis-ci.org/yezihaohao/react-admin.svg?branch=master)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-### 文档地址：[wiki](https://github.com/yezihaohao/react-admin/wiki)
-
-### 问题和方案汇总：[issue](https://github.com/yezihaohao/react-admin/issues/12)
-
-### 更新日志迁移至[CHANGELOG.md](https://github.com/yezihaohao/react-admin/blob/master/CHANGELOG.md)😁(重要！对于了解项目部分功能和代码很有用！)
-
 ### cli 安装和使用 react-admin 🔥
 
 使用 react-admin-creator 快速安装和下载 react-admin 模板来开发项目：
@@ -22,14 +11,6 @@ npm i -g react-admin-creator
 
 react-admin-creator myapp
 ```
-
-### 前言
-
-> 网上 react 后台管理开源免费的完整版项目比较少，所以利用空余时间集成了一个版本出来，已放到 GitHub
-> 启动和打包的时间都稍长，请耐心等待两分钟
-
--   [GitHub 地址](https://github.com/yezihaohao/react-admin)
--   [预览地址](https://admiring-dijkstra-34cb29.netlify.com)(已增加响应式，可手机预览 😄)
 
 ### 依赖模块
 
@@ -60,138 +41,10 @@ react-admin-creator myapp
 
 <span style="color: rgb(184,49,47);">项目使用了 antd 的自定义主题功能-->黑色，若想替换其他颜色，具体操作请查看 antd 官网</span>
 
-<!--more-->
 
--   首页
-    -   完整布局
-    -   换肤(全局功能，暂时只实现了顶部导航的换肤，后续加上其他模块)
--   导航菜单
-    -   顶部导航(菜单伸缩，全屏功能)
-    -   左边菜单(增加滚动条以及适配路由的 active 操作)
--   UI 模块
-    -   按钮(antd 组件)
-    -   图标(antd 组件并增加彩色表情符)
-    -   加载中(antd 组件并增加顶部加载条)
-    -   通知提醒框(antd 组件)
-    -   标签页(antd 组件)
-    -   轮播图(ant 动效组件)
-    -   富文本
-    -   拖拽
-    -   画廊
--   动画
-    -   基础动画(animate.css 所有动画)
-    -   动画案例
--   表格
-    -   基础表格(antd 组件)
-    -   高级表格(antd 组件)
-    -   异步表格(数据来自掘金酱的接口)
--   表单
-    -   基础表单(antd 组件)
--   图表
-    -   echarts 图表
-    -   recharts 图表
--   页面
-    -   登录页面(包括 GitHub 第三方登录)
-    -   404 页面
 
-### 功能截图
-
-#### 首页
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd1.gif)
-
-#### 按钮图标等
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd2.gif)
-
-#### 轮播图
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd3.gif)
-
-#### 富文本
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd4.gif)
-
-#### 拖拽
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd5.gif)
-
-#### 画廊
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd6.gif)
-
-#### 动画
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd7.gif)
-
-#### 表格
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd8.gif)
-
-#### 表单
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd9.gif)
-
-#### 图表
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd10.gif)
-
-#### 页面
-
-![截图](https://raw.githubusercontent.com/yezihaohao/yezihaohao.github.io/master/imgs/rd11.gif)
-
-#### 菜单拖拽
-
-![截图](https://raw.githubusercontent.com/yezihaohao/react-admin/master/screenshots/menu_draggable.gif)
-
-### 代码目录
-
-```js
-+-- build/                                  ---打包的文件目录
-+-- config/                                 ---npm run eject 后的配置文件目录
-+-- node_modules/                           ---npm下载文件目录
-+-- public/
-|   --- index.html							---首页入口html文件
-|   --- npm.json							---echarts测试数据
-|   --- weibo.json							---echarts测试数据
-+-- src/                                    ---核心代码目录
-|   +-- axios                               ---http请求存放目录
-|   |    --- index.js
-|   +-- components                          ---各式各样的组件存放目录
-|   |    +-- animation                      ---动画组件
-|   |    |    --- ...
-|   |    +-- charts                         ---图表组件
-|   |    |    --- ...
-|   |    +-- dashboard                      ---首页组件
-|   |    |    --- ...
-|   |    +-- forms                          ---表单组件
-|   |    |    --- ...
-|   |    +-- pages                          ---页面组件
-|   |    |    --- ...
-|   |    +-- tables                         ---表格组件
-|   |    |    --- ...
-|   |    +-- ui                             ---ui组件
-|   |    |    --- ...
-|   |    --- BreadcrumbCustom.jsx           ---面包屑组件
-|   |    --- HeaderCustom.jsx               ---顶部导航组件
-|   |    --- Page.jsx                       ---页面容器
-|   |    --- SiderCustom.jsx                ---左边菜单组件
-|   +-- style                               ---项目的样式存放目录，主要采用less编写
-|   +-- utils                               ---工具文件存放目录
-|   --- App.js                              ---组件入口文件
-|   --- index.js                            ---项目的整体js入口文件，包括路由配置等
---- .env                                    ---启动项目自定义端口配置文件
---- .eslintrc                               ---自定义eslint配置文件，包括增加的react jsx语法限制
---- package.json
-```
 
 ### 安装运行
-
-##### 1.下载或克隆项目源码
-
-##### 2.yarn 或者 npm 安装相关包文件(首先推荐使用 yarn，国内建议增加淘宝镜像源，不然很慢，你懂的 😁)
-
-> 有些老铁遇到运行时报错，首先确定下是不是最新稳定版的 nodejs 和 npm 或者 yarn(推荐用 yarn)，切记不要用 cnpn
 
 ```js
 // 首推荐使用yarn装包
@@ -210,31 +63,3 @@ yarn start or npm start
 yarn build or npm run build
 ```
 
-### Q&A(点击问题查看答案)
-
-#### 1.[create-react-app 打包项目 run build 增加进度条信息?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-325383346)
-
-#### 2.[接口跨域了，怎么在本地开发时配置代理?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-326169055)
-
-#### 3.[在使用 hashRouter 的情况下怎么实现类似锚点跳转?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-345127221)
-
-#### 4.[怎么添加多页面配置?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-348088852)
-
-#### 5.[路由传参数接问号怎么传?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-375583089)
-
-#### 6.[如何兼容 IE 浏览器?](https://github.com/yezihaohao/react-admin/issues/12#issuecomment-510295292)
-
-### 结尾
-
-该项目会不定时更新，后续时间会添加更多的模块
-
-欢迎和感谢大家 PR~~👏👏
-
-若有问题，可加 QQ 群与我交流
-
--   1 群：264591039（已满）
--   2 群：592688854（已满）
--   3 群：743490497 (已满)
--   4 群：150131600
-
-如果对你有帮助，给个 star 哟~~❤️❤️❤️❤️
