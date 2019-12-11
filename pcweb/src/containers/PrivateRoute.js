@@ -28,8 +28,8 @@ export default class PrivateRoute extends React.Component {
   }
 
   componentWillMount() {
-    const userId = storage.getStorage(USER_ID)
-    const token = storage.getStorage(TOKEN)
+    const userId = localStorage.getItem(USER_ID)
+    const token = localStorage.getItem(TOKEN)
 
     if (token && userId) {
       this.setState({
