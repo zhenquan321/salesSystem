@@ -1,23 +1,6 @@
 ## 云生活超市管理系统（完整的后台管理系统）
 React后台项目：react + react-router4 + redux + antd + axios + sass
-##### (项目迭代滚动中，如果有喜欢这个的小哥哥小姐姐，送我一个start，谢谢！如果您有什么建议修改之类的，请疯狂的pull request or create issue.)
-##### 先放一些图片哈
-* 登录页
-![登录页](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/signin_page.png)
-* 主页
-![主页](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/dashboard.png)
-* 用户管理
-![用户页面](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/users.png)
-* 商品管理
-![商品](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/goods.png)
-* 商品二级分类
-![商品二级分类](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/categories.png)
-* 订单查询
-![订单查询](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/order_query.png)
-* 订单派送管理
-![订单派送管理](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/order_dispatch.png)
-* 广告信息管理
-![广告管理](https://raw.githubusercontent.com/walljs/cms_community_e_commerce/master/src/assets/images/advs.png)
+
 ### 技术栈
 1. react 16.2.0
 2. react-router-dom 4.2.2 (react-router 4)
@@ -26,14 +9,6 @@ React后台项目：react + react-router4 + redux + antd + axios + sass
 5. axios
 6. sass
 7. es6 + babel ( 配了babel-plugin-transform-decorator-legacy 装饰器)
-
-使用了create-react-app搭建项目。 服务器端我是用springboot+mybatis编写的，仓库地址是：[服务器端代码](https://github.com/dekvos123/backend_cloud_commodity)
-
-作者想说：其实是想用React-native做一个超市的app，取名云生活超市（名字很难听各位轻吐槽），既然有app，那就得有一个后台，就是这个了。附上app端仓库地址：[云生活app](https://github.com/dekvos123/community_e_commerce)
-
-### 环境
-* 我自己使用ubuntu16.04，建议在linux或者mac os系统下运行
-* 因为项目依赖了sass，如果用windows，有一定的可能会出现很奇妙的问题哈
 
 ### 项目启动
 1. ***首先你可以安装一下yarn，并使用taobao registry***
@@ -52,7 +27,6 @@ yarn
 ```bash
 npm start
 ```
-5. ***服务器监听3000端口，直接访问 http://localhost:3000***
 
 ### 目录结构介绍
 ```js
