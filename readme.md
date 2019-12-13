@@ -10,3 +10,5 @@ systemctl status nginx
 ##配置文件
 vim /usr/local/nginx/conf/nginx.conf
 ```
+
+/home/webSite/salesSystem/pcweb/
