@@ -26,6 +26,8 @@ yarn
 3. ***直接运行***
 ```bash
 npm start
+
+npm run-script build`
 ```
 
 ### 目录结构介绍
