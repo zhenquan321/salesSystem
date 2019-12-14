@@ -277,22 +277,22 @@ module.exports = {
     new webpack.optimize.DedupePlugin(), //删除类似的重复代码
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),//合并块
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   async: 'async-vendor',
-    //   deepChildren: true,
-    //   minChunks: (module) => {
-    //     return /node_modules/.test(module.context);
-    //   },
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'async-vendor',
+      deepChildren: true,
+      minChunks: (module) => {
+        return /node_modules/.test(module.context);
+      },
+    }),
 
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
 
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   minChunks: Infinity,
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
 
 
     // Makes some environment variables available in index.html.
