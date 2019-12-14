@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PrivateRoute from './containers/PrivateRoute';
-import Login from './containers/Login';
 import * as storage from './utils/storage';
 import {
   ADMIN_ID,
@@ -30,11 +29,15 @@ const MyLoadingComponent = ({ isLoading, error }) => {
       return null;
   }
 };
+
 const AsyncHome = Loadable({
   loader: () => import('./containers/Home/index'),
   loading: MyLoadingComponent
 });
-
+const AsyncLogin = Loadable({
+  loader: () => import('./containers/Login'),
+  loading: MyLoadingComponent
+});
 
 @connect(
   state => {
@@ -73,7 +76,7 @@ export default class Routes extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route path="/signin" component={Login} />
+          <Route path="/signin" component={AsyncLogin} />
           <PrivateRoute exract component={AsyncHome} />
         </Switch>
       </Router>

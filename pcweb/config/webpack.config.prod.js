@@ -35,6 +35,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
+console.log("当前配置环境："+env.stringified['process.env'].NODE_ENV)
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
 
@@ -273,25 +274,25 @@ module.exports = {
   plugins: [
 
     new webpack.HashedModuleIdsPlugin(),
-
+    new webpack.optimize.DedupePlugin(), //删除类似的重复代码
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),//合并块
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   async: 'async-vendor',
+    //   deepChildren: true,
+    //   minChunks: (module) => {
+    //     return /node_modules/.test(module.context);
+    //   },
+    // }),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'async-vendor',
-      deepChildren: true,
-      minChunks: (module) => {
-        return /node_modules/.test(module.context);
-      },
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    // }),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      minChunks: Infinity,
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   minChunks: Infinity,
+    // }),
 
 
     // Makes some environment variables available in index.html.
