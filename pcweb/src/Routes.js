@@ -8,6 +8,9 @@ import {
 import { connect } from 'react-redux';
 import PrivateRoute from './containers/PrivateRoute';
 import Login from './containers/Login';
+import Home from './containers/Home/index';
+
+
 import * as storage from './utils/storage';
 import {
   ADMIN_ID,
@@ -18,22 +21,22 @@ import {
 } from './actions'
 
 //按需加载
-import Loadable from 'react-loadable';
-const MyLoadingComponent = ({ isLoading, error }) => {
-  if (isLoading) {
-      return <div>Loading...</div>
-  }
-  else if (error) {
-      return <div>Sorry, there was a problem loading the page.</div>
-  }
-  else {
-      return null;
-  }
-};
-const AsyncHome = Loadable({
-  loader: () => import('./containers/Home/index'),
-  loading: MyLoadingComponent
-});
+// import Loadable from 'react-loadable';
+// const MyLoadingComponent = ({ isLoading, error }) => {
+//   if (isLoading) {
+//       return <div>Loading...</div>
+//   }
+//   else if (error) {
+//       return <div>Sorry, there was a problem loading the page.</div>
+//   }
+//   else {
+//       return null;
+//   }
+// };
+// const AsyncHome = Loadable({
+//   loader: () => import('./containers/Home/index'),
+//   loading: MyLoadingComponent
+// });
 
 
 @connect(
@@ -74,8 +77,8 @@ export default class Routes extends React.Component {
       <Router>
         <Switch>
           <Route path="/signin" component={Login} />
-          {/* <PrivateRoute exract component={Home} /> */}
-          <PrivateRoute exract component={AsyncHome} />
+          <PrivateRoute exract component={Home} />
+          {/* <PrivateRoute exract component={AsyncHome} /> */}
         </Switch>
       </Router>
     )

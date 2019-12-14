@@ -278,11 +278,15 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),//合并块
     new webpack.optimize.CommonsChunkPlugin({
-      async: 'async-vendor',
+      // async: 'async-vendor',
       deepChildren: true,
-      minChunks: (module) => {
-        return /node_modules/.test(module.context);
-      },
+      // minChunks: (module) => {
+      //   return /node_modules/.test(module.context);
+      // },
+      minChunks: 2,
+      minSize: 0,
+      deepChildren: true,
+      async: true
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
@@ -293,7 +297,6 @@ module.exports = {
       name: 'manifest',
       minChunks: Infinity,
     }),
-
 
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
