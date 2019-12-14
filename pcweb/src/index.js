@@ -12,8 +12,7 @@ import { createLogger } from 'redux-logger';
 import Routes from './Routes';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-import 'normalize.css';
-import './assets/scss/index.scss';
+
 
 // const history = createHistory()
 const loggerMiddleware = createLogger()

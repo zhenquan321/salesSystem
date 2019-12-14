@@ -22,6 +22,10 @@ import {
   WEBSITE_NAME
 } from '../constants';
 
+import './../assets/scss/login.scss';
+
+
+
 const FormItem = Form.Item;
 
 @connect(

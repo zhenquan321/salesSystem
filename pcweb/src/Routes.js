@@ -74,7 +74,6 @@ export default class Routes extends React.Component {
       <Router>
         <Switch>
           <Route path="/signin" component={Login} />
-          {/* <PrivateRoute exract component={Home} /> */}
           <PrivateRoute exract component={AsyncHome} />
         </Switch>
       </Router>

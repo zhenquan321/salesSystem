@@ -11,6 +11,11 @@ import {
   TOKEN
 } from '../constants';
 
+
+import 'normalize.css';
+import '../assets/scss/index.scss';
+
+
 @connect(
   state => {
     return {
