@@ -17,10 +17,8 @@ import {
   setCurrentUser
 } from './actions'
 
-
 //按需加载
 import Loadable from 'react-loadable';
-import Home from './containers/Home/index';
 const MyLoadingComponent = ({ isLoading, error }) => {
   if (isLoading) {
       return <div>Loading...</div>
