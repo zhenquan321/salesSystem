@@ -38,11 +38,11 @@ function signin(username, password) {
       dispatch(fetchToken())
 
       const res = await authService.post(username, password)
-
-      if (res.status === 201 && res.data.code === 100) {
+      console.log(res);
+      if (res.status === 200 && res.data.code === 200) {
         console.log(res)
         const token = res.data.data.token
-        const adminId = res.data.data.userId
+        const adminId = res.data.data.id
 
         utils.setStorage(TOKEN, token)
         utils.setStorage(ADMIN_ID, adminId)

@@ -72,8 +72,9 @@ export default class Login extends React.Component {
       if (!err) {
         await this.props.signin(values.username, values.password)
 
-        if (this.props.error) {
-          message.error(this.props.error)
+        console.log(this.props);
+        if (this.props.error_code) {
+          message.error(this.props.msg)
         } else {
           message.success('登陆成功')
         }
