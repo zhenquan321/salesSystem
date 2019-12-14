@@ -44,7 +44,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -271,6 +271,29 @@ module.exports = {
     ],
   },
   plugins: [
+
+    new webpack.HashedModuleIdsPlugin(),
+
+    new webpack.optimize.ModuleConcatenationPlugin(),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'async-vendor',
+      deepChildren: true,
+      minChunks: (module) => {
+        return /node_modules/.test(module.context);
+      },
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
+
+
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
