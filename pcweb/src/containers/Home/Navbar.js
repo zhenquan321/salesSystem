@@ -58,6 +58,7 @@ export default class Navbar extends React.Component {
                 <Icon
                   type="user"
                 />
+                
               </li>
             </Dropdown>
           </ul>

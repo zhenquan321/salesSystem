@@ -35,6 +35,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
+console.log("当前配置环境："+env.stringified['process.env'].NODE_ENV)
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
 
@@ -44,7 +45,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -271,6 +272,32 @@ module.exports = {
     ],
   },
   plugins: [
+
+    new webpack.HashedModuleIdsPlugin(),
+    new webpack.optimize.DedupePlugin(), //删除类似的重复代码
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),//合并块
+    new webpack.optimize.CommonsChunkPlugin({
+      // async: 'async-vendor',
+      deepChildren: true,
+      // minChunks: (module) => {
+      //   return /node_modules/.test(module.context);
+      // },
+      minChunks: 2,
+      minSize: 0,
+      deepChildren: true,
+      async: true
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
+
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

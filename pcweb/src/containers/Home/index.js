@@ -6,21 +6,73 @@ import {
 import {
   Layout
 } from 'antd';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import Users from '../Users/index';
-import Goods from '../Goods/index';
-import CategoryFirst from '../CategoryFirst/index';
-import Orders from '../Orders/index';
-import Dashboard from '../Dashboard/index';
-import Advs from '../Advs/index';
-import CategorySecond from '../CategorySecond/index';
-import Administrators from '../Administrators';
-import OrderRefund from '../OrderRefund/index';
-import OrderDispatch from '../OrderDispatch/index';
+
 import {
   signout
 } from '../../actions';
+import Loadable from 'react-loadable';
+const MyLoadingComponent = ({ isLoading, error }) => {
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+  else if (error) {
+    return <div>Sorry, there was a problem loading the page.</div>
+  }
+  else {
+    return null;
+  }
+};
+
+const Navbar = Loadable({
+  loader: () => import('./Navbar'),
+  loading: MyLoadingComponent
+});
+const Sidebar = Loadable({
+  loader: () => import('./Sidebar'),
+  loading: MyLoadingComponent
+});
+const Users = Loadable({
+  loader: () => import('../Users/index'),
+  loading: MyLoadingComponent
+});
+const Goods = Loadable({
+  loader: () => import('../Goods/index'),
+  loading: MyLoadingComponent
+});
+const CategoryFirst = Loadable({
+  loader: () => import('../CategoryFirst/index'),
+  loading: MyLoadingComponent
+});
+const Orders = Loadable({
+  loader: () => import('../Orders/index'),
+  loading: MyLoadingComponent
+});
+const Dashboard = Loadable({
+  loader: () => import('../Dashboard/index'),
+  loading: MyLoadingComponent
+});
+const Advs = Loadable({
+  loader: () => import('../Advs/index'),
+  loading: MyLoadingComponent
+});
+const CategorySecond = Loadable({
+  loader: () => import('../CategorySecond/index'),
+  loading: MyLoadingComponent
+});
+const Administrators = Loadable({
+  loader: () => import('../Administrators'),
+  loading: MyLoadingComponent
+});
+const OrderRefund = Loadable({
+  loader: () => import('../OrderRefund/index'),
+  loading: MyLoadingComponent
+});
+const OrderDispatch = Loadable({
+  loader: () => import('../OrderDispatch/index'),
+  loading: MyLoadingComponent
+});
+
+
 
 @connect(
   state => ({
@@ -53,7 +105,7 @@ export default class Home extends React.Component {
     return (
       <div className="page page-home">
         <Layout>
-          <Sidebar collapsed={this.state.collapsed} permission={superLevel}/>
+          <Sidebar collapsed={this.state.collapsed} permission={superLevel} />
           <Layout>
             <Navbar
               collapsed={this.state.collapsed}

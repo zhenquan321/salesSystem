@@ -8,7 +8,10 @@ class LoginManager {
   static async adminLogin(email, password) {
     // 验证账号密码是否正确
     const admin = await AdminDao.verify(email, password);
-    return generateToken(admin.id, Auth.ADMIN)
+    let userInfo = await AdminDao.detail(admin.id);
+    userInfo.dataValues.token = generateToken(admin.id, Auth.ADMIN)
+    console.log("userInfo",userInfo.dataValues);
+    return userInfo.dataValues
   }
 }
 
