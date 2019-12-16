@@ -8,13 +8,9 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-// import createHistory from 'history/createHashHistory';
 import Routes from './Routes';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-
-
-// const history = createHistory()
 const loggerMiddleware = createLogger()
 
 const store = createStore(
@@ -26,8 +22,6 @@ const store = createStore(
     ),
   )
 )
-
-console.log(store.getState())
 
 ReactDOM.render(
   <Provider store={store}>

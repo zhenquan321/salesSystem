@@ -6,7 +6,7 @@ export const USER_API = 'http://106.12.28.41:3000/v1';
 
 
 
-export const WEBSITE_NAME = '大药房';
+export const WEBSITE_NAME = 'koa-mysql';
 export const AUTHOR = '17600112486@163.com';
 export const GITHUB = 'https://github.com/zhenquan321';
 export const BLOG = 'http://fengzq.cn';

@@ -1,5 +1,7 @@
 import React from 'react';
-import ReactEcharts from 'echarts-for-react';
+import ReactEchartsCore from 'echarts-for-react/lib/core';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/pie';
 
 export default class OrderCharts extends React.Component {
   getOption = () => {
@@ -11,11 +13,11 @@ export default class OrderCharts extends React.Component {
     } = this.props
 
     return {
-      title : {
+      title: {
         text: '订单情况概要',
-        x:'center'
+        x: 'center'
       },
-      tooltip : {
+      tooltip: {
         trigger: 'item',
         formatter: "{a} <br/>{b} : {c} ({d}%)"
       },
@@ -24,25 +26,25 @@ export default class OrderCharts extends React.Component {
         left: 'left',
         data: ['待发货', '交易成功', '退款中', '配送中']
       },
-      series : [
+      series: [
         {
-        name: '统计情况',
-        type: 'pie',
-        radius : '55%',
-        center: ['50%', '60%'],
-        data:[
-          {value: wait, name:'待发货'},
-          {value: success, name:'交易成功'},
-          {value: refunding, name:'退款中'},
-          {value: dispatching, name:'配送中'},
-        ],
-        itemStyle: {
-          emphasis: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+          name: '统计情况',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          data: [
+            { value: wait, name: '待发货' },
+            { value: success, name: '交易成功' },
+            { value: refunding, name: '退款中' },
+            { value: dispatching, name: '配送中' },
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
-        }
         }
       ]
     }
@@ -51,14 +53,15 @@ export default class OrderCharts extends React.Component {
   render() {
 
     return (
-      <ReactEcharts
-        option={this.getOption()}
-        style={{
-          height: 300,
-          backgroundColor: '#fff',
-          padding: '24px'
-        }}
-      />
+        <ReactEchartsCore
+          echarts={echarts}
+          option={this.getOption()}
+          notMerge={true}
+          lazyUpdate={true}
+          theme={"theme_name"}
+          onChartReady={this.onChartReadyCallback}
+          // onEvents={EventsDict}
+           />
     )
   }
 }

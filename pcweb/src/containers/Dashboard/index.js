@@ -10,9 +10,8 @@ import {
   Card
 } from 'antd';
 import MetaBox from '@/components/MetaBox';
-import Panel from '@/components/Panel';
 import OrderCharts from './OrderCharts';
-import ConversionCharts from './ConversionCharts';
+// import ConversionCharts from './ConversionCharts';
 import {
   statisticsOrder
 } from '../../actions';
@@ -123,7 +122,7 @@ export default class Dashboard extends React.Component {
             />
           </Col>
           <Col span={12}>
-            <ConversionCharts collection={collection} success={success} />
+            {/* <ConversionCharts collection={collection} success={success} /> */}
           </Col>
         </Row>
       </Layout.Content>
