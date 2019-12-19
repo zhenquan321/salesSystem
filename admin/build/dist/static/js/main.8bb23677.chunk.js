@@ -473,7 +473,7 @@
                 }
                 return Promise.reject(e);
               }),
-              (this.host = 'http://106.12.28.41:3000/'),
+              (this.host = 'http://106.12.28.41:3000'),
               (this.instance = c.a.create()),
               this.initInterceptors();
           }
