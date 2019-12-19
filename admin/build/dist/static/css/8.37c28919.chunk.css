@@ -1,0 +1,196 @@
+.margin-mini {
+  margin: 4px;
+}
+.padding-mini {
+  padding: 4px;
+}
+.margin-top-mini {
+  margin-top: 4px;
+}
+.padding-top-mini {
+  padding-top: 4px;
+}
+.margin-right-mini {
+  margin-right: 4px;
+}
+.padding-right-mini {
+  padding-right: 4px;
+}
+.margin-bottom-mini {
+  margin-bottom: 4px;
+}
+.padding-bottom-mini {
+  padding-bottom: 4px;
+}
+.margin-left-mini {
+  margin-left: 4px;
+}
+.padding-left-mini {
+  padding-left: 4px;
+}
+.margin-small {
+  margin: 8px;
+}
+.padding-small {
+  padding: 8px;
+}
+.margin-top-small {
+  margin-top: 8px;
+}
+.padding-top-small {
+  padding-top: 8px;
+}
+.margin-right-small {
+  margin-right: 8px;
+}
+.padding-right-small {
+  padding-right: 8px;
+}
+.margin-bottom-small {
+  margin-bottom: 8px;
+}
+.padding-bottom-small {
+  padding-bottom: 8px;
+}
+.margin-left-small {
+  margin-left: 8px;
+}
+.padding-left-small {
+  padding-left: 8px;
+}
+.margin-normal {
+  margin: 16px;
+}
+.padding-normal {
+  padding: 16px;
+}
+.margin-top-normal {
+  margin-top: 16px;
+}
+.padding-top-normal {
+  padding-top: 16px;
+}
+.margin-right-normal {
+  margin-right: 16px;
+}
+.padding-right-normal {
+  padding-right: 16px;
+}
+.margin-bottom-normal {
+  margin-bottom: 16px;
+}
+.padding-bottom-normal {
+  padding-bottom: 16px;
+}
+.margin-left-normal {
+  margin-left: 16px;
+}
+.padding-left-normal {
+  padding-left: 16px;
+}
+.margin-large {
+  margin: 24px;
+}
+.padding-large {
+  padding: 24px;
+}
+.margin-top-large {
+  margin-top: 24px;
+}
+.padding-top-large {
+  padding-top: 24px;
+}
+.margin-right-large {
+  margin-right: 24px;
+}
+.padding-right-large {
+  padding-right: 24px;
+}
+.margin-bottom-large {
+  margin-bottom: 24px;
+}
+.padding-bottom-large {
+  padding-bottom: 24px;
+}
+.margin-left-large {
+  margin-left: 24px;
+}
+.padding-left-large {
+  padding-left: 24px;
+}
+.monitor .monitor-list-card,
+.monitor .poplar-map-card {
+  margin-bottom: 24px;
+}
+.monitor #poplar-map {
+  height: 490px;
+  width: 100%;
+}
+.monitor #poplar-map .anchorBL {
+  display: none;
+}
+.monitor #list-bar {
+  height: 490px;
+  width: 100%;
+}
+.monitor #gaugeChart,
+.monitor #resource-surplus,
+.monitor #trading-proportion {
+  height: 200px;
+}
+.monitor #resource-surplus {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 2px solid #722ed1;
+  background: #aa82e3;
+  position: relative;
+  overflow: hidden;
+}
+.monitor #resource-surplus .wave {
+  content: '';
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  top: -25%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
+  border-radius: 35%;
+  background: #fff;
+  -webkit-animation: wave 15s linear infinite;
+  animation: wave 15s linear infinite;
+}
+.monitor #resource-surplus p {
+  color: #894fd8;
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+@-webkit-keyframes wave {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@keyframes wave {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+/*# sourceMappingURL=8.37c28919.chunk.css.map */
