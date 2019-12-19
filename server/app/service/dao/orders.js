@@ -4,7 +4,7 @@ const { Orders } = require("../models/orders");
 const { Category } = require("../models/category");
 
 // 定义商品模型
-class OrdersDao {
+class OrdersService {
   // 创建商品
   static async create(v) {
     // 检测是否存在商品
@@ -170,5 +170,5 @@ class OrdersDao {
 }
 
 module.exports = {
-  OrdersDao
+  OrdersService
 };

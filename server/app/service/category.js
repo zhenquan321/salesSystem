@@ -1,24 +1,24 @@
-const {Category} = require('../models/category')
+const { Category } = require("../models/category");
 
-class CategoryDao {
+class CategoryService {
   // 创建分类
   static async create(v) {
     // 查询是否存在重复的分类
     const hasCategory = await Category.findOne({
       where: {
-        key: v.get('body.key'),
+        key: v.get("body.key"),
         deleted_at: null
       }
     });
 
     if (hasCategory) {
-      throw new global.errs.Existing('分类已存在');
+      throw new global.errs.Existing("分类已存在");
     }
 
     const category = new Category();
-    category.name = v.get('body.name');
-    category.key = v.get('body.key');
-    category.parent_id = v.get('body.parent_id');
+    category.name = v.get("body.name");
+    category.key = v.get("body.key");
+    category.parent_id = v.get("body.parent_id");
 
     category.save();
   }
@@ -33,43 +33,42 @@ class CategoryDao {
       }
     });
     if (!category) {
-      throw new global.errs.NotFound('没有找到相关分类');
-
+      throw new global.errs.NotFound("没有找到相关分类");
     }
-    category.destroy()
+    category.destroy();
   }
 
   // 获取分类详情
   static async detail(id) {
-    const category = await Category.scope('bh').findOne({
+    const category = await Category.scope("bh").findOne({
       where: {
         id,
         deleted_at: null
       }
     });
     if (!category) {
-      throw new global.errs.NotFound('没有找到相关分类');
+      throw new global.errs.NotFound("没有找到相关分类");
     }
 
-    return category
+    return category;
   }
 
   // 更新分类
   static async update(id, v) {
     const category = await Category.findByPk(id);
     if (!category) {
-      throw new global.errs.NotFound('没有找到相关分类');
+      throw new global.errs.NotFound("没有找到相关分类");
     }
-    category.name = v.get('body.name');
-    category.key = v.get('body.key');
-    category.parent_id = v.get('body.parent_id');
+    category.name = v.get("body.name");
+    category.key = v.get("body.key");
+    category.parent_id = v.get("body.parent_id");
 
     category.save();
   }
 
   // 分类列表
   static async list() {
-    return await Category.scope('bh').findAll({
+    return await Category.scope("bh").findAll({
       where: {
         deleted_at: null
       }
@@ -78,5 +77,5 @@ class CategoryDao {
 }
 
 module.exports = {
-  CategoryDao
-}
+  CategoryService
+};

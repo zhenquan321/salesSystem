@@ -7,8 +7,8 @@ const {
 } = require("../../validators/orders");
 
 const { Auth } = require("../../../middlewares/auth");
-const { OrdersDao } = require("../../dao/orders");
-const { CommentDao } = require("../../dao/comment");
+const { OrdersService } = require("../../service/orders");
+const { CommentService } = require("../../service/comment");
 
 const { Resolve } = require("../../lib/helper");
 const res = new Resolve();
@@ -27,7 +27,7 @@ router.post("/orders", new Auth(AUTH_ADMIN).m, async ctx => {
   const v = await new OrdersValidator().validate(ctx);
 
   // 创建商品
-  await OrdersDao.create(v);
+  await OrdersService.create(v);
 
   // 返回结果
   ctx.response.status = 200;
@@ -44,7 +44,7 @@ router.delete("/orders/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 获取商品ID参数
   const id = v.get("path.id");
   // 删除商品
-  await OrdersDao.destroy(id);
+  await OrdersService.destroy(id);
 
   ctx.response.status = 200;
   ctx.body = res.success("删除商品成功");
@@ -60,7 +60,7 @@ router.put("/orders/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 获取商品ID参数
   const id = v.get("path.id");
   // 更新商品
-  await OrdersDao.update(id, v);
+  await OrdersService.update(id, v);
 
   ctx.response.status = 200;
   ctx.body = res.success("更新商品成功");
@@ -72,7 +72,7 @@ router.put("/orders/:id", new Auth(AUTH_ADMIN).m, async ctx => {
 router.get("/orders", async ctx => {
   // 获取页码，排序方法，分类ID，搜索关键字
   // 查询商品列表
-  const ordersList = await OrdersDao.list(ctx.query);
+  const ordersList = await OrdersService.list(ctx.query);
 
   // 返回结果
   ctx.response.status = 200;
@@ -89,16 +89,16 @@ router.get("/orders/:id", async ctx => {
   // 获取商品ID参数
   const id = v.get("path.id");
   // 查询商品
-  const orders = await OrdersDao.detail(id);
+  const orders = await OrdersService.detail(id);
 
   // 获取关联此商品的评论列表
-  const commentList = await CommentDao.targetComment({
+  const commentList = await CommentService.targetComment({
     target_id: id,
     target_type: "orders"
   });
 
   // 更新商品浏览
-  await OrdersDao.updateBrowse(id, ++orders.browse);
+  await OrdersService.updateBrowse(id, ++orders.browse);
   await orders.setDataValue("orders_comment", commentList);
 
   // 返回结果
@@ -111,7 +111,7 @@ router.get("/orders/:id", async ctx => {
  */
 router.get("/home", async ctx => {
   // 查询商品
-  const orders = await OrdersDao.list();
+  const orders = await OrdersService.list();
 
   // 返回结果
   ctx.response.status = 200;

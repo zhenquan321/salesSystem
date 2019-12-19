@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import FormatterLocale from '@components/FormatterLocale';
 import StepFormStore from './formStore';
 import styles from './form.module.scss';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 const Step3: React.FC = () => {
   const { initStep } = StepFormStore;
@@ -11,20 +12,22 @@ const Step3: React.FC = () => {
     <div className={styles.step}>
       <Result
         type="successed"
-        title={<FormatterLocale id="action.success" defaultMessage="操作成功" />}
-        subtitle={<FormatterLocale id="step3.soon" defaultMessage="已收到消息，将尽快处理~" />}
+        title="添加成功"
+        subtitle={<FormatterLocale id="step3.soon" defaultMessage="商品已成功添加" />}
       />
       <div className={styles.buttonGroup}>
         <Button type="primary" onClick={initStep}>
-          <FormatterLocale id="step3.oneMore" defaultMessage="再来一单" />
+          <FormatterLocale id="step3.oneMore" defaultMessage="再次添加" />
         </Button>
-        <Button
-          style={{
-            marginLeft: '8px'
-          }}
-        >
-          <FormatterLocale id="step3.checkList" defaultMessage="查看记录" />
-        </Button>
+        <Link to={'/form/goodsList'} replace>
+          <Button
+            style={{
+              marginLeft: '8px'
+            }}
+          >
+            <FormatterLocale id="step3.checkList" defaultMessage="查看商品列表" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

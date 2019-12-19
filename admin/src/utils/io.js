@@ -29,6 +29,7 @@ class Request {
         return config;
       },
       error => {
+        console.log(error);
         Promise.reject(error);
       }
     );
@@ -43,23 +44,27 @@ class Request {
   notify(message) {
     notification.error({
       message: '请求错误',
-      description: `${message ||
-        'This is the content of the notification. This is the content of the notification. This is the content of the notification.'}`
+      duration: 5,
+      description: `${message.msg || '出现未知错误，稍后再试'}`
     });
   }
 
   // 错误处理
   handleError = error => {
-    const { message, status } = error;
+    const { data, status } = error.response;
+
     switch (status) {
       case 401:
         break;
       case 404:
         break;
+      case 403:
+        window.location.href = window.location.origin + '/#/user/login';
+        break;
       case 500:
         break;
       default:
-        this.notify(message || error);
+        this.notify(data || error);
         break;
     }
     return Promise.reject(error);
@@ -72,7 +77,6 @@ class Request {
 
     let { path, params, options } = data;
     const _query = options ? { ...options, params } : { params };
-    console.log(_query);
     return this.instance[method](path, _query.params).catch(this.handleError);
   }
 

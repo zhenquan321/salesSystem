@@ -7,8 +7,8 @@ const {
 } = require("../../validators/article");
 
 const { Auth } = require("../../../middlewares/auth");
-const { ArticleDao } = require("../../dao/article");
-const { CommentDao } = require("../../dao/comment");
+const { ArticleService } = require("../../service/article");
+const { CommentService } = require("../../service/comment");
 
 const { Resolve } = require("../../lib/helper");
 const res = new Resolve();
@@ -27,7 +27,7 @@ router.post("/article", new Auth(AUTH_ADMIN).m, async ctx => {
   const v = await new ArticleValidator().validate(ctx);
 
   // 创建文章
-  await ArticleDao.create(v);
+  await ArticleService.create(v);
 
   // 返回结果
   ctx.response.status = 200;
@@ -44,7 +44,7 @@ router.delete("/article/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 获取文章ID参数
   const id = v.get("path.id");
   // 删除文章
-  await ArticleDao.destroy(id);
+  await ArticleService.destroy(id);
 
   ctx.response.status = 200;
   ctx.body = res.success("删除文章成功");
@@ -60,7 +60,7 @@ router.put("/article/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 获取文章ID参数
   const id = v.get("path.id");
   // 更新文章
-  await ArticleDao.update(id, v);
+  await ArticleService.update(id, v);
 
   ctx.response.status = 200;
   ctx.body = res.success("更新文章成功");
@@ -72,7 +72,7 @@ router.put("/article/:id", new Auth(AUTH_ADMIN).m, async ctx => {
 router.get("/article", async ctx => {
   // 获取页码，排序方法，分类ID，搜索关键字
   // 查询文章列表
-  const articleList = await ArticleDao.list(ctx.query);
+  const articleList = await ArticleService.list(ctx.query);
 
   // 返回结果
   ctx.response.status = 200;
@@ -89,16 +89,16 @@ router.get("/article/:id", async ctx => {
   // 获取文章ID参数
   const id = v.get("path.id");
   // 查询文章
-  const article = await ArticleDao.detail(id);
+  const article = await ArticleService.detail(id);
 
   // 获取关联此文章的评论列表
-  const commentList = await CommentDao.targetComment({
+  const commentList = await CommentService.targetComment({
     target_id: id,
     target_type: "article"
   });
 
   // 更新文章浏览
-  await ArticleDao.updateBrowse(id, ++article.browse);
+  await ArticleService.updateBrowse(id, ++article.browse);
   await article.setDataValue("article_comment", commentList);
 
   // 返回结果
@@ -111,7 +111,7 @@ router.get("/article/:id", async ctx => {
  */
 router.get("/home", async ctx => {
   // 查询文章
-  const article = await ArticleDao.list();
+  const article = await ArticleService.list();
   // 返回结果
   ctx.response.status = 200;
   ctx.body = res.json({

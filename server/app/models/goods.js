@@ -22,6 +22,7 @@ Goods.init(
     image_file: {
       type: Sequelize.STRING(100),
       allowNull: true,
+      defaultValue: "",
       comment: "商品图片"
     },
     price: {

@@ -78,13 +78,17 @@ class FormStore {
   @action onSubmit = (): void => {
     this.submitting = true;
     let goodsData = JSON.parse(JSON.stringify(this.data));
-    createGoods(goodsData).then((res: any) => {
-      console.log(res.data);
-      const { code, data } = res.data;
-      if (code === 200) {
-        this.nextStep();
-      }
-    });
+    createGoods(goodsData)
+      .then((res: any) => {
+        console.log(res.data);
+        const { code, data } = res.data;
+        if (code === 200) {
+          this.nextStep();
+        }
+      })
+      .catch(() => {
+        this.initStep();
+      });
   };
 }
 

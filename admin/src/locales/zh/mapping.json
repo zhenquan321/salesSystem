@@ -62,9 +62,9 @@
   "step1.attention": "请注意",
   "step1.divider": "分割线",
   "step1.nothing": "其实没啥想说的，其实没啥想说的，其实没啥想说的，其实没啥想说的，其实没啥想说的",
-  "step3.soon": "已收到消息，将尽快处理~",
-  "step3.oneMore": "再填一单",
-  "step3.checkList": "查看记录",
+  "step3.soon": "已成功添加商品",
+  "step3.oneMore": "再次添加",
+  "step3.checkList": "查看商品列表",
 
   "cardList.title": "卡片列表",
   "cardList.subtitle": "以卡片的形式展示列表数据，可展示主要信息，更方便的进行操作",
