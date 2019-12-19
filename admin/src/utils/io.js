@@ -17,7 +17,10 @@ let authorization = token => {
 
 class Request {
   instance;
+  host;
   constructor() {
+    this.host = 'http://106.12.28.41:3000/';
+
     this.instance = Axios.create();
     this.initInterceptors();
   }
@@ -77,7 +80,7 @@ class Request {
 
     let { path, params, options } = data;
     const _query = options ? { ...options, params } : { params };
-    return this.instance[method](path, _query.params).catch(this.handleError);
+    return this.instance[method](this.host + path, _query.params).catch(this.handleError);
   }
 
   get(path, data = {}) {

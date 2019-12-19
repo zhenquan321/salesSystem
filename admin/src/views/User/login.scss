@@ -12,9 +12,9 @@
   .ant-input {
     background-color: rgba(0, 0, 0, 0.06);
     border-color: transparent;
-    color: white;
+    color: #666;
     &:focus {
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.06);
     }
   }
   .ant-input-prefix {
