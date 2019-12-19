@@ -129,12 +129,12 @@
   width: 100%;
 }
 .login .ant-input {
-  background-color: rgba(0, 0, 0, 0.1);
   border-color: transparent;
-  color: #fff;
+  color: #666;
 }
+.login .ant-input,
 .login .ant-input:focus {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.06);
 }
 .login .ant-input-prefix .anticon {
   color: #666;
@@ -171,4 +171,4 @@
 .userLayout--Y_AfL .userContext--1UpGx {
   left: 50%;
 }
-/*# sourceMappingURL=30.f7c78de6.chunk.css.map */
+/*# sourceMappingURL=126.b98871a7.chunk.css.map */
