@@ -1,3 +1,5 @@
+import { Base64 } from "js-base64";
+
 /**
  * use to create authorization headers
  * @param {*} userId
@@ -5,8 +7,9 @@
  * @return uesrId_token
  */
 export const authorization = (userId, token) => {
-  if (userId && token) {
-    return `${userId}_${token}`
+  if (token) {
+    const base64 = Base64.encode(token + ":");
+    return "Basic " + base64;
   }
-  return null
-}
+  return null;
+};

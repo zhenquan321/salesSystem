@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -94,4 +95,17 @@ h3 {
       flex: 1;
     }
   }
+}
+
+.page-home .ant-layout-content {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.sidebar-logo {
+  height: 64px;
+  line-height: 64px;
+  margin-bottom: 5px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
 }

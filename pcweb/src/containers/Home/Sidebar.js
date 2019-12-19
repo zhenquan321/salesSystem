@@ -1,47 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  Layout,
-  Icon,
-  Badge,
-  Menu
-} from 'antd'
-import SidebarLogo from '@/components/SidebarLogo';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Layout, Icon, Badge, Menu } from "antd";
+import SidebarLogo from "@/components/SidebarLogo";
 
-const {
-  Sider
-} = Layout
-const {
-  Item,
-  SubMenu
-} = Menu
+const { Sider } = Layout;
+const { Item, SubMenu } = Menu;
 
-@connect(
-  state => ({
-    adminId: state.auth.admin.adminId,
-    wait: state.orders.wait,
-    dispatching: state.orders.dispatching,
-    refunding: state.orders.refunding
-  })
-)
+@connect(state => ({
+  adminId: state.auth.admin.adminId,
+  wait: state.orders.wait,
+  dispatching: state.orders.dispatching,
+  refunding: state.orders.refunding
+}))
 export default class Sidebar extends React.Component {
   static propTypes = {
     collapsed: PropTypes.bool.isRequired,
     permission: PropTypes.bool.isRequired
-  }
+  };
 
   state = {
-    current: '0'
-  }
+    current: "0"
+  };
 
-  handleClick = (e) => {
-    const key = e.key
+  handleClick = e => {
+    const key = e.key;
     this.setState({
       current: key
-    })
-  }
+    });
+  };
 
   render() {
     const {
@@ -51,14 +39,10 @@ export default class Sidebar extends React.Component {
       dispatching,
       refunding,
       collapsed
-    } = this.props
+    } = this.props;
 
     return (
-      <Sider
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-      >
+      <Sider trigger={null} collapsible collapsed={collapsed}>
         <SidebarLogo />
         <Menu
           theme="dark"
@@ -84,19 +68,21 @@ export default class Sidebar extends React.Component {
               <span>商品信息管理</span>
             </Link>
           </Item>
-          <SubMenu title={<span><Icon type="tags-o" />商品分类管理</span>}>
-            <Item key="3">
-              <Link to="/category/first">
-                <span>一级分类</span>
-              </Link>
-            </Item>
-            <Item key="4">
-              <Link to="/category/second">
-                <span>二级分类</span>
-              </Link>
-            </Item>
-          </SubMenu>
-          <SubMenu title={<span><Icon type="profile" />订单信息管理</span>}>
+          <Item key="3">
+            <Link to="/category/first">
+              <Icon type="table" />
+              <span>商品分类管理</span>
+            </Link>
+          </Item>
+
+          <SubMenu
+            title={
+              <span>
+                <Icon type="profile" />
+                订单信息管理
+              </span>
+            }
+          >
             <Item key="5">
               <Link to="/orders">
                 <span>订单查询</span>
@@ -123,18 +109,16 @@ export default class Sidebar extends React.Component {
               <span>滑动广告管理</span>
             </Link>
           </Item>
-          {
-            adminId === 100 ? (
-              <Item key="9">
-                <Link to="/admins">
-                  <Icon type="solution" />
-                  <span>管理员信息管理</span>
-                </Link>
-              </Item>
-            ) : null
-          }
+          {adminId === 100 ? (
+            <Item key="9">
+              <Link to="/admins">
+                <Icon type="solution" />
+                <span>管理员信息管理</span>
+              </Link>
+            </Item>
+          ) : null}
         </Menu>
       </Sider>
-    )
+    );
   }
 }

@@ -1,0 +1,56 @@
+.login {
+  .login-form {
+    max-width: 300px;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .login-form-button {
+    opacity: 0.8;
+    width: 100%;
+  }
+  .ant-input {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: transparent;
+    color: white;
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .ant-input-prefix {
+    .anticon {
+      color: #666;
+    }
+  }
+  .loginTitle {
+    font-size: 18px;
+    margin-bottom: 8px;
+    span {
+      color: $color-primary;
+    }
+    @media screen and (min-width: 1400px) {
+      position: absolute;
+      font-size: 38px;
+      font-weight: bold;
+      left: -400px;
+    }
+  }
+}
+.loginCard {
+  background-color: #fff;
+  padding: 40px 40px 5px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  h5 {
+    text-align: center;
+    font-size: 24px;
+    color: #888;
+    margin-bottom: 20px;
+    margin-top: -10px;
+    font-weight: 600;
+  }
+}
+
+.userLayout--Y_AfL .userContext--1UpGx {
+  left: 50%;
+}

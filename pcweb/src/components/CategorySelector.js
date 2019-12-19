@@ -1,67 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  fetchCategories,
-  fetchAllCategorySecond
-} from '../actions';
-import {
-  Select,
-  Spin
-} from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchCategories, fetchAllCategorySecond } from "../actions";
+import { Select, Spin } from "antd";
 
-const Option = Select.Option
+const Option = Select.Option;
 
 @connect(
   state => ({
     firstIsFetching: state.categories.first.isFetching,
-    categoryFirst: state.categories.first.categories,
-    secondIsFetching: state.categories.second.isFetching,
-    categorySecond: state.categories.second.categories
+    categoryFirst: state.categories.first.categories
   }),
   dispatch => ({
-    fetchCategoryFirst: () => dispatch(fetchCategories()),
-    fetchCategorySecond: () => dispatch(fetchAllCategorySecond())
+    fetchCategoryFirst: () => dispatch(fetchCategories())
   })
 )
 export default class CategorySelector extends React.Component {
   static defaultProps = {
     isFetching: PropTypes.bool.isRequired,
     categoryFirst: PropTypes.array.isRequired,
-    categorySecond: PropTypes.array.isRequired,
     allItem: PropTypes.bool.isRequired,
-    level: PropTypes.oneOf(['first', 'second'])
-  }
+    level: PropTypes.oneOf(["first", "second"])
+  };
 
   constructor(props) {
-    super(props)
-    const value = this.props.value || ''
+    super(props);
+    const value = this.props.value || "";
     this.state = {
       value
-    }
+    };
   }
 
   componentDidMount() {
-    this.fetchCategories()
+    this.fetchCategories();
   }
 
   fetchCategories = () => {
-    const {
-      level
-    } = this.props
+    const { level } = this.props;
 
-    if (level === 'first') {
-      this.props.fetchCategoryFirst()
+    if (level === "first") {
+      this.props.fetchCategoryFirst();
     }
-
-    if (level === 'second') {
-      this.props.fetchCategorySecond()
-    }
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     // Should be a controlled component.
-    if ('value' in nextProps) {
+    if ("value" in nextProps) {
       const value = nextProps.value;
       this.setState({
         value
@@ -69,65 +53,46 @@ export default class CategorySelector extends React.Component {
     }
   }
 
-  handleChange = (value) => {
-    if (!('value' in this.props)) {
+  handleChange = value => {
+    if (!("value" in this.props)) {
       this.setState(value);
     }
-    this.triggerChange(value)
-  }
+    this.triggerChange(value);
+  };
 
   handleBlur = () => {
-    console.log('blur');
-  }
+    console.log("blur");
+  };
 
   handleFocus = () => {
-    console.log('focus');
-  }
+    console.log("focus");
+  };
 
-  triggerChange = (changedValue) => {
+  triggerChange = changedValue => {
     const onChange = this.props.onChange;
     if (onChange) {
-      onChange(changedValue)
+      onChange(changedValue);
     }
-  }
+  };
 
   renderCategory = () => {
-    const {
-      level,
-      categoryFirst,
-      categorySecond
-    } = this.props
+    const { level, categoryFirst } = this.props;
 
-    if (level === 'first') {
-      return (
-        categoryFirst.map(item => (
-          <Option value={item.categoryFirstId} key={item.categoryFirstId}>
-            {item.categoryName}
-          </Option>
-        ))
-      )
+    if (level === "first") {
+      return categoryFirst.map(item => (
+        <Option value={item.categoryFirstId} key={item.categoryFirstId}>
+          {item.categoryName}
+        </Option>
+      ));
     } else {
-      return (
-        categorySecond.map(item => (
-          <Option value={item.categorySecondId} key={item.categorySecondId}>
-            {item.categoryName}
-          </Option>
-        ))
-      )
     }
-  }
+  };
 
   render() {
-    const {
-      categoryFirst,
-      categorySecond,
-      isFetching,
-      level,
-      allItem
-    } = this.props
-    const value = this.state.value
+    const { categoryFirst, isFetching, level, allItem } = this.props;
+    const value = this.state.value;
 
-    const categories = level === 'first' ? categoryFirst : categorySecond
+    const categories = level === "first" ? categoryFirst : "";
 
     if (categories.length === 0) {
       return (
@@ -136,7 +101,7 @@ export default class CategorySelector extends React.Component {
             <Option value="1">正在获取数据</Option>
           </Select>
         </Spin>
-      )
+      );
     } else {
       // const defaultValue = categories.length != 0 ? categories[0] : ""
       return (
@@ -147,20 +112,21 @@ export default class CategorySelector extends React.Component {
           value={value}
           optionFilterProp="children"
           onChange={this.handleChange}
-          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          filterOption={(input, option) =>
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >=
+            0
+          }
         >
-          {
-            allItem ? (
-              <Option value="all" key={-1}>
-                全部
-              </Option>
-            ) : ""
-          }
-          {
-            this.renderCategory()
-          }
+          {allItem ? (
+            <Option value="all" key={-1}>
+              全部
+            </Option>
+          ) : (
+            ""
+          )}
+          {this.renderCategory()}
         </Select>
-      )
+      );
     }
   }
 }

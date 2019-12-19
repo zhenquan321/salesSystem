@@ -1,38 +1,35 @@
-const {Op} = require('sequelize')
+const { Op } = require("sequelize");
 
-const {Goods} = require('../models/goods')
-const {Category} = require('../models/category')
+const { Goods } = require("../models/goods");
+const { Category } = require("../models/category");
 
 // 定义商品模型
 class GoodsDao {
-
   // 创建商品
   static async create(v) {
-
     // 检测是否存在商品
     const hasGoods = await Goods.findOne({
       where: {
-        goodName: v.get('body.goodName'),
+        goodName: v.get("body.goodName"),
         deleted_at: null
       }
     });
 
     // 如果存在，抛出存在信息
     if (hasGoods) {
-      throw new global.errs.Existing('商品已存在');
+      throw new global.errs.Existing("商品已存在");
     }
-
 
     // 创建商品
     const goods = new Goods();
 
-    goods.goodName = v.get('body.goodName');
-    goods.price = v.get('body.price');
-    goods.originalPrice = v.get('body.originalPrice');
-    goods.dec = v.get('body.dec');
-    goods.imageFile = v.get('body.imageFile');
-    goods.spec = v.get('body.spec');
-    goods.category_id = v.get('body.category_id');
+    goods.goodName = v.get("body.goodName");
+    goods.price = v.get("body.price");
+    goods.originalPrice = v.get("body.originalPrice");
+    goods.dec = v.get("body.dec");
+    goods.imageFile = v.get("body.imageFile");
+    goods.spec = v.get("body.spec");
+    goods.category_id = v.get("body.category_id");
 
     goods.save();
   }
@@ -44,7 +41,7 @@ class GoodsDao {
       keyword,
       page = 1,
       pageSize = 10,
-      desc = 'created_at'
+      desc = "created_at"
     } = params;
 
     // 筛选方式
@@ -63,21 +60,22 @@ class GoodsDao {
         [Op.like]: `%${keyword}%`
       };
     }
-    const goods = await Goods.scope('iv').findAndCountAll({
-      limit: pageSize,//每页10条
+    const goods = await Goods.findAndCountAll({
+      //
+      limit: pageSize, //每页10条
       offset: (page - 1) * pageSize,
       where: filter,
-      order: [
-        [desc, 'DESC']
-      ],
-      // 查询每篇商品下关联的分类
-      include: [{
-        model: Category,
-        as: 'category',
-        attributes: {
-          exclude: ['deleted_at', 'updated_at']
+      order: [[desc, "DESC"]],
+      // 查询每个商品下关联的分类
+      include: [
+        {
+          model: Category,
+          as: "category",
+          attributes: {
+            exclude: ["deleted_at", "updated_at"]
+          }
         }
-      }]
+      ]
     });
 
     return {
@@ -88,7 +86,7 @@ class GoodsDao {
         per_page: 10,
         count: goods.count,
         total: goods.count,
-        total_pages: Math.ceil(goods.count / 10),
+        total_pages: Math.ceil(goods.count / 10)
       }
     };
   }
@@ -104,12 +102,11 @@ class GoodsDao {
     });
     // 不存在抛出错误
     if (!goods) {
-      throw new global.errs.NotFound('没有找到相关商品');
-
+      throw new global.errs.NotFound("没有找到相关商品");
     }
 
     // 软删除商品
-    goods.destroy()
+    goods.destroy();
   }
 
   // 更新商品
@@ -117,19 +114,19 @@ class GoodsDao {
     // 查询商品
     const goods = await Goods.findByPk(id);
     if (!goods) {
-      throw new global.errs.NotFound('没有找到相关商品');
+      throw new global.errs.NotFound("没有找到相关商品");
     }
 
     // 更新商品
-    goods.goodName = v.get('body.goodName');
-    goods.price = v.get('body.price');
-    goods.originalPrice = v.get('body.originalPrice');
-    goods.salesNum = v.get('body.salesNum');
-    goods.imageFile = v.get('body.imageFile');
-    goods.spec = v.get('body.spec');
-    goods.category_id = v.get('body.category_id');
-    goods.dec = v.get('body.dec');
-    
+    goods.goodName = v.get("body.goodName");
+    goods.price = v.get("body.price");
+    goods.originalPrice = v.get("body.originalPrice");
+    goods.salesNum = v.get("body.salesNum");
+    goods.imageFile = v.get("body.imageFile");
+    goods.spec = v.get("body.spec");
+    goods.category_id = v.get("body.category_id");
+    goods.dec = v.get("body.dec");
+
     goods.save();
   }
 
@@ -138,7 +135,7 @@ class GoodsDao {
     // 查询商品
     const goods = await Goods.findByPk(id);
     if (!goods) {
-      throw new global.errs.NotFound('没有找到相关商品');
+      throw new global.errs.NotFound("没有找到相关商品");
     }
     // 更新商品浏览
     goods.spec = spec;
@@ -153,24 +150,25 @@ class GoodsDao {
         id
       },
       // 查询每篇商品下关联的分类
-      include: [{
-        model: Category,
-        as: 'category',
-        attributes: {
-          exclude: ['deleted_at', 'updated_at']
+      include: [
+        {
+          model: Category,
+          as: "category",
+          attributes: {
+            exclude: ["deleted_at", "updated_at"]
+          }
         }
-      }]
+      ]
     });
 
     if (!goods) {
-      throw new global.errs.NotFound('没有找到相关商品');
+      throw new global.errs.NotFound("没有找到相关商品");
     }
 
     return goods;
   }
-
 }
 
 module.exports = {
   GoodsDao
-}
+};
