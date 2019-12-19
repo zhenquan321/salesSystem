@@ -1,7 +1,7 @@
 const moment = require("moment");
 const { sequelize } = require("../../core/db");
 const { Sequelize, Model } = require("sequelize");
-const { Category } = require("./category");
+// const { Category } = require("./category");
 
 // 定义商品模型
 class Goods extends Model {}
@@ -21,7 +21,7 @@ Goods.init(
     },
     image_file: {
       type: Sequelize.STRING(100),
-      allowNull: false,
+      allowNull: true,
       comment: "商品图片"
     },
     price: {
@@ -41,6 +41,12 @@ Goods.init(
       allowNull: true,
       defaultValue: 0,
       comment: "销量"
+    },
+    stock_num: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      comment: "库存"
     },
     spec: {
       type: Sequelize.STRING(50),
@@ -68,17 +74,17 @@ Goods.init(
   }
 );
 
-// 商品关联分类
-Category.hasMany(Goods, {
-  foreignKey: "category_id",
-  sourceKey: "id",
-  as: "goods"
-});
-Goods.belongsTo(Category, {
-  foreignKey: "category_id",
-  targetKey: "id",
-  as: "category"
-});
+// // 商品关联分类
+// Category.hasMany(Goods, {
+//   foreignKey: "category_id",
+//   sourceKey: "id",
+//   as: "goods"
+// });
+// Goods.belongsTo(Category, {
+//   foreignKey: "category_id",
+//   targetKey: "id",
+//   as: "category"
+// });
 
 module.exports = {
   Goods

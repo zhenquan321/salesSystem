@@ -75,24 +75,18 @@ export const asyncRouteConfig = [
       {
         name: 'basicForm',
         path: '/form/basicForm',
-        component: ['/views/Form/BasicForm'],
+        component: ['/views/Goods/BasicForm'],
         authority: ['admin']
       },
       {
         name: 'stepForm',
         path: '/form/stepForm',
-        component: ['/views/Form/StepForm']
+        component: ['/views/Goods/StepForm']
       },
       {
-        name: '三级菜单',
-        path: '/form/test',
-        routes: [
-          {
-            name: '三级菜单',
-            path: '/form/test/test1',
-            component: ['/views/Form/TestDetail']
-          }
-        ]
+        name: '商品列表',
+        path: '/form/goodsList',
+        component: ['/views/Goods/goodsList']
       }
     ]
   },

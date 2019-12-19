@@ -1,5 +1,6 @@
 import { observable, configure, action } from 'mobx';
 import React from 'react';
+import { createGoods } from '@api/goods';
 
 configure({ enforceActions: 'always' });
 
@@ -10,18 +11,26 @@ interface StepObj {
 }
 
 interface StepData {
-  title: string;
-  detail: string;
-  user: string;
+  goodName: string;
+  imageFile: string;
+  price: number;
+  originalPrice: number;
+  stockNum: number;
+  spec: string;
+  dec: string;
 }
 
 class FormStore {
   @observable current: number = 0;
   @observable submitting: boolean = false;
   @observable data: StepData = {
-    title: '',
-    detail: '',
-    user: ''
+    goodName: '',
+    imageFile: '',
+    price: 0,
+    originalPrice: 0,
+    stockNum: 0,
+    spec: '',
+    dec: ''
   };
   steps: Array<StepObj>;
 
@@ -29,12 +38,12 @@ class FormStore {
     this.steps = [
       {
         id: 'form.stepTitle1',
-        title: '填写信息',
+        title: '进货信息',
         component: React.lazy(() => import(/* webpackChunkName: "Step1" */ './Step1'))
       },
       {
         id: 'form.stepTitle2',
-        title: '确认报告',
+        title: '销售信息',
         component: React.lazy(() => import(/* webpackChunkName: "Step2" */ './Step2'))
       },
       {
@@ -68,9 +77,14 @@ class FormStore {
 
   @action onSubmit = (): void => {
     this.submitting = true;
-    setTimeout(() => {
-      this.nextStep();
-    }, 1000);
+    let goodsData = JSON.parse(JSON.stringify(this.data));
+    createGoods(goodsData).then((res: any) => {
+      console.log(res.data);
+      const { code, data } = res.data;
+      if (code === 200) {
+        this.nextStep();
+      }
+    });
   };
 }
 

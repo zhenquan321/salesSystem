@@ -18,12 +18,7 @@ let authorization = token => {
 class Request {
   instance;
   constructor() {
-    let token = localStorage.getItem('token') || '';
-    this.instance = Axios.create({
-      headers: {
-        authorization: authorization(token)
-      }
-    });
+    this.instance = Axios.create();
     this.initInterceptors();
   }
 
@@ -71,8 +66,11 @@ class Request {
   };
 
   sendRequest(method, data) {
-    let { path, params, options } = data;
+    let user = localStorage.getItem('ra-user') || '';
+    let token = user ? JSON.parse(user) && JSON.parse(user).token : '';
+    this.setHeader('authorization', authorization(token));
 
+    let { path, params, options } = data;
     const _query = options ? { ...options, params } : { params };
     console.log(_query);
     return this.instance[method](path, _query.params).catch(this.handleError);

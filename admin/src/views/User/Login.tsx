@@ -19,7 +19,7 @@ const Login: React.FC = () => {
       {apError && (
         <div className={shake ? 'animated shake' : ''} onAnimationEnd={() => setShake(false)}>
           <Alert
-            message="账户或者密码错误 a:ra  p:123"
+            message="账户或者密码错误"
             type="error"
             showIcon
             style={{ marginBottom: '16px' }}
