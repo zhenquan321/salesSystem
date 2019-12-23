@@ -19,8 +19,8 @@ class Request {
   instance;
   host;
   constructor() {
-    this.host = 'http://106.12.28.41:3000';
-
+    // this.host = 'http://106.12.28.41:3000';
+    this.host = '';
     this.instance = Axios.create();
     this.initInterceptors();
   }
@@ -80,12 +80,12 @@ class Request {
 
     let { path, params, options } = data;
     const _query = options ? { ...options, params } : { params };
+    console.log(data, _query);
     return this.instance[method](this.host + path, _query.params).catch(this.handleError);
   }
 
   get(path, data = {}) {
     const { params } = data;
-
     let _path = path;
     if (params) {
       const keys = Object.keys(params);
@@ -97,7 +97,7 @@ class Request {
       }
       _path = _path.replace(/&$/, '');
     }
-    return this.sendRequest('get', { path: _path, data });
+    return this.sendRequest('get', { path: _path, params });
   }
 
   post(path, data) {

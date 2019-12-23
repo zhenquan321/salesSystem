@@ -8,11 +8,14 @@ import styles from './form.module.scss';
 
 const Step1: React.FC = () => {
   const { data } = StepFormStore;
+  var imageFile = '';
   const StepForm = (props: FormComponentProps) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
+          values.imageFile = imageFile;
+          console.log(imageFile, values);
           StepFormStore.setValue(values);
           StepFormStore.nextStep();
         }
@@ -60,13 +63,13 @@ const Step1: React.FC = () => {
 
     // 上传图片到服务器
     function normFile(e: any) {
-      console.log('Upload event:', e);
       if (Array.isArray(e)) {
         return e;
       }
-      let newData = JSON.parse(JSON.stringify(data));
-      newData.imageFile = e.fileList[0].thumbUrl;
-      StepFormStore.setValue(newData);
+      if (e.file && e.file.response) {
+        console.log('Upload event:', e.file.response.filePathList[0]);
+        imageFile = e.file.response.filePathList[0];
+      }
       return e && e.fileList[0].thumbUrl;
     }
 
@@ -113,7 +116,12 @@ const Step1: React.FC = () => {
             valuePropName: 'imageFile',
             getValueFromEvent: normFile
           })(
-            <Upload name="logo" beforeUpload={beforeUpload} action="/upload.do" listType="picture">
+            <Upload
+              name="logo"
+              beforeUpload={beforeUpload}
+              action="/v1/uploadImg"
+              listType="picture"
+            >
               <Button>
                 <Icon type="upload" />
                 <span>上传产品图片</span>

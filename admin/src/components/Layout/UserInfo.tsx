@@ -53,16 +53,16 @@ const UserInfo: React.FC<RouteComponentProps> = props => {
     <Menu>
       <Menu.Item>
         <Icon type="user" />
-        <span className={styles.menuItem}>user info</span>
+        <span className={styles.menuItem}>用户信息</span>
       </Menu.Item>
-      <Menu.Item onClick={handleTriggerError}>
+      {/* <Menu.Item onClick={handleTriggerError}>
         <Icon type="setting" />
         <span className={styles.menuItem}>trigger error</span>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Divider />
       <Menu.Item onClick={handleLogout}>
         <Icon type="logout" />
-        <span className={styles.menuItem}>logout</span>
+        <span className={styles.menuItem}>退出</span>
       </Menu.Item>
     </Menu>
   );

@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 
 const {
   dbName,
@@ -6,43 +6,43 @@ const {
   port,
   user,
   password
-} = require('../config/config').database
+} = require("../config/config").database;
 
 const sequelize = new Sequelize(dbName, user, password, {
-  dialect: 'mysql',
+  dialect: "mysql",
   host,
   port,
   logging: true,
-  timezone: '+08:00',
+  timezone: "+08:00",
   define: {
     // create_time && update_time
     timestamps: true,
     // delete_time
     paranoid: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    deletedAt: "deleted_at",
     // 把驼峰命名转换为下划线
     underscored: true,
     scopes: {
       bh: {
         attributes: {
-          exclude: ['password', 'updated_at', 'deleted_at', 'created_at']
+          exclude: ["password", "updated_at", "deleted_at", "created_at"]
         }
       },
       iv: {
         attributes: {
-          exclude: ['content', 'password', 'updated_at', 'deleted_at']
+          exclude: ["content", "password", "updated_at", "deleted_at"]
         }
       }
     }
   }
-})
-// 创建模型
+});
+//直接强制同步创建表
 sequelize.sync({
   force: false
-})
+});
 
 module.exports = {
   sequelize
-}
+};

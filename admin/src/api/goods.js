@@ -16,7 +16,7 @@ export function createGoods(goodsInfo) {
  */
 
 export function deleteGoods(id) {
-  return request.sendRequest('delete', {
+  return request.sendRequest('post', {
     path: '/v1/goods/' + id
   });
 }
@@ -26,7 +26,7 @@ export function deleteGoods(id) {
  */
 
 export function updateGoods(id, goodsInfo) {
-  return request.sendRequest('put', {
+  return request.sendRequest('post', {
     path: '/v1/goods/' + id,
     params: goodsInfo
   });
@@ -35,9 +35,9 @@ export function updateGoods(id, goodsInfo) {
 /**
  * 获取商品列表
  */
-export function goodsList() {
-  return request.sendRequest('get', {
-    path: '/v1/goods'
+export function goodsList(searchData) {
+  return request.get('/v1/goods', {
+    params: searchData
   });
 }
 

@@ -33,7 +33,7 @@ export const constantRouteConfig = [
 
 export const asyncRouteConfig = [
   {
-    name: 'dashboard',
+    name: '统计看板',
     icon: 'pie-chart',
     path: '/dashboard',
     component: ['/views/Dashboard']
@@ -43,6 +43,13 @@ export const asyncRouteConfig = [
     exact: true,
     redirect: '/dashboard',
     hideMenu: true
+  },
+  {
+    name: '售货',
+    icon: 'shop',
+    path: '/sales',
+    component: ['/views/Sales/goodsList']
+    // authority: ['admin']
   },
   {
     name: 'program',
@@ -86,7 +93,7 @@ export const asyncRouteConfig = [
       {
         name: '商品列表',
         path: '/form/goodsList',
-        component: ['/views/Goods/goodsList']
+        component: ['/views/Goods/GoodsList']
       }
     ]
   },
@@ -111,64 +118,64 @@ export const asyncRouteConfig = [
         component: ['/views/List/BasicTable']
       }
     ]
-  },
-  {
-    name: 'map',
-    icon: 'heat-map',
-    path: '/map',
-    component: ['/views/Map'],
-    authority: ['admin']
-  },
-  {
-    name: 'gallery',
-    icon: 'picture',
-    path: '/gallery',
-    component: ['/views/Gallery'],
-    authority: ['admin']
-  },
-  {
-    name: 'result',
-    icon: 'check-circle',
-    path: '/result',
-    routes: [
-      {
-        name: 'successResult',
-        path: '/result/successResult',
-        component: ['/views/Result/SuccessResult']
-      },
-      {
-        name: 'failedResult',
-        path: '/result/failedResult',
-        component: ['/views/Result/FailedResult']
-      }
-    ]
-  },
-  {
-    name: 'exception',
-    icon: 'warning',
-    path: '/exception',
-    routes: [
-      {
-        name: '403',
-        path: '/exception/403',
-        component: ['/views/Exception/403', 'bounceIn-animated']
-      },
-      {
-        name: '404',
-        path: '/exception/404',
-        component: ['/views/Exception/404']
-      },
-      {
-        name: '500',
-        path: '/exception/500',
-        component: ['/views/Exception/500']
-      },
-      {
-        name: 'index',
-        path: '/exception/home',
-        component: ['/views/Exception'],
-        hideMenu: true
-      }
-    ]
   }
+  // {
+  //   name: 'map',
+  //   icon: 'heat-map',
+  //   path: '/map',
+  //   component: ['/views/Map'],
+  //   // authority: ['admin']
+  // },
+  // {
+  //   name: 'gallery',
+  //   icon: 'picture',
+  //   path: '/gallery',
+  //   component: ['/views/Gallery'],
+  //   // authority: ['admin']
+  // },
+  // {
+  //   name: 'result',
+  //   icon: 'check-circle',
+  //   path: '/result',
+  //   routes: [
+  //     {
+  //       name: 'successResult',
+  //       path: '/result/successResult',
+  //       component: ['/views/Result/SuccessResult']
+  //     },
+  //     {
+  //       name: 'failedResult',
+  //       path: '/result/failedResult',
+  //       component: ['/views/Result/FailedResult']
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'exception',
+  //   icon: 'warning',
+  //   path: '/exception',
+  //   routes: [
+  //     {
+  //       name: '403',
+  //       path: '/exception/403',
+  //       component: ['/views/Exception/403', 'bounceIn-animated']
+  //     },
+  //     {
+  //       name: '404',
+  //       path: '/exception/404',
+  //       component: ['/views/Exception/404']
+  //     },
+  //     {
+  //       name: '500',
+  //       path: '/exception/500',
+  //       component: ['/views/Exception/500']
+  //     },
+  //     {
+  //       name: 'index',
+  //       path: '/exception/home',
+  //       component: ['/views/Exception'],
+  //       hideMenu: true
+  //     }
+  //   ]
+  // }
 ];

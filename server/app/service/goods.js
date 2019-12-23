@@ -29,6 +29,8 @@ class GoodsService {
     goods.dec = v.get("body.dec");
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
+    goods.stock_num = v.get("body.stockNum");
+
     // goods.category_id = v.get("body.category_id");
 
     goods.save();
@@ -37,7 +39,7 @@ class GoodsService {
   // 获取商品列表
   static async list(params = {}) {
     const {
-      category_id,
+      // category_id,
       keyword,
       page = 1,
       pageSize = 10,
@@ -50,13 +52,13 @@ class GoodsService {
     };
 
     // 筛选方式：存在分类ID
-    if (category_id) {
-      filter.category_id = category_id;
-    }
+    // if (category_id) {
+    //   filter.category_id = category_id;
+    // }
 
     // 筛选方式：存在搜索关键字
     if (keyword) {
-      filter.goodName = {
+      filter.good_name = {
         [Op.like]: `%${keyword}%`
       };
     }
@@ -65,17 +67,17 @@ class GoodsService {
       limit: pageSize, //每页10条
       offset: (page - 1) * pageSize,
       where: filter,
-      order: [[desc, "DESC"]],
+      order: [[desc, "DESC"]]
       // 查询每个商品下关联的分类
-      include: [
-        {
-          model: Category,
-          as: "category",
-          attributes: {
-            exclude: ["deleted_at", "updated_at"]
-          }
-        }
-      ]
+      // include: [
+      //   {
+      //     model: Category,
+      //     as: "category",
+      //     attributes: {
+      //       exclude: ["deleted_at", "updated_at"]
+      //     }
+      //   }
+      // ]
     });
 
     return {

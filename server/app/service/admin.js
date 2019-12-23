@@ -20,6 +20,7 @@ class AdminService {
     admin.email = v.get("body.email");
     admin.password = v.get("body.password2");
     admin.nickname = v.get("body.nickname");
+    admin.authority = v.get("body.authority");
 
     admin.save();
   }
