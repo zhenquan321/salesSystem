@@ -124,12 +124,14 @@ class CardList extends React.Component<{}, CardListState> {
                   ]}
                 >
                   <Card.Meta
-                    avatar={<Avatar src={item.image_file} size={60} />}
+                    avatar={<Avatar src={item.image_file} size={80} />}
                     title={
                       <Button
                         type="link"
                         style={{
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
+                          padding: 0,
+                          marginBottom: 0
                         }}
                       >
                         {item.good_name}
@@ -139,18 +141,15 @@ class CardList extends React.Component<{}, CardListState> {
                       <div className={styles.goodInfo}>
                         <div className={styles.goodInfoSales}>
                           <div className={styles.goodInfoSalesNum}>
-                            {' '}
                             售价：
                             <span className={styles.goodInfoSalesNumNumer}>￥{item.price}</span>
                           </div>
                           <div className={styles.goodInfoSalesNum}>
-                            {' '}
                             已售：
                             <span className={styles.goodInfoSalesNumNumer}>{item.sales_num}</span>
                             {item.spec}
                           </div>
                           <div className={styles.goodInfoSalesNum}>
-                            {' '}
                             库存：
                             <span className={styles.goodInfoSalesNumNumer}>{item.stock_num}</span>
                             {item.spec}
