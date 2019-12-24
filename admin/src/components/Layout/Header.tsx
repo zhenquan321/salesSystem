@@ -30,7 +30,7 @@ const Header: React.FC = props => {
       <Icon type={iconCollapsed} className={styles.foldIcon} onClick={() => toggleCollapsed()} />
       <div className={styles.rightPart}>
         <UserInfo />
-        <SelectLang />
+        {/* <SelectLang /> */}
       </div>
     </header>
   );

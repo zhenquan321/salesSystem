@@ -119,7 +119,7 @@ class CardList extends React.Component<{}, CardListState> {
                       type="link"
                       key={item.id + 1}
                       style={{
-                        fontSize: '16px',
+                        fontSize: '15px',
                         fontWeight: 'bold',
                         color: '#555'
                       }}
@@ -131,7 +131,7 @@ class CardList extends React.Component<{}, CardListState> {
                       type="link"
                       key={item.id + 2}
                       style={{
-                        fontSize: '16px',
+                        fontSize: '15px',
                         fontWeight: 'bold',
                         color: '#722ed1'
                       }}
@@ -149,7 +149,7 @@ class CardList extends React.Component<{}, CardListState> {
                         style={{
                           fontWeight: 'bold',
                           padding: 0,
-                          fontSize: '18px',
+                          fontSize: '17px',
                           marginBottom: '5px',
                           color: '#555'
                         }}
