@@ -6,54 +6,64 @@ import FormatterLocale from '@components/FormatterLocale';
 import ListTable from './ListTable';
 import styles from './listTable.module.scss';
 import LayoutStore from '@store/layoutStore';
-
+import { goodsAnalysis } from '@api/goods';
 interface BasicInjected {
   layoutStore: LayoutStore;
 }
+interface basicListState {
+  list: any;
+}
+class BasicList extends React.Component<{}, basicListState> {
+  state = {
+    list: []
+  };
 
-const BasicList: React.FC<BasicInjected> = props => {
-  const list = [
-    {
-      title: '商品总品类',
-      num: '2113'
-    },
-    {
-      title: '商品总库存',
-      num: '1231'
-    },
-    {
-      title: '商品库存总值',
-      num: '13222'
+  async initData() {
+    let data = await goodsAnalysis();
+    if (data.data.code == 200) {
+      this.setState({
+        list: data.data.data
+      });
     }
-  ];
-  const RowInfo = () => (
-    <Row gutter={24}>
-      {list.map(col => {
-        return (
-          <Col xl={8} sm={24} xs={24} key={col.title}>
-            <Card bordered={false}>
-              <p className={styles.colTitle}>{col.title}</p>
-              <span className={styles.colNum}>{col.num}</span>
-            </Card>
-          </Col>
-        );
-      })}
-    </Row>
-  );
+    console.log(data);
+  }
+  componentDidMount() {
+    this.initData();
+  }
+  render() {
+    const isMobile = false;
+    const { list } = this.state;
 
-  const DontShow = () => (
-    <Card style={{ marginTop: '24px' }} bordered={false}>
-      <div style={{ textAlign: 'center' }}>不给你看</div>
-    </Card>
-  );
+    const RowInfo = () => (
+      <Row gutter={24}>
+        {list.map((col: any) => {
+          return (
+            <Col xl={6} sm={12} xs={12} key={col.title}>
+              <Card bordered={false}>
+                <p className={styles.colTitle}>{col.title}</p>
+                <span className={styles.colNum}>{col.value}</span>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
+    );
 
-  const { isMobile } = props.layoutStore;
-  return (
-    <PageWrapper title={<FormatterLocale id="basicList.title" />}>
-      <RowInfo />
-      {isMobile ? <DontShow /> : <ListTable />}
-    </PageWrapper>
-  );
-};
+    const DontShow = () => (
+      <Card style={{ marginTop: '24px' }} bordered={false}>
+        <div style={{ textAlign: 'center' }}>不给你看</div>
+      </Card>
+    );
+
+    return (
+      // <PageWrapper title={""}>
+      <div>
+        <RowInfo />
+        {isMobile ? <DontShow /> : <ListTable />}
+      </div>
+      // </PageWrapper>
+    );
+  }
+}
 
 export default inject('layoutStore')(observer(BasicList));

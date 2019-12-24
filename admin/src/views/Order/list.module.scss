@@ -33,13 +33,7 @@
 }
 
 .description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  height: 40px;
-  margin-bottom: -5px;
-  font-size: 13px;
+  height: 69px;
 }
 
 .images {
@@ -90,29 +84,4 @@
     transform: scale(2.4);
     opacity: 0;
   }
-}
-
-.goodInfoSales {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: -10px;
-}
-.goodInfoSalesNum {
-  margin: 5px 20px 5px 0;
-  font-size: 14px;
-  color: #666;
-}
-.goodInfoSalesNumNumer {
-  color: #fb4491;
-  font-weight: 600;
-  font-size: 18px;
-  padding-right: 5px;
-}
-.SearchBtn {
-  height: 50px;
-}
-.paginationStyle {
-  text-align: center;
-  margin: 10px;
 }

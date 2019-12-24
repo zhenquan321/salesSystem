@@ -94,44 +94,64 @@ class CardList extends React.Component<{}, CardListState> {
         extraContent={ExtraContent}
         // content={Content}
       >
-        <div className={styles.SearchBtn}>
-          <Search
-            placeholder="搜索商品列表"
-            enterButton="搜索"
-            onSearch={this.handleSearch}
-            style={{ width: 300, float: 'right', marginLeft: '8px' }}
-          />
-        </div>
+        <div>
+          <div className={styles.SearchBtn}>
+            <Search
+              placeholder="搜索商品列表"
+              enterButton="搜索"
+              onSearch={this.handleSearch}
+              style={{ width: 300, float: 'right', marginLeft: '8px' }}
+            />
+          </div>
 
-        <List
-          rowKey="id"
-          loading={!list.length}
-          grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-          dataSource={[...list]}
-          renderItem={
-            (item: any) => (
+          <List
+            rowKey="id"
+            loading={!list.length}
+            grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
+            dataSource={[...list]}
+            renderItem={(item: any) => (
               // item ? (
               <List.Item key={item.id}>
                 <Card
                   hoverable
                   actions={[
-                    <Button type="link" key={item.id + 1}>
-                      <Icon type="setting" /> 立即结算
+                    <Button
+                      type="link"
+                      key={item.id + 1}
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        color: '#555'
+                      }}
+                    >
+                      {/* <Icon type="setting" />  */}
+                      立即结算
                     </Button>,
-                    <Button type="link" key={item.id + 2}>
-                      <Icon type="edit" /> 加入订单
+                    <Button
+                      type="link"
+                      key={item.id + 2}
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        color: '#722ed1'
+                      }}
+                    >
+                      {/* <Icon type="edit" /> */}
+                      加入订单
                     </Button>
                   ]}
                 >
                   <Card.Meta
-                    avatar={<Avatar src={item.image_file} size={80} />}
+                    avatar={<Avatar src={item.image_file} shape="square" size={80} />}
                     title={
                       <Button
                         type="link"
                         style={{
                           fontWeight: 'bold',
                           padding: 0,
-                          marginBottom: 0
+                          fontSize: '18px',
+                          marginBottom: '5px',
+                          color: '#555'
                         }}
                       >
                         {item.good_name}
@@ -161,23 +181,16 @@ class CardList extends React.Component<{}, CardListState> {
                   />
                 </Card>
               </List.Item>
-            )
-            // ) : (
-            //   <List.Item>
-            //     <Button type="dashed" className={styles.createButton}>
-            //       <Icon type="plus" /> 新建
-            //     </Button>
-            //   </List.Item>
-            // )
-          }
-        />
-        <div className={styles.paginationStyle}>
-          <Pagination
-            showQuickJumper
-            defaultCurrent={meta.per_page}
-            total={meta.total}
-            onChange={this.onChange}
+            )}
           />
+          <div className={styles.paginationStyle}>
+            <Pagination
+              showQuickJumper
+              defaultCurrent={meta.per_page}
+              total={meta.total}
+              onChange={this.onChange}
+            />
+          </div>
         </div>
       </PageWrapper>
     );

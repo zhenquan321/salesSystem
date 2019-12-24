@@ -142,8 +142,12 @@ class ListTable extends React.Component<{}, ListTableState> {
                 ]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar src={item.image_file} shape="square" size={60} />}
-                  title={<Button type="link">{item.good_name}</Button>}
+                  avatar={<Avatar src={item.image_file} shape="square" size={64} />}
+                  title={
+                    <Button type="link" style={{ padding: 0, height: '24px', fontWeight: 'bold' }}>
+                      {item.good_name}
+                    </Button>
+                  }
                   description={<div className={styles.detail}>{item.dec}</div>}
                 />
                 <ListContent data={item} />

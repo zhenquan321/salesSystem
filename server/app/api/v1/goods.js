@@ -107,6 +107,22 @@ router.get("/goods/:id", async ctx => {
 });
 
 /**
+ * 返回商品库分析
+ */
+router.get("/goodsAnalysis", async ctx => {
+  // 查询商品
+  const goodsAnalysis = await GoodsService.analysis();
+  // 返回结果
+  ctx.response.status = 200;
+  ctx.body = res.json([
+    { title: "商品数", value: goodsAnalysis.stockGoodsNum },
+    { title: "库存总量", value: goodsAnalysis.stockAllNum },
+    { title: "库存总值", value: goodsAnalysis.stockAllValue },
+    { title: "库存总成本", value: goodsAnalysis.stockOriginalValue }
+  ]);
+});
+
+/**
  * 返回首页的商品和专栏
  */
 router.get("/home", async ctx => {

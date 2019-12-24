@@ -33,16 +33,16 @@ export const constantRouteConfig = [
 
 export const asyncRouteConfig = [
   {
-    name: '统计看板',
-    icon: 'pie-chart',
-    path: '/dashboard',
-    component: ['/views/Dashboard']
-  },
-  {
     path: '/',
     exact: true,
     redirect: '/dashboard',
     hideMenu: true
+  },
+  {
+    name: '统计看板',
+    icon: 'pie-chart',
+    path: '/dashboard',
+    component: ['/views/Dashboard']
   },
   {
     name: '售货',
@@ -51,42 +51,14 @@ export const asyncRouteConfig = [
     component: ['/views/Sales/goodsList']
     // authority: ['admin']
   },
-  {
-    name: 'program',
-    icon: 'appstore',
-    path: '/program',
-    routes: [
-      {
-        name: 'analysis',
-        path: '/program/analysis',
-        component: ['/views/Program/Analysis'],
-        authority: ['admin']
-      },
-      {
-        name: 'monitor',
-        path: '/program/monitor',
-        component: ['/views/Program/Monitor']
-      },
-      {
-        name: 'platform',
-        path: '/program/platform',
-        component: ['/views/Program/Platform']
-      }
-    ]
-  },
+
   {
     name: 'form',
     icon: 'form',
     path: '/form',
     routes: [
       {
-        name: 'basicForm',
-        path: '/form/basicForm',
-        component: ['/views/Goods/BasicForm'],
-        authority: ['admin']
-      },
-      {
-        name: 'stepForm',
+        name: '添加商品',
         path: '/form/stepForm',
         component: ['/views/Goods/StepForm']
       },
@@ -98,27 +70,63 @@ export const asyncRouteConfig = [
     ]
   },
   {
-    name: 'list',
+    name: '订单',
     icon: 'ordered-list',
-    path: '/list',
+    path: '/order',
     routes: [
       {
-        name: 'basicList',
-        path: '/list/basicList',
-        component: ['/views/List/BasicList']
-      },
-      {
-        name: 'cardList',
-        path: '/list/cardList',
-        component: ['/views/List/CardList']
-      },
-      {
-        name: 'basicTable',
-        path: '/list/basicTable',
-        component: ['/views/List/BasicTable']
+        name: '订单列表',
+        path: '/Order/list',
+        component: ['/views/Order/list']
       }
     ]
   }
+  // {
+  //   name: 'program',
+  //   icon: 'appstore',
+  //   path: '/program',
+  //   routes: [
+  //     {
+  //       name: 'analysis',
+  //       path: '/program/analysis',
+  //       component: ['/views/Program/Analysis'],
+  //       authority: ['admin']
+  //     },
+  //     {
+  //       name: 'monitor',
+  //       path: '/program/monitor',
+  //       component: ['/views/Program/Monitor']
+  //     },
+  //     {
+  //       name: 'platform',
+  //       path: '/program/platform',
+  //       component: ['/views/Program/Platform']
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   name: 'list',
+  //   icon: 'ordered-list',
+  //   path: '/list',
+  //   routes: [
+  //     {
+  //       name: 'basicList',
+  //       path: '/list/basicList',
+  //       component: ['/views/List/BasicList']
+  //     },
+  //     {
+  //       name: 'cardList',
+  //       path: '/list/cardList',
+  //       component: ['/views/List/CardList']
+  //     },
+  //     {
+  //       name: 'basicTable',
+  //       path: '/list/basicTable',
+  //       component: ['/views/List/BasicTable']
+  //     }
+  //   ]
+  // }
   // {
   //   name: 'map',
   //   icon: 'heat-map',

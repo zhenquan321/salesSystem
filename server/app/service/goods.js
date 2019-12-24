@@ -36,6 +36,31 @@ class GoodsService {
     goods.save();
   }
 
+  // 获取商品概况
+  static async analysis() {
+    const desc = "created_at";
+    const goods = await Goods.findAndCountAll({
+      order: [[desc, "DESC"]]
+    });
+    let stockAllNum = 0;
+    let stockAllValue = 0;
+    let stockOriginalValue = 0;
+    for (let i = 0; i < goods.rows.length; i++) {
+      stockAllNum = stockAllNum + goods.rows[i].stock_num;
+      stockAllValue =
+        stockAllValue + goods.rows[i].stock_num * goods.rows[i].price;
+      stockOriginalValue =
+        stockOriginalValue +
+        goods.rows[i].stock_num * goods.rows[i].original_price;
+    }
+    return {
+      stockGoodsNum: goods.count,
+      stockAllNum,
+      stockAllValue,
+      stockOriginalValue
+    };
+  }
+
   // 获取商品列表
   static async list(params = {}) {
     const {

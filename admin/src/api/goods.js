@@ -50,3 +50,13 @@ export function goodsDetail(id) {
     path: '/v1/goods/' + id
   });
 }
+
+/**
+ * 查询商品分析
+ */
+
+export function goodsAnalysis() {
+  return request.sendRequest('get', {
+    path: '/v1/goodsAnalysis'
+  });
+}

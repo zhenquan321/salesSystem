@@ -17,6 +17,14 @@
 
 .detail {
   max-width: 500px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 36px;
+  font-size: 12px;
+  padding-right: 10px;
+  line-height: 18px;
 }
 
 .content {
