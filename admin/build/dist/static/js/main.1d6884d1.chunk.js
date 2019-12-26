@@ -399,8 +399,8 @@
                 }
                 return Promise.reject(e);
               }),
-              (this.host = window),
-              location.hostname,
+              (this.host =
+                'p.fengzq.cn' == window.location.hostname ? 'http://106.12.28.41:3000' : ''),
               (this.instance = c.a.create()),
               this.initInterceptors();
           }
