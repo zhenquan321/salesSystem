@@ -399,7 +399,8 @@
                 }
                 return Promise.reject(e);
               }),
-              (this.host = ''),
+              (this.host = window),
+              location.hostname,
               (this.instance = c.a.create()),
               this.initInterceptors();
           }
