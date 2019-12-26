@@ -119,7 +119,10 @@ const Step1: React.FC = () => {
             <Upload
               name="logo"
               beforeUpload={beforeUpload}
-              action="/v1/uploadImg"
+              action={
+                (window.location.hostname == 'p.fengzq.cn' ? 'http://106.12.28.41:3000' : '') +
+                '/v1/uploadImg'
+              }
               listType="picture"
             >
               <Button>
