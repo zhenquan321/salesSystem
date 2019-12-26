@@ -6073,7 +6073,10 @@
                         var n = e.size / 1024 / 1024 < 2;
                         return n || a.a.error('Image must smaller than 2MB!'), t && n;
                       },
-                      action: '/v1/uploadImg',
+                      action:
+                        ('p.fengzq.cn' == window.location.hostname
+                          ? 'http://106.12.28.41:3000'
+                          : '') + '/v1/uploadImg',
                       listType: 'picture'
                     },
                     c.a.createElement(
