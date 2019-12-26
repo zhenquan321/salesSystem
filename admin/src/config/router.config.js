@@ -73,13 +73,14 @@ export const asyncRouteConfig = [
     name: '订单',
     icon: 'ordered-list',
     path: '/order',
-    routes: [
-      {
-        name: '订单列表',
-        path: '/Order/list',
-        component: ['/views/Order/list']
-      }
-    ]
+    component: ['/views/Order/list']
+    // routes: [
+    //   {
+    //     name: '订单列表',
+    //     path: '/Order/list',
+    //     component: ['/views/Order/list']
+    //   }
+    // ]
   }
   // {
   //   name: 'program',

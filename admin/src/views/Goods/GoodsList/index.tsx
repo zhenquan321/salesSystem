@@ -22,7 +22,7 @@ class BasicList extends React.Component<{}, basicListState> {
     let data = await goodsAnalysis();
     if (data.data.code == 200) {
       this.setState({
-        list: data.data.data
+        list: data.data.data.list
       });
     }
     console.log(data);

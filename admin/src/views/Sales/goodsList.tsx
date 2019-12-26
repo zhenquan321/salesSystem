@@ -3,12 +3,15 @@ import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
 import { Icon, Card, List, Button, Pagination, Input, Avatar } from 'antd';
 import { goodsList } from '@api/goods';
+
+import AddOrder from './salesPart/addOrder';
 import styles from './list.module.scss';
 const Search = Input.Search;
 
 interface CardListState {
   list: any[];
   meta: any;
+  addGoodsList: any[];
   searchData: {
     keyword: string;
     page: number;
@@ -18,6 +21,7 @@ interface CardListState {
 class CardList extends React.Component<{}, CardListState> {
   state = {
     list: [],
+    addGoodsList: [],
     searchData: {
       keyword: '',
       page: 1
@@ -56,17 +60,35 @@ class CardList extends React.Component<{}, CardListState> {
     this.initData();
   };
 
-  onChange = (pageNumber: number) => {
+  onChange(pageNumber: number) {
     let searchData = this.state.searchData;
     searchData.page = pageNumber;
     this.setState({
       searchData: searchData
     });
     this.initData();
+  }
+
+  addGoods = (good: any) => {
+    good.sales_num_now = 1;
+    let goodList: any[] = JSON.parse(JSON.stringify(this.state.addGoodsList));
+    let included = false;
+    for (let i = 0; i < goodList.length; i++) {
+      if (good.id == goodList[i].id) {
+        goodList[i].sales_num_now = goodList[i].sales_num_now + 1;
+        included = true;
+      }
+    }
+    if (!included) {
+      goodList.push(good);
+    }
+    this.setState({
+      addGoodsList: goodList
+    });
   };
 
   render() {
-    const { list, meta } = this.state;
+    const { list, meta, addGoodsList } = this.state;
 
     const ExtraContent = (
       <div className={styles.extraContent}>
@@ -94,6 +116,7 @@ class CardList extends React.Component<{}, CardListState> {
         extraContent={ExtraContent}
         // content={Content}
       >
+        <AddOrder goodList={addGoodsList}></AddOrder>
         <div>
           <div className={styles.SearchBtn}>
             <Search
@@ -130,6 +153,7 @@ class CardList extends React.Component<{}, CardListState> {
                     <Button
                       type="link"
                       key={item.id + 2}
+                      onClick={this.addGoods.bind(this, item)}
                       style={{
                         fontSize: '15px',
                         fontWeight: 'bold',

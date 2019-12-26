@@ -3,55 +3,41 @@ const { Op } = require("sequelize");
 const { Orders } = require("../models/orders");
 const { Category } = require("../models/category");
 
-// 定义商品模型
+// 定义订单模型
 class OrdersService {
-  // 创建商品
+  // 创建订单
   static async create(v) {
-    // 检测是否存在商品
-    const hasOrders = await Orders.findOne({
-      where: {
-        orderName: v.get("body.serialNumber"),
-        deleted_at: null
-      }
-    });
-
-    // 如果存在，抛出存在信息
-    if (hasOrders) {
-      throw new global.errs.Existing("商品已存在");
-    }
-
-    // 创建商品
+    let myDate = new Date();
+    // 创建订单
     const orders = new Orders();
-
-    orders.orderName = v.get("body.orderName");
-    orders.price = v.get("body.price");
-    orders.originalPrice = v.get("body.originalPrice");
-    orders.dec = v.get("body.dec");
-    orders.imageFile = v.get("body.imageFile");
-    orders.spec = v.get("body.spec");
-    orders.serialNumber = v.get("body.serialNumber");
+    orders.serial_number =
+      "XSD" +
+      myDate.getFullYear().toString() +
+      myDate.getMonth().toString() +
+      myDate.getDate().toString() +
+      "T" +
+      myDate.getHours().toString() +
+      myDate.getMinutes().toString() +
+      myDate.getSeconds().toString();
+    orders.sales_amount = v.get("body.sales_amount");
+    orders.orders_amount = v.get("body.orders_amount");
+    orders.discount_amount = v.get("body.discount_amount");
+    orders.original_amount = v.get("body.original_amount");
+    orders.sale_goods = v.get("body.sale_goods");
+    orders.sale_goods_count = v.get("body.sale_goods_count");
+    orders.order_status = v.get("body.order_status");
+    orders.Remarks = v.get("body.Remarks");
     orders.save();
   }
 
-  // 获取商品列表
+  // 获取订单列表
   static async list(params = {}) {
-    const {
-      category_id,
-      keyword,
-      page = 1,
-      pageSize = 10,
-      desc = "created_at"
-    } = params;
+    const { keyword, page = 1, pageSize = 10, desc = "created_at" } = params;
 
     // 筛选方式
     let filter = {
       deleted_at: null
     };
-
-    // 筛选方式：存在分类ID
-    if (category_id) {
-      filter.category_id = category_id;
-    }
 
     // 筛选方式：存在搜索关键字
     if (keyword) {
@@ -64,17 +50,7 @@ class OrdersService {
       limit: pageSize, //每页10条
       offset: (page - 1) * pageSize,
       where: filter,
-      order: [[desc, "DESC"]],
-      // 查询每个商品下关联的分类
-      include: [
-        {
-          model: Category,
-          as: "category",
-          attributes: {
-            exclude: ["deleted_at", "updated_at"]
-          }
-        }
-      ]
+      order: [[desc, "DESC"]]
     });
 
     return {
@@ -90,9 +66,9 @@ class OrdersService {
     };
   }
 
-  // 删除商品
+  // 删除订单
   static async destroy(id) {
-    // 检测是否存在商品
+    // 检测是否存在订单
     const orders = await Orders.findOne({
       where: {
         id,
@@ -101,54 +77,39 @@ class OrdersService {
     });
     // 不存在抛出错误
     if (!orders) {
-      throw new global.errs.NotFound("没有找到相关商品");
+      throw new global.errs.NotFound("没有找到相关订单");
     }
-
-    // 软删除商品
+    // 软删除订单
     orders.destroy();
   }
 
-  // 更新商品
+  // 更新订单
   static async update(id, v) {
-    // 查询商品
+    // 查询订单
     const orders = await Orders.findByPk(id);
     if (!orders) {
-      throw new global.errs.NotFound("没有找到相关商品");
+      throw new global.errs.NotFound("没有找到相关订单");
     }
 
-    // 更新商品
-    orders.orderName = v.get("body.orderName");
-    orders.price = v.get("body.price");
-    orders.originalPrice = v.get("body.originalPrice");
-    orders.salesNum = v.get("body.salesNum");
-    orders.imageFile = v.get("body.imageFile");
-    orders.spec = v.get("body.spec");
-    orders.category_id = v.get("body.category_id");
-    orders.dec = v.get("body.dec");
+    // 更新订单
+    orders.sales_amount = v.get("body.sales_amount");
+    orders.orders_amount = v.get("body.orders_amount");
+    orders.discount_amount = v.get("body.discount_amount");
+    orders.original_amount = v.get("body.original_amount");
+    orders.sale_goods = v.get("body.sale_goods");
+    orders.order_status = v.get("body.order_status");
+    orders.Remarks = v.get("body.Remarks");
 
     orders.save();
   }
 
-  // 更新商品浏览次数
-  static async updateBrowse(id, spec) {
-    // 查询商品
-    const orders = await Orders.findByPk(id);
-    if (!orders) {
-      throw new global.errs.NotFound("没有找到相关商品");
-    }
-    // 更新商品浏览
-    orders.spec = spec;
-
-    orders.save();
-  }
-
-  // 商品详情
+  // 订单详情
   static async detail(id) {
     const orders = await Orders.findOne({
       where: {
         id
       },
-      // 查询每篇商品下关联的分类
+      // 查询每篇订单下关联的分类
       include: [
         {
           model: Category,
@@ -161,10 +122,38 @@ class OrdersService {
     });
 
     if (!orders) {
-      throw new global.errs.NotFound("没有找到相关商品");
+      throw new global.errs.NotFound("没有找到相关订单");
     }
 
     return orders;
+  }
+
+  // 订单概况
+  static async analysis() {
+    const desc = "created_at";
+    const orders = await Orders.findAndCountAll({
+      order: [[desc, "DESC"]]
+    });
+
+    let salesVolume = 0;
+    let ordersVolume = 0;
+    let originalVolume = 0;
+    let goodsAmount = 0;
+    let ordersAmount = orders.count;
+
+    for (let i = 0; i < orders.rows.length; i++) {
+      salesVolume += orders.rows[i].sales_amount;
+      ordersVolume += orders.rows[i].orders_amount;
+      originalVolume += orders.rows[i].original_amount;
+      goodsAmount += orders.rows[i].sale_goods_count;
+    }
+    return {
+      salesVolume,
+      ordersAmount,
+      ordersVolume,
+      originalVolume,
+      goodsAmount
+    };
   }
 }
 

@@ -5,8 +5,8 @@ const { Category } = require("../models/category");
 class OrdersValidator extends LinValidator {
   constructor() {
     super();
-    this.saleGoods = [
-      new Rule("isLength", "商品名称 saleGoods 不能为空", { min: 1 })
+    this.sale_goods = [
+      new Rule("isLength", "必须选择商品才能下单", { min: 1 })
     ];
   }
 }

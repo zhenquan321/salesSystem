@@ -10,7 +10,7 @@ import './dashboard.scss';
 const Dashboard: React.FC = () => (
   <div className="dashboard">
     <RowInfoCard />
-    <Row gutter={24}>
+    {/* <Row gutter={24}>
       <Col xl={14} lg={14} md={24} sm={24} xs={24}>
         <Weather />
       </Col>
@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => (
       <Col span={24}>
         <SaleTable />
       </Col>
-    </Row>
+    </Row> */}
   </div>
 );
 

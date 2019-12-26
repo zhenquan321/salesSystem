@@ -114,12 +114,21 @@ router.get("/goodsAnalysis", async ctx => {
   const goodsAnalysis = await GoodsService.analysis();
   // 返回结果
   ctx.response.status = 200;
-  ctx.body = res.json([
-    { title: "商品数", value: goodsAnalysis.stockGoodsNum },
-    { title: "库存总量", value: goodsAnalysis.stockAllNum },
-    { title: "库存总值", value: goodsAnalysis.stockAllValue },
-    { title: "库存总成本", value: goodsAnalysis.stockOriginalValue }
-  ]);
+  ctx.body = res.json({
+    stockGoodsNum: { title: "商品数", value: goodsAnalysis.stockGoodsNum },
+    stockAllNum: { title: "库存总量", value: goodsAnalysis.stockAllNum },
+    stockAllValue: { title: "库存总值", value: goodsAnalysis.stockAllValue },
+    stockOriginalValue: {
+      title: "库存总成本",
+      value: goodsAnalysis.stockOriginalValue
+    },
+    list: [
+      { title: "商品数", value: goodsAnalysis.stockGoodsNum },
+      { title: "库存总量", value: goodsAnalysis.stockAllNum },
+      { title: "库存总值", value: goodsAnalysis.stockAllValue },
+      { title: "库存总成本", value: goodsAnalysis.stockOriginalValue }
+    ]
+  });
 });
 
 /**

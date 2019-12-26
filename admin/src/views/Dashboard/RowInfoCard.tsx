@@ -3,6 +3,8 @@ import { Row, Col, Card, Icon } from 'antd';
 import { CustomIconComponentProps } from 'antd/lib/icon';
 import { BoxSvg, EmpolyeesSvg, OrdersSvg, SalesSvg } from '@components/SvgIcon';
 import FormatterLocale from '@components/FormatterLocale';
+import { goodsAnalysis } from '@api/goods';
+import { ordersAnalysis } from '@api/orders';
 
 interface InfoCardProps {
   icon: React.ComponentType<CustomIconComponentProps>;
@@ -10,69 +12,105 @@ interface InfoCardProps {
   title: string;
   num: string | number;
   tipIcon: string;
-  index: string | number;
+  index?: string | number;
+}
+interface RowInfoCardStage {
+  details: InfoCardProps[];
 }
 
-const RowInfoCard: React.FC = () => {
-  const details = [
-    {
-      icon: BoxSvg,
-      tips: '65% lower growth',
-      title: 'Total Revenue',
-      num: '$65,650',
-      tipIcon: 'exclamation-circle'
-    },
-    {
-      icon: OrdersSvg,
-      tips: 'Product-wise sales',
-      title: 'Orders',
-      num: '3455',
-      tipIcon: 'shake'
-    },
-    {
-      icon: SalesSvg,
-      tips: 'Weekly Sales',
-      title: 'Sales',
-      num: '5693',
-      tipIcon: 'fund'
-    },
-    {
-      icon: EmpolyeesSvg,
-      tips: 'Product-wise sales',
-      title: 'Employees',
-      num: '246',
-      tipIcon: 'redo'
-    }
-  ];
-  const InfoCard = (props: InfoCardProps) => {
-    const { icon, tips, title, num, tipIcon, index } = props;
-    return (
-      <Card className="info-card fat-card" bordered={false} hoverable>
-        <div className="top">
-          <Icon component={icon} />
-          <div className="right-part">
-            <p className="title">
-              {<FormatterLocale id={`dashboard.rowInfo${index}.title`} defaultMessage={title} />}
-            </p>
-            <h3 className="num">{num}</h3>
-          </div>
-        </div>
-        <p className="mb-0 mt-3 text-muted">
-          <Icon type={tipIcon} className="mr-2" />
-          {<FormatterLocale id={`dashboard.rowInfo${index}.tips`} defaultMessage={tips} />}
-        </p>
-      </Card>
-    );
+class RowInfoCard extends React.Component<{}, RowInfoCardStage> {
+  state: RowInfoCardStage = {
+    details: [
+      {
+        icon: SalesSvg,
+        tips: '所有商品营业',
+        title: '营业额',
+        num: '￥0',
+        tipIcon: 'fund'
+      },
+      {
+        icon: OrdersSvg,
+        tips: '所有已售商品毛利',
+        title: '毛利',
+        num: '￥0',
+        tipIcon: 'shake'
+      },
+      {
+        icon: EmpolyeesSvg,
+        tips: '所有成交订单',
+        title: '订单量 ',
+        num: '0',
+        tipIcon: 'redo'
+      },
+      {
+        icon: BoxSvg,
+        tips: '剩余库存总额',
+        title: '库存额',
+        num: '￥0',
+        tipIcon: 'exclamation-circle'
+      }
+    ]
   };
-  return (
-    <Row gutter={24} className="rowInfo-card">
-      {details.map((dl, index) => (
-        <Col xl={6} lg={12} md={12} sm={24} xs={24} key={index} style={{ marginBottom: '24px' }}>
-          <InfoCard {...dl} index={index} />
-        </Col>
-      ))}
-    </Row>
-  );
-};
+
+  componentDidMount() {
+    let details = this.state.details;
+    ordersAnalysis().then((res: any) => {
+      let data = res.data.data;
+      details[0].num = '￥' + data.salesVolume.value;
+      details[1].num = '￥' + (data.salesVolume.value - data.originalVolume.value);
+      details[2].num = data.ordersAmount.value;
+      this.setState({
+        details: details
+      });
+    });
+    goodsAnalysis().then((res: any) => {
+      let data = res.data.data;
+      details[3].num = '￥' + data.stockAllValue.value;
+      this.setState({
+        details: details
+      });
+    });
+  }
+
+  render() {
+    const InfoCard = (props: InfoCardProps) => {
+      const { icon, tips, title, num, tipIcon, index } = props;
+      return (
+        <Card className="info-card fat-card" bordered={false} hoverable>
+          <div className="top">
+            <Icon component={icon} />
+            <div className="right-part">
+              <p className="title">{title}</p>
+              <h3 className="num">{num}</h3>
+            </div>
+          </div>
+          <p className="mb-0 mt-3 text-muted">
+            <Icon type={tipIcon} className="mr-2" />
+            {tips}
+          </p>
+        </Card>
+      );
+    };
+    return (
+      <Row gutter={24} className="rowInfo-card">
+        {this.state.details.map((dl, index) => {
+          return (
+            <Col
+              xl={6}
+              lg={12}
+              md={12}
+              sm={24}
+              xs={24}
+              key={index}
+              style={{ marginBottom: '24px' }}
+            >
+              <InfoCard {...dl} index={index} />
+            </Col>
+          );
+        })}
+      </Row>
+    );
+  }
+}
 
 export default RowInfoCard;

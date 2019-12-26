@@ -104,7 +104,7 @@
   color: #666;
 }
 .goodInfoSalesNumNumer {
-  color: #fb4491;
+  color: #f35a1e;
   font-weight: 600;
   font-size: 18px;
   padding-right: 5px;
@@ -115,4 +115,72 @@
 .paginationStyle {
   text-align: center;
   margin: 10px;
+}
+
+.dsCss {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 140px;
+}
+.dsCss2 {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 240px;
+}
+.dhsl {
+  display: block;
+  height: 40px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  width: 240px;
+}
+.AddOrder {
+  position: fixed;
+  right: 0;
+  width: 200px;
+  height: auto;
+  top: 50%;
+  transform: translate(0%, -50%);
+  z-index: 10;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.jdBtn {
+  text-align: center;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 10px;
+}
+.deleteIcon {
+  margin: 0 5px 0 10px;
+  color: red;
+  cursor: pointer;
+  margin-top: 1px;
+}
+.dbBtn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e8e8e8;
+  padding: 10px 16px;
+  text-align: right;
+  left: 0;
+  background: #fff;
+  border-radius: 0 0 4px 4px;
+}
+.zjCard {
+  text-align: right;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 20px;
+}
+.zhekou {
+  padding: 10px 10px 0;
+  border-top: 1px solid #e8e8e8;
 }

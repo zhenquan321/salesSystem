@@ -19,8 +19,7 @@ Orders.init(
       allowNull: false,
       comment: "流水号"
     },
-
-    order_amount: {
+    sales_amount: {
       type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0,
@@ -50,6 +49,13 @@ Orders.init(
       defaultValue: 0,
       comment: "销量商品详情"
     },
+    sale_goods_count: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      comment: "商品数量"
+    },
+
     order_status: {
       type: Sequelize.INTEGER,
       allowNull: false,
