@@ -1,6 +1,5 @@
 import React from 'react';
-import Result from '@components/Result';
-import { Button } from 'antd';
+import { Button, Result } from 'antd';
 import FormatterLocale from '@components/FormatterLocale';
 import StepFormStore from './formStore';
 import styles from './form.module.scss';
@@ -10,11 +9,7 @@ const Step3: React.FC = () => {
   const { initStep } = StepFormStore;
   return (
     <div className={styles.step}>
-      <Result
-        type="successed"
-        title="添加成功"
-        subtitle={<FormatterLocale id="step3.soon" defaultMessage="商品已成功添加" />}
-      />
+      <Result status="success" title="添加成功" subTitle="商品已成功添加" />,
       <div className={styles.buttonGroup}>
         <Button type="primary" onClick={initStep}>
           <FormatterLocale id="step3.oneMore" defaultMessage="再次添加" />
