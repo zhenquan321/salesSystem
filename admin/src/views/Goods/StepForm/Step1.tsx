@@ -99,18 +99,6 @@ const Step1: React.FC = () => {
             rules: [{ required: true, message: '请输入进货价格！' }]
           })(<Input placeholder="请输入进货价格" autoComplete="off" />)}
         </Form.Item>
-        {/* <Form.Item label="商品分类">
-          {getFieldDecorator('category', {
-            initialValue: '',
-            rules: [{ required: true, message: '请选择商品分类！' }]
-          })(
-            <Select placeholder="">
-              <Select.Option value="me">我呀</Select.Option>
-              <Select.Option value="noOne">谁也不说</Select.Option>
-            </Select>
-          )}
-        </Form.Item> */}
-
         <Form.Item label="上传封面" extra="">
           {getFieldDecorator('imageFile', {
             valuePropName: 'imageFile',
