@@ -1,5 +1,5 @@
 (window.webpackJsonp = window.webpackJsonp || []).push([
-  [34, 18, 70, 131],
+  [33, 18, 34, 70, 131],
   {
     1113: function(e, t, r) {
       var n = r(1229);
@@ -345,17 +345,17 @@
           F = void 0,
           E = void 0,
           w = void 0,
-          _ = void 0,
           O = void 0,
+          _ = void 0,
           M = void 0;
         c
           ? ((w = t),
             (M = n.height(w)),
-            (O = n.width(w)),
-            (_ = { left: n.scrollLeft(w), top: n.scrollTop(w) }),
-            (F = { left: p.left - _.left - u, top: p.top - _.top - l }),
-            (E = { left: p.left + v - (_.left + O) + d, top: p.top + h - (_.top + M) + f }),
-            (b = _))
+            (_ = n.width(w)),
+            (O = { left: n.scrollLeft(w), top: n.scrollTop(w) }),
+            (F = { left: p.left - O.left - u, top: p.top - O.top - l }),
+            (E = { left: p.left + v - (O.left + _) + d, top: p.top + h - (O.top + M) + f }),
+            (b = O))
           : ((y = n.offset(t)),
             (m = t.clientHeight),
             (g = t.clientWidth),
@@ -507,13 +507,13 @@
             }
         return n;
       }
-      function _(e) {
+      function O(e) {
         return null != e && e == e.window;
       }
-      var O = {};
+      var _ = {};
       function M(e, t, r) {
-        if (_(e)) return 'width' === t ? O.viewportWidth(e) : O.viewportHeight(e);
-        if (9 === e.nodeType) return 'width' === t ? O.docWidth(e) : O.docHeight(e);
+        if (O(e)) return 'width' === t ? _.viewportWidth(e) : _.viewportHeight(e);
+        if (9 === e.nodeType) return 'width' === t ? _.docWidth(e) : _.docHeight(e);
         var n = 'width' === t ? ['Left', 'Right'] : ['Top', 'Bottom'],
           i = 'width' === t ? e.offsetWidth : e.offsetHeight,
           o = (v(e), m(e)),
@@ -533,15 +533,15 @@
         return a + w(e, g.slice(r), n);
       }
       y(['Width', 'Height'], function(e) {
-        (O['doc' + e] = function(t) {
+        (_['doc' + e] = function(t) {
           var r = t.document;
           return Math.max(
             r.documentElement['scroll' + e],
             r.body['scroll' + e],
-            O['viewport' + e](r)
+            _['viewport' + e](r)
           );
         }),
-          (O['viewport' + e] = function(t) {
+          (_['viewport' + e] = function(t) {
             var r = 'client' + e,
               n = t.document,
               i = n.body,
@@ -549,8 +549,8 @@
             return ('CSS1Compat' === n.compatMode && o) || (i && i[r]) || o;
           });
       });
-      var N = { position: 'absolute', visibility: 'hidden', display: 'block' };
-      function S(e) {
+      var S = { position: 'absolute', visibility: 'hidden', display: 'block' };
+      function N(e) {
         var t = void 0,
           r = arguments;
         return (
@@ -562,7 +562,7 @@
                   o = void 0;
                 for (o in t) t.hasOwnProperty(o) && ((n[o] = i[o]), (i[o] = t[o]));
                 for (o in (r.call(e), t)) t.hasOwnProperty(o) && (i[o] = n[o]);
-              })(e, N, function() {
+              })(e, S, function() {
                 t = M.apply(void 0, r);
               }),
           t
@@ -578,12 +578,12 @@
       }
       y(['width', 'height'], function(e) {
         var t = e.charAt(0).toUpperCase() + e.slice(1);
-        O['outer' + t] = function(t, r) {
-          return t && S(t, e, r ? 0 : E);
+        _['outer' + t] = function(t, r) {
+          return t && N(t, e, r ? 0 : E);
         };
         var r = 'width' === e ? ['Left', 'Right'] : ['Top', 'Bottom'];
-        O[e] = function(t, n) {
-          if (void 0 === n) return t && S(t, e, b);
+        _[e] = function(t, n) {
+          if (void 0 === n) return t && N(t, e, b);
           if (t) {
             v(t);
             return m(t) && (n += w(t, ['padding', 'border'], r)), P(t, e, n);
@@ -609,7 +609,7 @@
                 P(e, n);
               })(e, t);
             },
-            isWindow: _,
+            isWindow: O,
             each: y,
             css: P,
             clone: function(e) {
@@ -620,7 +620,7 @@
               return t;
             },
             scrollLeft: function(e, t) {
-              if (_(e)) {
+              if (O(e)) {
                 if (void 0 === t) return a(e);
                 window.scrollTo(t, s(e));
               } else {
@@ -629,7 +629,7 @@
               }
             },
             scrollTop: function(e, t) {
-              if (_(e)) {
+              if (O(e)) {
                 if (void 0 === t) return s(e);
                 window.scrollTo(a(e), t);
               } else {
@@ -640,7 +640,7 @@
             viewportWidth: 0,
             viewportHeight: 0
           },
-          O
+          _
         ));
     },
     1245: function(e, t, r) {
@@ -1929,10 +1929,10 @@
                   );
                 }, {}),
                 w = this.state.checked,
-                _ = g()(r, n, (((e = {})[r + '-checked'] = w), (e[r + '-disabled'] = f), e));
+                O = g()(r, n, (((e = {})[r + '-checked'] = w), (e[r + '-disabled'] = f), e));
               return h.a.createElement(
                 'span',
-                { className: _, style: o },
+                { className: O, style: o },
                 h.a.createElement(
                   'input',
                   a()(
@@ -2038,7 +2038,7 @@
     },
     507: function(e, t) {
       e.exports = {
-        siteName: 'koa-mysql',
+        siteName: '\u5927\u836f\u623f',
         copyright: ['koa-mysql', '17600112486@163.com', 'https://github.com/zhenquan321'],
         menuLinkUrl: 'https://github.com/zhenquan321',
         logoPath: '/logo.png',
@@ -2273,11 +2273,11 @@
         F = r.n(b),
         E = r(353),
         w = r(1266),
-        _ = r.n(w),
-        O = r(496),
-        M = r.n(O),
-        N = r(503),
-        S = r.n(N),
+        O = r.n(w),
+        _ = r(496),
+        M = r.n(_),
+        S = r(503),
+        N = r.n(S),
         P = r(1116),
         j = r.n(P),
         x = r(142),
@@ -2942,7 +2942,7 @@
                 )
                   n(L(p) ? null : p, this.fieldsStore.getFieldsValue(a));
                 else {
-                  var h = new _.a(f);
+                  var h = new O.a(f);
                   r && h.messages(r),
                     h.validate(d, u, function(e) {
                       var t = i()({}, p);
@@ -2964,14 +2964,14 @@
                             var i = r.slice(e.length + 1);
                             return !!/^\d+$/.test(i) && ((n = e), !0);
                           });
-                          var i = S()(t, n);
+                          var i = N()(t, n);
                           ('object' !== typeof i || Array.isArray(i)) && j()(t, n, { errors: [] }),
-                            S()(t, n.concat('.errors')).push(e);
+                            N()(t, n.concat('.errors')).push(e);
                         });
                       var r = [],
                         s = {};
                       Object.keys(f).forEach(function(e) {
-                        var n = S()(t, e),
+                        var n = N()(t, e),
                           i = o.fieldsStore.getField(e);
                         V()(i.value, d[e])
                           ? ((i.errors = n && n.errors),
@@ -3190,7 +3190,7 @@
                     return new Promise(function() {
                       setTimeout(function() {
                         h.handleUserLogin(n, i).then(function(t) {
-                          t ? e.history.push('/dashboard') : (p(!1), e.handleError());
+                          t ? e.history.push('/sales') : (p(!1), e.handleError());
                         });
                       }, 800);
                     });
@@ -3244,12 +3244,7 @@
                   o.a.Item,
                   null,
                   y('remember', { valuePropName: 'checked', initialValue: !0 })(
-                    f.a.createElement(i.a, null, 'Remember me')
-                  ),
-                  f.a.createElement(
-                    'a',
-                    { className: 'login-form-forgot', href: '/login' },
-                    'Forgot password'
+                    f.a.createElement(i.a, null, '\u8bb0\u4f4f\u5bc6\u7801')
                   ),
                   f.a.createElement(
                     n.a,
@@ -3259,16 +3254,62 @@
                       className: 'login-form-button',
                       loading: d
                     },
-                    f.a.createElement('span', null, 'Log in')
-                  ),
-                  'Or ',
-                  f.a.createElement('a', { href: '/login' }, 'register now!')
+                    f.a.createElement('span', null, '\u767b\u5f55')
+                  )
                 )
               )
             )
           );
         })
       );
+    },
+    695: function(e, t, r) {
+      'use strict';
+      r.r(t);
+      r(1219);
+      var n = r(1220),
+        i = (r(1125), r(1126)),
+        o = r(99),
+        a = r(0),
+        s = r.n(a),
+        l = r(621);
+      r(1134), r(597);
+      t.default = function() {
+        var e = Object(a.useState)(!1),
+          t = Object(o.a)(e, 2),
+          r = t[0],
+          u = t[1],
+          f = Object(a.useState)(!1),
+          d = Object(o.a)(f, 2),
+          c = d[0],
+          p = d[1],
+          h = i.a.create({ name: 'login' })(l.default);
+        return s.a.createElement(
+          'div',
+          { className: 'login' },
+          r &&
+            s.a.createElement(
+              'div',
+              {
+                className: c ? 'animated shake' : '',
+                onAnimationEnd: function() {
+                  return p(!1);
+                }
+              },
+              s.a.createElement(n.a, {
+                message: '\u8d26\u6237\u6216\u8005\u5bc6\u7801\u9519\u8bef',
+                type: 'error',
+                showIcon: !0,
+                style: { marginBottom: '16px' }
+              })
+            ),
+          s.a.createElement(h, {
+            handleError: function() {
+              p(!0), u(!0);
+            }
+          })
+        );
+      };
     }
   }
 ]);

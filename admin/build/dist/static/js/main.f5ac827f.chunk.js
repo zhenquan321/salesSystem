@@ -48,12 +48,13 @@
           }
         ],
         o = [
-          { path: '/', exact: !0, redirect: '/dashboard', hideMenu: !0 },
+          { path: '/', exact: !0, redirect: '/sales', hideMenu: !0 },
           {
             name: '\u7edf\u8ba1\u770b\u677f',
             icon: 'pie-chart',
             path: '/dashboard',
-            component: ['/views/Dashboard']
+            component: ['/views/Dashboard'],
+            authority: ['admin']
           },
           {
             name: '\u552e\u8d27',
@@ -82,7 +83,8 @@
             name: '\u8ba2\u5355',
             icon: 'ordered-list',
             path: '/order',
-            component: ['/views/Order/list']
+            component: ['/views/Order/list'],
+            authority: ['admin']
           }
         ];
     },

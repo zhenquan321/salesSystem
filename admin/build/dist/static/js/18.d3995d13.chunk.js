@@ -3,7 +3,7 @@
   {
     507: function(e, o) {
       e.exports = {
-        siteName: 'koa-mysql',
+        siteName: '\u5927\u836f\u623f',
         copyright: ['koa-mysql', '17600112486@163.com', 'https://github.com/zhenquan321'],
         menuLinkUrl: 'https://github.com/zhenquan321',
         logoPath: '/logo.png',
