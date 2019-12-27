@@ -6,7 +6,7 @@ import request from '@utils/io';
 
 export function createOrders(ordersInfo) {
   return request.sendRequest('post', {
-    path: '/v1/orders',
+    path: '/api/v1/orders',
     params: ordersInfo
   });
 }
@@ -17,7 +17,7 @@ export function createOrders(ordersInfo) {
 
 export function deleteOrders(id) {
   return request.sendRequest('post', {
-    path: '/v1/orders/' + id
+    path: '/api/v1/orders/' + id
   });
 }
 
@@ -27,7 +27,7 @@ export function deleteOrders(id) {
 
 export function updateOrders(id, ordersInfo) {
   return request.sendRequest('post', {
-    path: '/v1/orders/' + id,
+    path: '/api/v1/orders/' + id,
     params: ordersInfo
   });
 }
@@ -36,7 +36,7 @@ export function updateOrders(id, ordersInfo) {
  * 获取商品列表
  */
 export function ordersList(searchData) {
-  return request.get('/v1/orders', {
+  return request.get('/api/v1/orders', {
     params: searchData
   });
 }
@@ -47,7 +47,7 @@ export function ordersList(searchData) {
 
 export function ordersDetail(id) {
   return request.sendRequest('get', {
-    path: '/v1/orders/' + id
+    path: '/api/v1/orders/' + id
   });
 }
 
@@ -57,6 +57,6 @@ export function ordersDetail(id) {
 
 export function ordersAnalysis() {
   return request.sendRequest('get', {
-    path: '/v1/ordersAnalysis'
+    path: '/api/v1/ordersAnalysis'
   });
 }

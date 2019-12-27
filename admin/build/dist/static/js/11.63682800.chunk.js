@@ -2371,19 +2371,19 @@
         });
       var r = n(141);
       function i(e) {
-        return r.default.sendRequest('post', { path: '/v1/goods', params: e });
+        return r.default.sendRequest('post', { path: '/api/v1/goods', params: e });
       }
       function a(e) {
-        return r.default.sendRequest('post', { path: '/v1/goods/' + e });
+        return r.default.sendRequest('post', { path: '/api/v1/goods/' + e });
       }
       function o(e, t) {
-        return r.default.sendRequest('post', { path: '/v1/goods/' + e, params: t });
+        return r.default.sendRequest('post', { path: '/api/v1/goods/' + e, params: t });
       }
       function s(e) {
-        return r.default.get('/v1/goods', { params: e });
+        return r.default.get('/api/v1/goods', { params: e });
       }
       function c(e) {
-        return r.default.sendRequest('get', { path: '/v1/goods/' + e });
+        return r.default.sendRequest('get', { path: '/api/v1/goods/' + e });
       }
       function l() {
         return r.default.sendRequest('get', { path: '/v1/goodsAnalysis' });

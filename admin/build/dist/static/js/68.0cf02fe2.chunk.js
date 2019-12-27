@@ -14,32 +14,32 @@
           return d;
         }),
         t.d(r, 'ordersList', function() {
-          return o;
+          return a;
         }),
         t.d(r, 'ordersDetail', function() {
-          return a;
+          return o;
         }),
         t.d(r, 'ordersAnalysis', function() {
           return i;
         });
       var n = t(141);
       function u(e) {
-        return n.default.sendRequest('post', { path: '/v1/orders', params: e });
+        return n.default.sendRequest('post', { path: '/api/v1/orders', params: e });
       }
       function s(e) {
-        return n.default.sendRequest('post', { path: '/v1/orders/' + e });
+        return n.default.sendRequest('post', { path: '/api/v1/orders/' + e });
       }
       function d(e, r) {
-        return n.default.sendRequest('post', { path: '/v1/orders/' + e, params: r });
-      }
-      function o(e) {
-        return n.default.get('/v1/orders', { params: e });
+        return n.default.sendRequest('post', { path: '/api/v1/orders/' + e, params: r });
       }
       function a(e) {
-        return n.default.sendRequest('get', { path: '/v1/orders/' + e });
+        return n.default.get('/api/v1/orders', { params: e });
+      }
+      function o(e) {
+        return n.default.sendRequest('get', { path: '/api/v1/orders/' + e });
       }
       function i() {
-        return n.default.sendRequest('get', { path: '/v1/ordersAnalysis' });
+        return n.default.sendRequest('get', { path: '/api/v1/ordersAnalysis' });
       }
     }
   }

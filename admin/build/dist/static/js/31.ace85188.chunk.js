@@ -6823,19 +6823,19 @@
         });
       var o = n(141);
       function r(e) {
-        return o.default.sendRequest('post', { path: '/v1/goods', params: e });
+        return o.default.sendRequest('post', { path: '/api/v1/goods', params: e });
       }
       function i(e) {
-        return o.default.sendRequest('post', { path: '/v1/goods/' + e });
+        return o.default.sendRequest('post', { path: '/api/v1/goods/' + e });
       }
       function a(e, t) {
-        return o.default.sendRequest('post', { path: '/v1/goods/' + e, params: t });
+        return o.default.sendRequest('post', { path: '/api/v1/goods/' + e, params: t });
       }
       function s(e) {
-        return o.default.get('/v1/goods', { params: e });
+        return o.default.get('/api/v1/goods', { params: e });
       }
       function l(e) {
-        return o.default.sendRequest('get', { path: '/v1/goods/' + e });
+        return o.default.sendRequest('get', { path: '/api/v1/goods/' + e });
       }
       function u() {
         return o.default.sendRequest('get', { path: '/v1/goodsAnalysis' });

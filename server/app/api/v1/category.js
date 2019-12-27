@@ -14,7 +14,7 @@ const res = new Resolve();
 const AUTH_ADMIN = 16;
 
 const router = new Router({
-  prefix: "/v1"
+  prefix: "/api/v1"
 });
 
 /**

@@ -1,5 +1,5 @@
 (window.webpackJsonp = window.webpackJsonp || []).push([
-  [10, 47, 66, 68, 125],
+  [47, 66, 68],
   {
     110: function(e, t, n) {
       var r = n(165),
@@ -16,7 +16,6 @@
       var r = n(1229);
       e.exports = new r();
     },
-    1147: function(e, t, n) {},
     1224: function(e, t, n) {
       'use strict';
       n.d(t, 'a', function() {
@@ -256,21 +255,6 @@
         i = '[object Symbol]';
       e.exports = function(e) {
         return 'symbol' == typeof e || (a(e) && r(e) == i);
-      };
-    },
-    262: function(e, t, n) {
-      'use strict';
-      n.r(t);
-      var r = n(0),
-        a = n.n(r),
-        i = n(605);
-      n(1147);
-      t.default = function() {
-        return a.a.createElement(
-          'div',
-          { className: 'dashboard' },
-          a.a.createElement(i.default, null)
-        );
       };
     },
     333: function(e, t, n) {
@@ -1624,19 +1608,19 @@
         });
       var r = n(141);
       function a(e) {
-        return r.default.sendRequest('post', { path: '/v1/goods', params: e });
+        return r.default.sendRequest('post', { path: '/api/v1/goods', params: e });
       }
       function i(e) {
-        return r.default.sendRequest('post', { path: '/v1/goods/' + e });
+        return r.default.sendRequest('post', { path: '/api/v1/goods/' + e });
       }
       function o(e, t) {
-        return r.default.sendRequest('post', { path: '/v1/goods/' + e, params: t });
+        return r.default.sendRequest('post', { path: '/api/v1/goods/' + e, params: t });
       }
       function s(e) {
-        return r.default.get('/v1/goods', { params: e });
+        return r.default.get('/api/v1/goods', { params: e });
       }
       function c(e) {
-        return r.default.sendRequest('get', { path: '/v1/goods/' + e });
+        return r.default.sendRequest('get', { path: '/api/v1/goods/' + e });
       }
       function l() {
         return r.default.sendRequest('get', { path: '/v1/goodsAnalysis' });
@@ -1665,22 +1649,22 @@
         });
       var r = n(141);
       function a(e) {
-        return r.default.sendRequest('post', { path: '/v1/orders', params: e });
+        return r.default.sendRequest('post', { path: '/api/v1/orders', params: e });
       }
       function i(e) {
-        return r.default.sendRequest('post', { path: '/v1/orders/' + e });
+        return r.default.sendRequest('post', { path: '/api/v1/orders/' + e });
       }
       function o(e, t) {
-        return r.default.sendRequest('post', { path: '/v1/orders/' + e, params: t });
+        return r.default.sendRequest('post', { path: '/api/v1/orders/' + e, params: t });
       }
       function s(e) {
-        return r.default.get('/v1/orders', { params: e });
+        return r.default.get('/api/v1/orders', { params: e });
       }
       function c(e) {
-        return r.default.sendRequest('get', { path: '/v1/orders/' + e });
+        return r.default.sendRequest('get', { path: '/api/v1/orders/' + e });
       }
       function l() {
-        return r.default.sendRequest('get', { path: '/v1/ordersAnalysis' });
+        return r.default.sendRequest('get', { path: '/api/v1/ordersAnalysis' });
       }
     },
     60: function(e, t) {

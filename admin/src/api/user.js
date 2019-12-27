@@ -37,7 +37,7 @@ Mock.mock('/get/userInfo', userInfo);
 
 export function postLogin(userName, password) {
   return request.sendRequest('post', {
-    path: '/v1/admin/login',
+    path: '/api/v1/admin/login',
     params: {
       email: userName,
       password
@@ -47,6 +47,6 @@ export function postLogin(userName, password) {
 
 export function getUserInfo() {
   return request.sendRequest('get', {
-    path: '/get/userInfo'
+    path: '/api/get/userInfo'
   });
 }

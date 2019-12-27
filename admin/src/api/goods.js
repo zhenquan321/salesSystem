@@ -6,7 +6,7 @@ import request from '@utils/io';
 
 export function createGoods(goodsInfo) {
   return request.sendRequest('post', {
-    path: '/v1/goods',
+    path: '/api/v1/goods',
     params: goodsInfo
   });
 }
@@ -17,7 +17,7 @@ export function createGoods(goodsInfo) {
 
 export function deleteGoods(id) {
   return request.sendRequest('post', {
-    path: '/v1/goods/' + id
+    path: '/api/v1/goods/' + id
   });
 }
 
@@ -27,7 +27,7 @@ export function deleteGoods(id) {
 
 export function updateGoods(id, goodsInfo) {
   return request.sendRequest('post', {
-    path: '/v1/goods/' + id,
+    path: '/api/v1/goods/' + id,
     params: goodsInfo
   });
 }
@@ -36,7 +36,7 @@ export function updateGoods(id, goodsInfo) {
  * 获取商品列表
  */
 export function goodsList(searchData) {
-  return request.get('/v1/goods', {
+  return request.get('/api/v1/goods', {
     params: searchData
   });
 }
@@ -47,7 +47,7 @@ export function goodsList(searchData) {
 
 export function goodsDetail(id) {
   return request.sendRequest('get', {
-    path: '/v1/goods/' + id
+    path: '/api/v1/goods/' + id
   });
 }
 

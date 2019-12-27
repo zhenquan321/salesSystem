@@ -24,19 +24,19 @@
         });
       var o = e(141);
       function u(t) {
-        return o.default.sendRequest('post', { path: '/v1/goods', params: t });
+        return o.default.sendRequest('post', { path: '/api/v1/goods', params: t });
       }
       function s(t) {
-        return o.default.sendRequest('post', { path: '/v1/goods/' + t });
+        return o.default.sendRequest('post', { path: '/api/v1/goods/' + t });
       }
       function d(t, n) {
-        return o.default.sendRequest('post', { path: '/v1/goods/' + t, params: n });
+        return o.default.sendRequest('post', { path: '/api/v1/goods/' + t, params: n });
       }
       function r(t) {
-        return o.default.get('/v1/goods', { params: t });
+        return o.default.get('/api/v1/goods', { params: t });
       }
       function a(t) {
-        return o.default.sendRequest('get', { path: '/v1/goods/' + t });
+        return o.default.sendRequest('get', { path: '/api/v1/goods/' + t });
       }
       function i() {
         return o.default.sendRequest('get', { path: '/v1/goodsAnalysis' });

@@ -19,7 +19,7 @@ class Request {
   instance;
   host;
   constructor() {
-    this.host = window.location.hostname == 'p.fengzq.cn' ? 'http://106.12.28.41:3000' : '';
+    this.host = '';
     this.instance = Axios.create();
     this.initInterceptors();
   }

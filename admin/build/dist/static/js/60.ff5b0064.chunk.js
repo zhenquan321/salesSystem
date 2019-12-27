@@ -72,19 +72,19 @@
         });
       var i = n(141);
       function a(t) {
-        return i.default.sendRequest('post', { path: '/v1/goods', params: t });
+        return i.default.sendRequest('post', { path: '/api/v1/goods', params: t });
       }
       function r(t) {
-        return i.default.sendRequest('post', { path: '/v1/goods/' + t });
+        return i.default.sendRequest('post', { path: '/api/v1/goods/' + t });
       }
       function o(t, e) {
-        return i.default.sendRequest('post', { path: '/v1/goods/' + t, params: e });
+        return i.default.sendRequest('post', { path: '/api/v1/goods/' + t, params: e });
       }
       function l(t) {
-        return i.default.get('/v1/goods', { params: t });
+        return i.default.get('/api/v1/goods', { params: t });
       }
       function m(t) {
-        return i.default.sendRequest('get', { path: '/v1/goods/' + t });
+        return i.default.sendRequest('get', { path: '/api/v1/goods/' + t });
       }
       function d() {
         return i.default.sendRequest('get', { path: '/v1/goodsAnalysis' });
@@ -101,8 +101,8 @@
         m,
         d,
         g = n(32),
-        s = n(51),
-        p = n(52),
+        p = n(51),
+        s = n(52),
         u = n(21),
         c = (n(176), n(7)),
         f = n(0),
@@ -112,7 +112,7 @@
       var y = new ((i = (function() {
         function t() {
           var e = this;
-          Object(s.a)(this, t),
+          Object(p.a)(this, t),
             Object(g.a)(this, 'current', a, this),
             Object(g.a)(this, 'submitting', r, this),
             Object(g.a)(this, 'data', o, this),
@@ -152,7 +152,7 @@
             ]);
         }
         return (
-          Object(p.a)(t, [
+          Object(s.a)(t, [
             {
               key: 'nextStep',
               value: function() {
@@ -275,7 +275,7 @@
         m = n(511),
         d = n(1117),
         g = n.n(d),
-        s = n(243);
+        p = n(243);
       e.default = function() {
         var t = m.default.initStep;
         return o.a.createElement(
@@ -299,7 +299,7 @@
               })
             ),
             o.a.createElement(
-              s.b,
+              p.b,
               { to: '/form/goodsList', replace: !0 },
               o.a.createElement(
                 i.a,

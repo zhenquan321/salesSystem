@@ -24,19 +24,19 @@
         });
       var i = n(141);
       function r(t) {
-        return i.default.sendRequest('post', { path: '/v1/goods', params: t });
+        return i.default.sendRequest('post', { path: '/api/v1/goods', params: t });
       }
       function o(t) {
-        return i.default.sendRequest('post', { path: '/v1/goods/' + t });
+        return i.default.sendRequest('post', { path: '/api/v1/goods/' + t });
       }
       function a(t, e) {
-        return i.default.sendRequest('post', { path: '/v1/goods/' + t, params: e });
+        return i.default.sendRequest('post', { path: '/api/v1/goods/' + t, params: e });
       }
       function u(t) {
-        return i.default.get('/v1/goods', { params: t });
+        return i.default.get('/api/v1/goods', { params: t });
       }
       function s(t) {
-        return i.default.sendRequest('get', { path: '/v1/goods/' + t });
+        return i.default.sendRequest('get', { path: '/api/v1/goods/' + t });
       }
       function c() {
         return i.default.sendRequest('get', { path: '/v1/goodsAnalysis' });
@@ -52,8 +52,8 @@
         u,
         s,
         c,
-        l = n(32),
-        p = n(51),
+        p = n(32),
+        l = n(51),
         d = n(52),
         f = n(21),
         b = (n(176), n(7)),
@@ -64,17 +64,17 @@
       var O = new ((i = (function() {
         function t() {
           var e = this;
-          Object(p.a)(this, t),
-            Object(l.a)(this, 'current', r, this),
-            Object(l.a)(this, 'submitting', o, this),
-            Object(l.a)(this, 'data', a, this),
+          Object(l.a)(this, t),
+            Object(p.a)(this, 'current', r, this),
+            Object(p.a)(this, 'submitting', o, this),
+            Object(p.a)(this, 'data', a, this),
             (this.steps = void 0),
             (this.getStepChild = function() {
               return e.steps[e.current].component;
             }),
-            Object(l.a)(this, 'initStep', u, this),
-            Object(l.a)(this, 'onPrev', s, this),
-            Object(l.a)(this, 'onSubmit', c, this),
+            Object(p.a)(this, 'initStep', u, this),
+            Object(p.a)(this, 'onPrev', s, this),
+            Object(p.a)(this, 'onSubmit', c, this),
             (this.steps = [
               {
                 id: 'form.stepTitle1',

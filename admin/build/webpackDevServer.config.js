@@ -26,12 +26,12 @@ module.exports = function(proxy) {
     //   disableDotRule: true
     // },
     proxy: {
-      '/v1': {
+      '/api': {
         target: 'http://localhost:3000/',
         changeOrigin: true,
         secure: true,
         pathRewrite: {
-          '/v1': '/v1'
+          '/api': '/api'
         }
       }
     }

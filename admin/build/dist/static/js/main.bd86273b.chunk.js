@@ -401,8 +401,7 @@
                 }
                 return Promise.reject(e);
               }),
-              (this.host =
-                'p.fengzq.cn' == window.location.hostname ? 'http://106.12.28.41:3000' : ''),
+              (this.host = ''),
               (this.instance = c.a.create()),
               this.initInterceptors();
           }
@@ -1060,12 +1059,12 @@
         });
       function i(e, t) {
         return s.default.sendRequest('post', {
-          path: '/v1/admin/login',
+          path: '/api/v1/admin/login',
           params: { email: e, password: t }
         });
       }
       function c() {
-        return s.default.sendRequest('get', { path: '/get/userInfo' });
+        return s.default.sendRequest('get', { path: '/api/get/userInfo' });
       }
       a.a.mock('/api/admin/login', function(e) {
         var t = JSON.parse(e.body).params,
