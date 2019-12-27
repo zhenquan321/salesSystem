@@ -1,6 +1,6 @@
 // @ts-ignore
 module.exports = {
-  siteName: 'koa-mysql',
+  siteName: '大药房',
   copyright: ['koa-mysql', '17600112486@163.com', 'https://github.com/zhenquan321'],
   menuLinkUrl: 'https://github.com/zhenquan321',
   logoPath: '/logo.png',

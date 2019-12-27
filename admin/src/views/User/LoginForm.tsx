@@ -29,7 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = props => {
   };
 
   const handleSuccess = () => {
-    props.history.push('/dashboard');
+    props.history.push('/sales');
   };
 
   const { userStore } = injected();
@@ -91,19 +91,19 @@ const LoginForm: React.FC<LoginFormProps> = props => {
             {getFieldDecorator('remember', {
               valuePropName: 'checked',
               initialValue: true
-            })(<Checkbox>Remember me</Checkbox>)}
-            <a className="login-form-forgot" href="/login">
+            })(<Checkbox>记住密码</Checkbox>)}
+            {/* <a className="login-form-forgot" href="/login">
               Forgot password
-            </a>
+            </a> */}
             <Button
               type="primary"
               htmlType="submit"
               className="login-form-button"
               loading={loading}
             >
-              <span>Log in</span>
+              <span>登录</span>
             </Button>
-            Or <a href="/login">register now!</a>
+            {/* Or <a href="/login">register now!</a> */}
           </Form.Item>
         </Form>
       </div>

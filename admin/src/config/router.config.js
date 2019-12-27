@@ -35,21 +35,21 @@ export const asyncRouteConfig = [
   {
     path: '/',
     exact: true,
-    redirect: '/dashboard',
+    redirect: '/sales',
     hideMenu: true
   },
   {
     name: '统计看板',
     icon: 'pie-chart',
     path: '/dashboard',
-    component: ['/views/Dashboard']
+    component: ['/views/Dashboard'],
+    authority: ['admin']
   },
   {
     name: '售货',
     icon: 'shop',
     path: '/sales',
     component: ['/views/Sales/goodsList']
-    // authority: ['admin']
   },
 
   {
@@ -73,7 +73,8 @@ export const asyncRouteConfig = [
     name: '订单',
     icon: 'ordered-list',
     path: '/order',
-    component: ['/views/Order/list']
+    component: ['/views/Order/list'],
+    authority: ['admin']
     // routes: [
     //   {
     //     name: '订单列表',
