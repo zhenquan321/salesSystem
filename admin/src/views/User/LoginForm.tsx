@@ -41,15 +41,18 @@ const LoginForm: React.FC<LoginFormProps> = props => {
         setLoading(true);
         const { userName, password } = props.form.getFieldsValue(['userName', 'password']);
         return new Promise(() => {
-          setTimeout(() => {
-            userStore.handleUserLogin(userName, password).then(res => {
+          userStore
+            .handleUserLogin(userName, password)
+            .then(res => {
               if (res) {
                 handleSuccess();
               } else {
                 handleError();
               }
+            })
+            .catch(() => {
+              handleError();
             });
-          }, 800);
         });
       }
     });

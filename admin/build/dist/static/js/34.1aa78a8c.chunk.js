@@ -1,5 +1,5 @@
 (window.webpackJsonp = window.webpackJsonp || []).push([
-  [33, 18, 34, 70, 131],
+  [34, 18, 70, 131],
   {
     1113: function(e, t, r) {
       var n = r(1229);
@@ -345,17 +345,17 @@
           F = void 0,
           E = void 0,
           w = void 0,
-          O = void 0,
           _ = void 0,
+          O = void 0,
           M = void 0;
         c
           ? ((w = t),
             (M = n.height(w)),
-            (_ = n.width(w)),
-            (O = { left: n.scrollLeft(w), top: n.scrollTop(w) }),
-            (F = { left: p.left - O.left - u, top: p.top - O.top - l }),
-            (E = { left: p.left + v - (O.left + _) + d, top: p.top + h - (O.top + M) + f }),
-            (b = O))
+            (O = n.width(w)),
+            (_ = { left: n.scrollLeft(w), top: n.scrollTop(w) }),
+            (F = { left: p.left - _.left - u, top: p.top - _.top - l }),
+            (E = { left: p.left + v - (_.left + O) + d, top: p.top + h - (_.top + M) + f }),
+            (b = _))
           : ((y = n.offset(t)),
             (m = t.clientHeight),
             (g = t.clientWidth),
@@ -507,13 +507,13 @@
             }
         return n;
       }
-      function O(e) {
+      function _(e) {
         return null != e && e == e.window;
       }
-      var _ = {};
+      var O = {};
       function M(e, t, r) {
-        if (O(e)) return 'width' === t ? _.viewportWidth(e) : _.viewportHeight(e);
-        if (9 === e.nodeType) return 'width' === t ? _.docWidth(e) : _.docHeight(e);
+        if (_(e)) return 'width' === t ? O.viewportWidth(e) : O.viewportHeight(e);
+        if (9 === e.nodeType) return 'width' === t ? O.docWidth(e) : O.docHeight(e);
         var n = 'width' === t ? ['Left', 'Right'] : ['Top', 'Bottom'],
           i = 'width' === t ? e.offsetWidth : e.offsetHeight,
           o = (v(e), m(e)),
@@ -533,15 +533,15 @@
         return a + w(e, g.slice(r), n);
       }
       y(['Width', 'Height'], function(e) {
-        (_['doc' + e] = function(t) {
+        (O['doc' + e] = function(t) {
           var r = t.document;
           return Math.max(
             r.documentElement['scroll' + e],
             r.body['scroll' + e],
-            _['viewport' + e](r)
+            O['viewport' + e](r)
           );
         }),
-          (_['viewport' + e] = function(t) {
+          (O['viewport' + e] = function(t) {
             var r = 'client' + e,
               n = t.document,
               i = n.body,
@@ -578,11 +578,11 @@
       }
       y(['width', 'height'], function(e) {
         var t = e.charAt(0).toUpperCase() + e.slice(1);
-        _['outer' + t] = function(t, r) {
+        O['outer' + t] = function(t, r) {
           return t && N(t, e, r ? 0 : E);
         };
         var r = 'width' === e ? ['Left', 'Right'] : ['Top', 'Bottom'];
-        _[e] = function(t, n) {
+        O[e] = function(t, n) {
           if (void 0 === n) return t && N(t, e, b);
           if (t) {
             v(t);
@@ -609,7 +609,7 @@
                 P(e, n);
               })(e, t);
             },
-            isWindow: O,
+            isWindow: _,
             each: y,
             css: P,
             clone: function(e) {
@@ -620,7 +620,7 @@
               return t;
             },
             scrollLeft: function(e, t) {
-              if (O(e)) {
+              if (_(e)) {
                 if (void 0 === t) return a(e);
                 window.scrollTo(t, s(e));
               } else {
@@ -629,7 +629,7 @@
               }
             },
             scrollTop: function(e, t) {
-              if (O(e)) {
+              if (_(e)) {
                 if (void 0 === t) return s(e);
                 window.scrollTo(a(e), t);
               } else {
@@ -640,7 +640,7 @@
             viewportWidth: 0,
             viewportHeight: 0
           },
-          _
+          O
         ));
     },
     1245: function(e, t, r) {
@@ -1929,10 +1929,10 @@
                   );
                 }, {}),
                 w = this.state.checked,
-                O = g()(r, n, (((e = {})[r + '-checked'] = w), (e[r + '-disabled'] = f), e));
+                _ = g()(r, n, (((e = {})[r + '-checked'] = w), (e[r + '-disabled'] = f), e));
               return h.a.createElement(
                 'span',
-                { className: O, style: o },
+                { className: _, style: o },
                 h.a.createElement(
                   'input',
                   a()(
@@ -2273,9 +2273,9 @@
         F = r.n(b),
         E = r(353),
         w = r(1266),
-        O = r.n(w),
-        _ = r(496),
-        M = r.n(_),
+        _ = r.n(w),
+        O = r(496),
+        M = r.n(O),
         S = r(503),
         N = r.n(S),
         P = r(1116),
@@ -2942,7 +2942,7 @@
                 )
                   n(L(p) ? null : p, this.fieldsStore.getFieldsValue(a));
                 else {
-                  var h = new O.a(f);
+                  var h = new _.a(f);
                   r && h.messages(r),
                     h.validate(d, u, function(e) {
                       var t = i()({}, p);
@@ -3178,8 +3178,11 @@
             r = Object(l.a)(t, 2),
             d = r[0],
             p = r[1],
-            h = e.userStore,
-            v = function(t) {
+            h = function() {
+              p(!1), e.handleError();
+            },
+            v = e.userStore,
+            y = function(t) {
               t.preventDefault(),
                 e.form.validateFields(function(t) {
                   if (!t) {
@@ -3188,16 +3191,18 @@
                       n = r.userName,
                       i = r.password;
                     return new Promise(function() {
-                      setTimeout(function() {
-                        h.handleUserLogin(n, i).then(function(t) {
-                          t ? e.history.push('/sales') : (p(!1), e.handleError());
+                      v.handleUserLogin(n, i)
+                        .then(function(t) {
+                          t ? e.history.push('/sales') : h();
+                        })
+                        .catch(function() {
+                          h();
                         });
-                      }, 800);
                     });
                   }
                 });
             },
-            y = e.form.getFieldDecorator;
+            m = e.form.getFieldDecorator;
           return f.a.createElement(
             u.Fragment,
             null,
@@ -3209,14 +3214,14 @@
                 o.a,
                 {
                   onSubmit: function(e) {
-                    return v(e);
+                    return y(e);
                   },
                   className: 'login-form'
                 },
                 f.a.createElement(
                   o.a.Item,
                   null,
-                  y('userName', {
+                  m('userName', {
                     rules: [{ required: !0, message: 'Please input your username!' }]
                   })(
                     f.a.createElement(a.a, {
@@ -3229,7 +3234,7 @@
                 f.a.createElement(
                   o.a.Item,
                   null,
-                  y('password', {
+                  m('password', {
                     rules: [{ required: !0, message: 'Please input your Password!' }]
                   })(
                     f.a.createElement(a.a, {
@@ -3243,7 +3248,7 @@
                 f.a.createElement(
                   o.a.Item,
                   null,
-                  y('remember', { valuePropName: 'checked', initialValue: !0 })(
+                  m('remember', { valuePropName: 'checked', initialValue: !0 })(
                     f.a.createElement(i.a, null, '\u8bb0\u4f4f\u5bc6\u7801')
                   ),
                   f.a.createElement(
@@ -3262,54 +3267,6 @@
           );
         })
       );
-    },
-    695: function(e, t, r) {
-      'use strict';
-      r.r(t);
-      r(1219);
-      var n = r(1220),
-        i = (r(1125), r(1126)),
-        o = r(99),
-        a = r(0),
-        s = r.n(a),
-        l = r(621);
-      r(1134), r(597);
-      t.default = function() {
-        var e = Object(a.useState)(!1),
-          t = Object(o.a)(e, 2),
-          r = t[0],
-          u = t[1],
-          f = Object(a.useState)(!1),
-          d = Object(o.a)(f, 2),
-          c = d[0],
-          p = d[1],
-          h = i.a.create({ name: 'login' })(l.default);
-        return s.a.createElement(
-          'div',
-          { className: 'login' },
-          r &&
-            s.a.createElement(
-              'div',
-              {
-                className: c ? 'animated shake' : '',
-                onAnimationEnd: function() {
-                  return p(!1);
-                }
-              },
-              s.a.createElement(n.a, {
-                message: '\u8d26\u6237\u6216\u8005\u5bc6\u7801\u9519\u8bef',
-                type: 'error',
-                showIcon: !0,
-                style: { marginBottom: '16px' }
-              })
-            ),
-          s.a.createElement(h, {
-            handleError: function() {
-              p(!0), u(!0);
-            }
-          })
-        );
-      };
     }
   }
 ]);
