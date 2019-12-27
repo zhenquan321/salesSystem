@@ -89,8 +89,8 @@ class GoodsService {
     }
     const goods = await Goods.findAndCountAll({
       //
-      limit: pageSize, //每页10条
-      offset: (page - 1) * pageSize,
+      limit: Number(pageSize), //每页10条
+      offset: (page - 1) * Number(pageSize),
       where: filter,
       order: [[desc, "DESC"]]
       // 查询每个商品下关联的分类
@@ -110,7 +110,7 @@ class GoodsService {
       // 分页
       meta: {
         current_page: parseInt(page),
-        per_page: 10,
+        per_page: Number(pageSize),
         count: goods.count,
         total: goods.count,
         total_pages: Math.ceil(goods.count / 10)

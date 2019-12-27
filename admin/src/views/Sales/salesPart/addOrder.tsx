@@ -13,12 +13,12 @@ import {
   notification
 } from 'antd';
 import { createOrders } from '@api/orders';
-import { getContact } from '@api/platform';
 import styles from '../list.module.scss';
 import { Link } from 'react-router-dom';
+import salesStore from '../salesStore';
+import { observer } from 'mobx-react';
 
 interface State {
-  list: any[];
   visible: boolean;
   zkJe: number;
   orderInfo: {
@@ -32,10 +32,9 @@ interface State {
     Remarks: string;
   };
 }
-interface Props {
-  goodList: any[];
-}
+interface Props {}
 
+@observer
 class AddOrder extends React.Component<Props, State> {
   state = {
     visible: false,
@@ -49,39 +48,10 @@ class AddOrder extends React.Component<Props, State> {
       sale_goods_count: 0,
       order_status: 1,
       Remarks: ''
-    },
-    list: [
-      {
-        created_at: '2019-12-24',
-        id: 6,
-        good_name: '爱仕达无大无大大所大无',
-        image_file: 'http://localhost:3000/uploadResources/1577196769611_WechatIMG62.jpeg',
-        price: 12,
-        original_price: 12,
-        sales_num: 0,
-        stock_num: 12,
-        spec: '盒',
-        sales_num_now: 1,
-        dec:
-          '爱我打算打算打算打算打打流口水都爱过四大皆空山豆根ASDO奥古斯丁OASGD偶啊施工队LaS阿苏好的oASisDAL D AWDAWDAWDASDAWWFAFQWA我打打女',
-        updated_at: '2019-12-24T14:12:55.000Z',
-        deleted_at: null
-      }
-    ]
+    }
   };
 
-  componentWillReceiveProps(prevProps: any) {
-    if (prevProps.goodList !== this.state.list) {
-      this.setState({
-        list: prevProps.goodList
-      });
-    }
-  }
-
   componentDidMount() {
-    this.setState({
-      list: this.props.goodList
-    });
     this.initData();
   }
 
@@ -90,33 +60,30 @@ class AddOrder extends React.Component<Props, State> {
   createOrders = () => {
     createOrders(this.state.orderInfo)
       .then((res: any) => {
-        console.log(res);
-        this.onClose();
         this.openNotification();
+        salesStore.settlementFun(false);
+        salesStore.clearGoods();
       })
       .catch((res: any) => {
         console.log(res);
       });
   };
 
-  onChange(value: any) {}
+  onChange(value: any) {
+    console.log(value);
+  }
+
   showDrawer = () => {
-    this.setState({
-      visible: true
-    });
+    salesStore.settlementFun(true);
     this.allSalesFun();
   };
-  onClose = () => {
-    this.setState({
-      visible: false
-    });
-  };
+
   allSalesFun = () => {
     let orderInfo = this.state.orderInfo;
     orderInfo.sales_amount = 0;
     orderInfo.orders_amount = 0;
     orderInfo.original_amount = 0;
-    let list = this.state.list;
+    let list = salesStore.goodsList;
     for (let i = 0; i < list.length; i++) {
       orderInfo.orders_amount += list[i].price * list[i].sales_num_now;
       orderInfo.original_amount += list[i].original_price * list[i].sales_num_now;
@@ -149,31 +116,34 @@ class AddOrder extends React.Component<Props, State> {
     });
   };
   render() {
-    let { list, orderInfo } = this.state;
-
+    let { orderInfo } = this.state;
+    let { goodsList, addGoods, delGoods, settlementNow, settlementFun } = salesStore;
     return (
       <div>
         <div className={styles.AddOrder}>
           <List
             itemLayout="horizontal"
-            dataSource={list}
+            className={styles.ovfAut}
+            dataSource={goodsList}
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.image_file} />}
+                  avatar={<Avatar style={{ marginRight: '-5px' }} src={item.image_file} />}
                   title={<a className={styles.dsCss}>{item.good_name}</a>}
                   description={
                     <div>
                       数量：
-                      <InputNumber
+                      <Input
                         style={{ width: '50px' }}
                         size="small"
-                        min={1}
-                        max={100000}
                         value={item.sales_num_now}
                         onChange={this.onChange.bind(this)}
                       />
-                      <Icon className={styles.deleteIcon} type="close-circle" />
+                      <Icon
+                        className={styles.deleteIcon}
+                        onClick={delGoods.bind(this, item, 'all')}
+                        type="close-circle"
+                      />
                     </div>
                   }
                 />
@@ -188,8 +158,7 @@ class AddOrder extends React.Component<Props, State> {
               icon="money-collect"
               onClick={this.showDrawer}
             >
-              {' '}
-              结算{' '}
+              结算
             </Button>
           </div>
         </div>
@@ -197,13 +166,13 @@ class AddOrder extends React.Component<Props, State> {
           title="订单结算"
           width={520}
           closable={false}
-          onClose={this.onClose}
-          visible={this.state.visible}
+          onClose={settlementFun.bind(this, false)}
+          visible={settlementNow}
         >
           <div className="jsCard">
             <List
               itemLayout="horizontal"
-              dataSource={list}
+              dataSource={goodsList}
               renderItem={item => (
                 <List.Item>
                   <List.Item.Meta
@@ -220,15 +189,17 @@ class AddOrder extends React.Component<Props, State> {
                     </div>
                     <div>
                       数量：
-                      <InputNumber
+                      <Input
                         style={{ width: '50px' }}
                         size="small"
-                        min={1}
-                        max={100000}
                         value={item.sales_num_now}
                         onChange={this.onChange.bind(this)}
                       />
-                      <Icon className={styles.deleteIcon} type="close-circle" />
+                      <Icon
+                        className={styles.deleteIcon}
+                        onClick={delGoods.bind(this, item, 'all')}
+                        type="close-circle"
+                      />
                     </div>
                   </div>
                 </List.Item>
@@ -253,7 +224,7 @@ class AddOrder extends React.Component<Props, State> {
               style={{
                 marginRight: 8
               }}
-              onClick={this.onClose}
+              onClick={settlementFun.bind(this, false)}
             >
               取消
             </Button>

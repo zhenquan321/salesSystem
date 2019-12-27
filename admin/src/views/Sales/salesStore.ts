@@ -1,51 +1,47 @@
 import { observable, configure, action } from 'mobx';
 import React from 'react';
-import { createGoods } from '@api/goods';
+import { createOrders } from '@api/orders';
 
 configure({ enforceActions: 'always' });
 
-interface StepObj {
-  id: string;
-  title: string;
-  component: any;
-}
-
-interface StepData {
-  goodName: string;
-  imageFile: string;
-  price: number;
-  originalPrice: number;
-  stockNum: number;
-  spec: string;
-  dec: string;
-}
-
 class SalesStore {
-  @observable data: StepData = {
-    goodName: '',
-    imageFile: '',
-    price: 0,
-    originalPrice: 0,
-    stockNum: 0,
-    spec: '',
-    dec: ''
+  @observable goodsList: any[] = [];
+  @observable settlementNow: boolean = false;
+  constructor() {}
+
+  @action settlementFun = (type: boolean) => {
+    this.settlementNow = type;
   };
-  steps: Array<StepObj>;
-
-  constructor() {
-    this.steps = [];
-  }
-
-  @action onSubmit = (): void => {
-    let goodsData = JSON.parse(JSON.stringify(this.data));
-    createGoods(goodsData)
-      .then((res: any) => {
-        console.log(res.data);
-        const { code, data } = res.data;
-        if (code === 200) {
+  @action addGoods = (good: any): void => {
+    good.sales_num_now = 1;
+    let goodList: any[] = JSON.parse(JSON.stringify(this.goodsList));
+    let included = false;
+    for (let i = 0; i < goodList.length; i++) {
+      if (good.id == goodList[i].id) {
+        goodList[i].sales_num_now = goodList[i].sales_num_now + 1;
+        included = true;
+      }
+    }
+    if (!included) {
+      goodList.push(good);
+    }
+    this.goodsList = goodList;
+  };
+  @action delGoods = (good: any, type?: string): void => {
+    let goodList: any[] = JSON.parse(JSON.stringify(this.goodsList));
+    for (let i = 0; i < goodList.length; i++) {
+      if (good.id == goodList[i].id) {
+        if (!(type && type == 'all') && goodList[i].sales_num_now > 1) {
+          goodList[i].sales_num_now--;
+        } else {
+          goodList.splice(i, 1);
         }
-      })
-      .catch(() => {});
+      }
+    }
+    this.goodsList = goodList;
+  };
+  @action clearGoods = (): void => {
+    this.goodsList = [];
   };
 }
 

@@ -3,28 +3,32 @@ import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
 import { Icon, Card, List, Button, Pagination, Input, Avatar } from 'antd';
 import { goodsList } from '@api/goods';
-
 import AddOrder from './salesPart/addOrder';
 import styles from './list.module.scss';
+import { observable, observe } from 'mobx';
 const Search = Input.Search;
+
+import salesStore from './salesStore';
+import { observer } from 'mobx-react';
 
 interface CardListState {
   list: any[];
   meta: any;
-  addGoodsList: any[];
   searchData: {
     keyword: string;
     page: number;
+    pageSize: number;
   };
 }
 
+@observer
 class CardList extends React.Component<{}, CardListState> {
   state = {
     list: [],
-    addGoodsList: [],
     searchData: {
       keyword: '',
-      page: 1
+      page: 1,
+      pageSize: 12
     },
     meta: {
       current_page: 1,
@@ -68,27 +72,14 @@ class CardList extends React.Component<{}, CardListState> {
     });
     this.initData();
   }
-
-  addGoods = (good: any) => {
-    good.sales_num_now = 1;
-    let goodList: any[] = JSON.parse(JSON.stringify(this.state.addGoodsList));
-    let included = false;
-    for (let i = 0; i < goodList.length; i++) {
-      if (good.id == goodList[i].id) {
-        goodList[i].sales_num_now = goodList[i].sales_num_now + 1;
-        included = true;
-      }
-    }
-    if (!included) {
-      goodList.push(good);
-    }
-    this.setState({
-      addGoodsList: goodList
-    });
+  jsNow = (data: any) => {
+    salesStore.addGoods(data);
+    salesStore.settlementFun(true);
   };
 
   render() {
-    const { list, meta, addGoodsList } = this.state;
+    const { list, meta } = this.state;
+    const { addGoods, goodsList } = salesStore;
 
     const ExtraContent = (
       <div className={styles.extraContent}>
@@ -116,8 +107,8 @@ class CardList extends React.Component<{}, CardListState> {
         extraContent={ExtraContent}
         // content={Content}
       >
-        <AddOrder goodList={addGoodsList}></AddOrder>
-        <div>
+        <AddOrder />
+        <div style={{ paddingRight: '180px' }}>
           <div className={styles.SearchBtn}>
             <Search
               placeholder="搜索商品列表"
@@ -141,6 +132,7 @@ class CardList extends React.Component<{}, CardListState> {
                     <Button
                       type="link"
                       key={item.id + 1}
+                      onClick={this.jsNow.bind(this, item)}
                       style={{
                         fontSize: '15px',
                         fontWeight: 'bold',
@@ -153,7 +145,7 @@ class CardList extends React.Component<{}, CardListState> {
                     <Button
                       type="link"
                       key={item.id + 2}
-                      onClick={this.addGoods.bind(this, item)}
+                      onClick={addGoods.bind(this, item)}
                       style={{
                         fontSize: '15px',
                         fontWeight: 'bold',
@@ -210,9 +202,10 @@ class CardList extends React.Component<{}, CardListState> {
           <div className={styles.paginationStyle}>
             <Pagination
               showQuickJumper
-              defaultCurrent={meta.per_page}
+              current={meta.current_page}
               total={meta.total}
-              onChange={this.onChange}
+              pageSize={meta.per_page}
+              onChange={this.onChange.bind(this)}
             />
           </div>
         </div>

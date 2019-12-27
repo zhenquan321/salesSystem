@@ -157,8 +157,9 @@ class ListTable extends React.Component<{}, ListTableState> {
           <div className={styles.paginationStyle}>
             <Pagination
               showQuickJumper
-              defaultCurrent={meta.per_page}
+              current={meta.current_page}
               total={meta.total}
+              pageSize={meta.per_page}
               onChange={this.onChange}
             />
           </div>

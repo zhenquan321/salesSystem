@@ -146,8 +146,9 @@ class BasicTable extends React.Component<{}, BasicTableState> {
           <div className={styles.paginationStyle}>
             <Pagination
               showQuickJumper
-              defaultCurrent={meta.per_page}
+              current={meta.current_page}
               total={meta.total}
+              pageSize={meta.per_page}
               onChange={this.onChange}
             />
           </div>
