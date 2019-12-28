@@ -82,6 +82,14 @@ class AddOrder extends React.Component<Props, State> {
   onChange(item: any, value: any) {
     let goods = JSON.parse(JSON.stringify(item));
     let sales_num_now = goods.sales_num_now;
+    if (value >= goods.stock_num) {
+      notification.error({
+        message: '库存不足',
+        duration: 5,
+        description: `库存仅剩余${goods.stock_num}${goods.spec}`
+      });
+      value = goods.stock_num;
+    }
     let num = value - sales_num_now;
     if (num > 0) {
       for (let a = 0; a < num; a++) {
@@ -142,7 +150,7 @@ class AddOrder extends React.Component<Props, State> {
     let { goodsList, addGoods, delGoods, settlementNow, settlementFun } = salesStore;
     return (
       <div>
-        <div className={styles.AddOrder}>
+        <div className="AddOrder">
           <List
             itemLayout="horizontal"
             className={styles.ovfAut}

@@ -46,7 +46,7 @@ class OrdersService {
 
     // 筛选方式：存在搜索关键字
     if (keyword) {
-      filter.orderName = {
+      filter.sale_goods = {
         [Op.like]: `%${keyword}%`
       };
     }

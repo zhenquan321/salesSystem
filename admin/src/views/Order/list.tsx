@@ -38,11 +38,12 @@ class BasicTable extends React.Component<{}, BasicTableState> {
     this.initData();
   }
   initData = () => {
-    ordersList().then((res: any) => {
+    ordersList(this.state.searchData).then((res: any) => {
       console.log(res.data.data.data);
       const data = res.data.data.data;
       this.setState({
-        olderList: data
+        olderList: data,
+        meta: res.data.data.meta
       });
     });
   };
@@ -53,6 +54,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
     this.setState({
       searchData: searchData
     });
+    this.initData();
   };
 
   onChange(pageNumber: number) {
@@ -68,7 +70,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
       <div>
         <Search
           placeholder="搜索"
-          onSearch={this.handleSearch}
+          onSearch={this.handleSearch.bind(this)}
           style={{ width: 200, marginLeft: '8px' }}
         />
       </div>
@@ -87,7 +89,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
             <span>
               {JSON.parse(tag.sale_goods).map((item: any) => {
                 return (
-                  <div>
+                  <div key={item.id}>
                     {item.good_name}{' '}
                     <span style={{ color: '#722ed1' }}>{'x' + item.sales_num_now}</span>
                   </div>
@@ -107,7 +109,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
       },
       {
         title: '利润(￥)',
-        key: 'sales_amount',
+        key: 'id',
         render: (tag: any) => {
           return <span>{tag.sales_amount - tag.original_amount}</span>;
         }
@@ -121,7 +123,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
       },
       {
         title: '操作',
-        key: 'id',
+        key: 'discount_amount',
         render: () => {
           return (
             <span>
@@ -149,7 +151,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
               current={meta.current_page}
               total={meta.total}
               pageSize={meta.per_page}
-              onChange={this.onChange}
+              onChange={this.onChange.bind(this)}
             />
           </div>
         </Card>

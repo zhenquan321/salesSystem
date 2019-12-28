@@ -129,34 +129,50 @@ class CardList extends React.Component<{}, CardListState> {
             <List.Item key={item.id}>
               <Card
                 hoverable
-                actions={[
-                  <Button
-                    type="link"
-                    key={item.id + 1}
-                    onClick={this.jsNow.bind(this, item)}
-                    style={{
-                      fontSize: '15px',
-                      fontWeight: 'bold',
-                      color: '#555'
-                    }}
-                  >
-                    {/* <Icon type="setting" />  */}
-                    立即结算
-                  </Button>,
-                  <Button
-                    type="link"
-                    key={item.id + 2}
-                    onClick={addGoods.bind(this, item)}
-                    style={{
-                      fontSize: '15px',
-                      fontWeight: 'bold',
-                      color: '#722ed1'
-                    }}
-                  >
-                    {/* <Icon type="edit" /> */}
-                    加入订单
-                  </Button>
-                ]}
+                actions={
+                  item.stock_num > 1
+                    ? [
+                        <Button
+                          type="link"
+                          key={item.id + 1}
+                          onClick={this.jsNow.bind(this, item)}
+                          style={{
+                            fontSize: '15px',
+                            fontWeight: 'bold',
+                            color: '#555'
+                          }}
+                        >
+                          {/* <Icon type="setting" />  */}
+                          立即结算
+                        </Button>,
+                        <Button
+                          type="link"
+                          key={item.id + 2}
+                          onClick={addGoods.bind(this, item)}
+                          style={{
+                            fontSize: '15px',
+                            fontWeight: 'bold',
+                            color: '#722ed1'
+                          }}
+                        >
+                          {/* <Icon type="edit" /> */}
+                          加入订单
+                        </Button>
+                      ]
+                    : [
+                        <Button
+                          type="link"
+                          key={item.id + 3}
+                          style={{
+                            fontSize: '15px',
+                            fontWeight: 'bold',
+                            color: '#888'
+                          }}
+                        >
+                          已售完
+                        </Button>
+                      ]
+                }
               >
                 <Card.Meta
                   avatar={<Avatar src={item.image_file} shape="square" size={70} />}

@@ -1,6 +1,7 @@
 import { observable, configure, action } from 'mobx';
 import React from 'react';
 import { createOrders } from '@api/orders';
+import { notification } from 'antd';
 
 configure({ enforceActions: 'always' });
 
@@ -18,7 +19,15 @@ class SalesStore {
     let included = false;
     for (let i = 0; i < goodList.length; i++) {
       if (good.id == goodList[i].id) {
-        goodList[i].sales_num_now = goodList[i].sales_num_now + 1;
+        if (goodList[i].sales_num_now >= goodList[i].stock_num) {
+          notification.error({
+            message: '库存不足',
+            duration: 5,
+            description: `库存仅剩余${goodList[i].stock_num}${goodList[i].spec}`
+          });
+        } else {
+          goodList[i].sales_num_now = goodList[i].sales_num_now + 1;
+        }
         included = true;
       }
     }
