@@ -78,8 +78,14 @@ class Request {
     this.setHeader('authorization', authorization(token));
 
     let { path, params, options } = data;
-    const _query = options ? { ...options, params } : { params };
-    console.log(data, _query);
+    const _query = options
+      ? {
+          ...options,
+          params
+        }
+      : {
+          params
+        };
     return this.instance[method](this.host + path, _query.params).catch(this.handleError);
   }
 
@@ -96,23 +102,38 @@ class Request {
       }
       _path = _path.replace(/&$/, '');
     }
-    return this.sendRequest('get', { path: _path, params });
+    return this.sendRequest('get', {
+      path: _path,
+      params
+    });
   }
 
   post(path, data) {
-    return this.sendRequest('post', { path, ...data });
+    return this.sendRequest('post', {
+      path,
+      ...data
+    });
   }
 
   put(path, data) {
-    return this.sendRequest('put', { path, ...data });
+    return this.sendRequest('put', {
+      path,
+      ...data
+    });
   }
 
   patch(path, data) {
-    return this.sendRequest('patch', { path, ...data });
+    return this.sendRequest('patch', {
+      path,
+      ...data
+    });
   }
 
   delete(path, data) {
-    return this.sendRequest('delete', { path, ...data });
+    return this.sendRequest('delete', {
+      path,
+      ...data
+    });
   }
 }
 const request = new Request();

@@ -16,7 +16,7 @@ export function createOrders(ordersInfo) {
  */
 
 export function deleteOrders(id) {
-  return request.sendRequest('post', {
+  return request.sendRequest('delete', {
     path: '/api/v1/orders/' + id
   });
 }

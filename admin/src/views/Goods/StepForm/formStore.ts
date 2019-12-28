@@ -1,6 +1,6 @@
 import { observable, configure, action } from 'mobx';
 import React from 'react';
-import { createGoods } from '@api/goods';
+import { createGoods, updateGoods } from '@api/goods';
 
 configure({ enforceActions: 'always' });
 
@@ -18,11 +18,13 @@ interface StepData {
   stockNum: number;
   spec: string;
   dec: string;
+  id?: number;
 }
 
 class FormStore {
   @observable current: number = 0;
   @observable submitting: boolean = false;
+  @observable updateGoods: boolean = false; //
   @observable data: StepData = {
     goodName: '',
     imageFile: '',
@@ -30,7 +32,8 @@ class FormStore {
     originalPrice: 0,
     stockNum: 0,
     spec: '',
-    dec: ''
+    dec: '',
+    id: 0
   };
   steps: Array<StepObj>;
 
@@ -78,17 +81,34 @@ class FormStore {
   @action onSubmit = (): void => {
     this.submitting = true;
     let goodsData = JSON.parse(JSON.stringify(this.data));
-    createGoods(goodsData)
-      .then((res: any) => {
-        console.log(res.data);
-        const { code, data } = res.data;
-        if (code === 200) {
-          this.nextStep();
-        }
-      })
-      .catch(() => {
-        this.initStep();
-      });
+    if (this.updateGoods) {
+      updateGoods(goodsData.id, goodsData)
+        .then((res: any) => {
+          if (res.data.code == 200) {
+            this.changeUpdateGoods(false);
+            this.nextStep();
+          }
+        })
+        .catch((res: any) => {
+          this.initStep();
+        });
+    } else {
+      createGoods(goodsData)
+        .then((res: any) => {
+          console.log(res.data);
+          const { code, data } = res.data;
+          if (code == 200) {
+            this.nextStep();
+          }
+        })
+        .catch(() => {
+          this.initStep();
+        });
+    }
+  };
+
+  @action changeUpdateGoods = (type: boolean) => {
+    this.updateGoods = type;
   };
 }
 

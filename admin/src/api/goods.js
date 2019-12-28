@@ -16,7 +16,7 @@ export function createGoods(goodsInfo) {
  */
 
 export function deleteGoods(id) {
-  return request.sendRequest('post', {
+  return request.sendRequest('delete', {
     path: '/api/v1/goods/' + id
   });
 }
@@ -26,7 +26,7 @@ export function deleteGoods(id) {
  */
 
 export function updateGoods(id, goodsInfo) {
-  return request.sendRequest('post', {
+  return request.sendRequest('put', {
     path: '/api/v1/goods/' + id,
     params: goodsInfo
   });

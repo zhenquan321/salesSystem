@@ -9,10 +9,10 @@ const Step3: React.FC = () => {
   const { initStep } = StepFormStore;
   return (
     <div className={styles.step}>
-      <Result status="success" title="添加成功" subTitle="商品已成功添加" />,
+      <Result status="success" title="操作成功" subTitle="商品库操作成功" />,
       <div className={styles.buttonGroup}>
         <Button type="primary" onClick={initStep}>
-          <FormatterLocale id="step3.oneMore" defaultMessage="再次添加" />
+          添加商品
         </Button>
         <Link to={'/form/goodsList'} replace>
           <Button

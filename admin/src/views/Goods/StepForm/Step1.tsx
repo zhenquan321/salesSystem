@@ -5,6 +5,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import FormatterLocale from '@components/FormatterLocale';
 import StepFormStore from './formStore';
 import styles from './form.module.scss';
+import { observer } from 'mobx-react';
 
 const Step1: React.FC = () => {
   const { data } = StepFormStore;
@@ -14,9 +15,10 @@ const Step1: React.FC = () => {
       e.preventDefault();
       props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          values.imageFile = imageFile;
-          console.log(imageFile, values);
-          StepFormStore.setValue(values);
+          let useDate = JSON.parse(JSON.stringify(data));
+          values.imageFile = imageFile ? imageFile : useDate.imageFile;
+          let formData: any = Object.assign(useDate, values);
+          StepFormStore.setValue(formData);
           StepFormStore.nextStep();
         }
       });
@@ -38,17 +40,19 @@ const Step1: React.FC = () => {
         }
       }
     };
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">上传图片</div>
-      </div>
-    );
-    function getBase64(img: any, callback: any) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => callback(reader.result));
-      reader.readAsDataURL(img);
-    }
+
+    let fileList: any = data.imageFile
+      ? [
+          {
+            uid: '-1',
+            name: data.imageFile,
+            status: 'done',
+            url: data.imageFile,
+            thumbUrl: data.imageFile
+          }
+        ]
+      : [];
+
     function beforeUpload(file: any) {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
@@ -77,13 +81,13 @@ const Step1: React.FC = () => {
       <Form {...formItemLayout} onSubmit={handleSubmit}>
         <Form.Item label="商品名称">
           {getFieldDecorator('goodName', {
-            initialValue: '',
+            initialValue: data.goodName,
             rules: [{ required: true, message: '请输入商品名称!' }]
           })(<Input placeholder="请输入商品名称" autoComplete="off" />)}
         </Form.Item>
         <Form.Item label="商品简介">
           {getFieldDecorator('dec', {
-            initialValue: '',
+            initialValue: data.dec,
             rules: [{ required: true, message: '请输入商品简介!' }]
           })(
             <TextArea
@@ -95,20 +99,21 @@ const Step1: React.FC = () => {
         </Form.Item>
         <Form.Item label="进货价格">
           {getFieldDecorator('originalPrice', {
-            initialValue: '',
+            initialValue: data.originalPrice,
             rules: [{ required: true, message: '请输入进货价格！' }]
           })(<Input placeholder="请输入进货价格" autoComplete="off" />)}
         </Form.Item>
         <Form.Item label="上传封面" extra="">
           {getFieldDecorator('imageFile', {
             valuePropName: 'imageFile',
+            initialValue: data.imageFile,
             getValueFromEvent: normFile
           })(
             <Upload
-              name="logo"
               beforeUpload={beforeUpload}
               action={'/api/v1/uploadImg'}
               listType="picture"
+              defaultFileList={fileList}
             >
               <Button>
                 <Icon type="upload" />
@@ -136,4 +141,4 @@ const Step1: React.FC = () => {
   );
 };
 
-export default Step1;
+export default observer(Step1);

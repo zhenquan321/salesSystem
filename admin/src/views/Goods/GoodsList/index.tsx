@@ -13,11 +13,13 @@ interface BasicInjected {
 interface basicListState {
   list: any;
 }
-class BasicList extends React.Component<{}, basicListState> {
+class BasicList extends React.Component<any, basicListState> {
   state = {
     list: []
   };
-
+  constructor(props: any) {
+    super(props);
+  }
   async initData() {
     let data = await goodsAnalysis();
     if (data.data.code == 200) {

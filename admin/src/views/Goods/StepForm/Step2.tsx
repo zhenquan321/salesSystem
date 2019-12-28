@@ -30,7 +30,8 @@ const Step2: React.FC = () => {
       e.preventDefault();
       props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          let formData: any = Object.assign(data, values);
+          let useData: any = JSON.parse(JSON.stringify(data));
+          let formData: any = Object.assign(useData, values);
           StepFormStore.setValue(formData);
           StepFormStore.onSubmit();
         }
@@ -40,20 +41,20 @@ const Step2: React.FC = () => {
       <Form {...formItemLayout} onSubmit={handleSubmit}>
         <Form.Item label={'销售价格'}>
           {getFieldDecorator('price', {
-            initialValue: '',
+            initialValue: data.price,
             rules: [{ required: true, message: '请输入销售价格!' }]
           })(<Input placeholder="请输入销售价格" autoComplete="off" />)}
         </Form.Item>
         <Form.Item label="商品库存">
           {getFieldDecorator('stockNum', {
-            initialValue: '',
+            initialValue: data.stockNum,
             rules: [{ required: true, message: '请输入商品库存！' }]
           })(<Input placeholder="请输入商品库存" autoComplete="off" />)}
         </Form.Item>
 
         <Form.Item label="计量单位">
           {getFieldDecorator('spec', {
-            initialValue: '盒',
+            initialValue: data.spec || '盒',
             rules: [{ required: true, message: '请选择计量单位' }]
           })(
             <Select placeholder="请选择计量单位">

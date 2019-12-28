@@ -1,10 +1,11 @@
 import React from 'react';
 import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
-import { Card, Table, Button, Input, Divider, Pagination } from 'antd';
-import { ordersList } from '@api/orders';
+import { Card, Table, Button, Input, Divider, Pagination, Modal, notification, Icon } from 'antd';
+import { ordersList, deleteOrders } from '@api/orders';
 import styles from './list.module.scss';
 import { format } from '@utils/tools';
+const { confirm } = Modal;
 
 interface BasicTableState {
   olderList: any[];
@@ -65,6 +66,27 @@ class BasicTable extends React.Component<{}, BasicTableState> {
     });
     this.initData();
   }
+  delOrder = (id: string) => {
+    confirm({
+      title: '删除订单',
+      content: '是否确定删除订单',
+      onOk: () => {
+        deleteOrders(id).then((res: any) => {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            notification.open({
+              message: '操作成功',
+              description: res.data.msg,
+              icon: <Icon type="smile" style={{ color: '#108ee9' }} />
+            });
+            this.initData();
+          }
+        });
+      },
+      onCancel: () => {}
+    });
+  };
+
   render() {
     const Extra = (
       <div>
@@ -91,7 +113,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
                 return (
                   <div key={item.id}>
                     {item.good_name}{' '}
-                    <span style={{ color: '#722ed1' }}>{'x' + item.sales_num_now}</span>
+                    <span style={{ color: 'green' }}>{'x' + item.sales_num_now}</span>
                   </div>
                 );
               })}
@@ -124,11 +146,13 @@ class BasicTable extends React.Component<{}, BasicTableState> {
       {
         title: '操作',
         key: 'discount_amount',
-        render: () => {
+        render: (tag: any) => {
           return (
             <span>
               {/* <Divider type="vertical" /> */}
-              <Button type="link">删除</Button>
+              <Button onClick={this.delOrder.bind(this, tag.id)} type="link">
+                删除
+              </Button>
             </span>
           );
         }
