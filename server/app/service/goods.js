@@ -145,18 +145,31 @@ class GoodsService {
     }
 
     // 更新商品
-    goods.goodName = v.get("body.goodName");
+    goods.good_name = v.get("body.goodName");
     goods.price = v.get("body.price");
-    goods.originalPrice = v.get("body.originalPrice");
-    goods.salesNum = v.get("body.salesNum");
-    goods.imageFile = v.get("body.imageFile");
+    goods.original_price = v.get("body.originalPrice");
+    goods.sales_num = v.get("body.salesNum");
+    goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
-    goods.category_id = v.get("body.category_id");
     goods.dec = v.get("body.dec");
 
     goods.save();
   }
 
+  // 销售商品
+  static async salesGood(id, number) {
+    // 查询商品
+    const goods = await Goods.findByPk(id);
+    if (!goods) {
+      throw new global.errs.NotFound("没有找到相关商品");
+    }
+
+    // 更新商品
+    goods.sales_num += number;
+    goods.stock_num = goods.stock_num - number;
+
+    goods.save();
+  }
   // 更新商品浏览次数
   static async updateBrowse(id, spec) {
     // 查询商品

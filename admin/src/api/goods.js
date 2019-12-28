@@ -57,6 +57,6 @@ export function goodsDetail(id) {
 
 export function goodsAnalysis() {
   return request.sendRequest('get', {
-    path: '/v1/goodsAnalysis'
+    path: '/api/v1/goodsAnalysis'
   });
 }

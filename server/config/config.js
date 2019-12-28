@@ -1,11 +1,11 @@
 module.exports = {
-  environment: 'dev',
+  environment: "dev",
   database: {
-    dbName: 'salesystem',
-    host: 'localhost',
+    dbName: "salesystem",
+    host: "106.12.28.41",
     port: 3306,
-    user: 'root',
-    password: 'Quan5.20'
+    user: "root",
+    password: "Quan5.20"
   },
   security: {
     secretKey: "secretKey",
@@ -13,8 +13,9 @@ module.exports = {
     expiresIn: 60 * 60
   },
   wx: {
-    appId: '',
-    appSecret: '',
-    loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
+    appId: "",
+    appSecret: "",
+    loginUrl:
+      "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
   }
-}
+};

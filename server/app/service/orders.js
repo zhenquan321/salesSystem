@@ -2,7 +2,7 @@ const { Op } = require("sequelize");
 
 const { Orders } = require("../models/orders");
 const { Category } = require("../models/category");
-
+const { GoodsService } = require("./goods");
 // 定义订单模型
 class OrdersService {
   // 创建订单
@@ -28,6 +28,11 @@ class OrdersService {
     orders.order_status = v.get("body.order_status");
     orders.Remarks = v.get("body.Remarks");
     orders.save();
+
+    let saleGoodsArr = JSON.parse(v.get("body.sale_goods"));
+    for (let i = 0; i < saleGoodsArr.length; i++) {
+      GoodsService.salesGood(saleGoodsArr[i].id, saleGoodsArr[i].sales_num_now);
+    }
   }
 
   // 获取订单列表

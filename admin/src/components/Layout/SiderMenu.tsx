@@ -139,7 +139,7 @@ const SiderMenu: React.FC<RouteComponentProps> = props => {
   return (
     <aside className={classNames(styles.navigator, collapsed ? styles.collapsed : '')}>
       <a className={styles.controlBut} href={menuLinkUrl} target="_blank" rel="noopener noreferrer">
-        <img alt="" src={logoPath} className={styles.logo} />
+        {/* <img alt="" src={logoPath} className={styles.logo} /> */}
         <span className={`ml-2 ${styles.title}`}>{siteName}</span>
       </a>
       <Menu

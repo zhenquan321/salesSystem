@@ -22,6 +22,7 @@ class SalesStore {
         included = true;
       }
     }
+
     if (!included) {
       goodList.push(good);
     }

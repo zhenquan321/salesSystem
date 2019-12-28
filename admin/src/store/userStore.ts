@@ -43,7 +43,7 @@ class UserStore {
       if (code === 200) {
         this.setUserInfo(data);
         // const ui = this.getAuthority(name);
-        this.setAuthority(name);
+        this.setAuthority(data.authority);
         return true;
       }
       return false;

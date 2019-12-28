@@ -254,6 +254,23 @@
     background-position: 0 0;
   }
 }
+
 .ant-card-actions > li {
-  margin: 8px 0 !important;
+  margin: 4px 0 !important;
+}
+
+.ant-spin-container .ant-card-body {
+  padding: 18px 15px;
+}
+
+.ant-list-item .ant-card-meta-avatar {
+  padding-right: 10px;
+}
+
+.ant-col-lg-8 {
+  padding: 0 5px !important;
+}
+
+.ant-list-grid .ant-col > .ant-list-item {
+  margin-bottom: 10px !important;
 }

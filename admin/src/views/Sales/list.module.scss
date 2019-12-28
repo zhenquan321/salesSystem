@@ -3,9 +3,11 @@
   position: absolute;
   top: 30px;
   right: 70px;
+
   @media screen and (max-width: 768px) {
     display: none;
   }
+
   img {
     width: 100%;
   }
@@ -14,10 +16,12 @@
 .content {
   margin-top: 16px;
   margin-left: -16px;
+
   a {
     margin-right: 16px;
     font-size: 14px;
   }
+
   i {
     margin-right: 4px;
   }
@@ -39,7 +43,7 @@
   overflow: hidden;
   height: 40px;
   margin-bottom: -5px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .images {
@@ -54,6 +58,7 @@
   vertical-align: middle;
   position: relative;
   margin-right: 8px;
+
   &.maintain {
     background: $color-warning;
   }
@@ -65,8 +70,10 @@
   &.offline {
     background: #d9d9d9;
   }
+
   &.progress {
     background: $color-progress;
+
     &::after {
       content: '';
       background: $color-progress;
@@ -86,6 +93,7 @@
     transform: scale(0.8);
     opacity: 0.5;
   }
+
   100% {
     transform: scale(2.4);
     opacity: 0;
@@ -96,21 +104,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: -10px;
+  margin-top: -14px;
 }
+
 .goodInfoSalesNum {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
 }
+
 .goodInfoSalesNumNumer {
   color: #f35a1e;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
   padding-right: 5px;
 }
+
+.headerTitle {
+  font-size: 16px;
+  color: #666;
+  float: left;
+  font-weight: 600;
+  padding-left: 15px;
+  padding-top: 5px;
+}
+
 .SearchBtn {
   height: 50px;
+  background-color: #fff;
+  padding: 10px;
+  margin: -6px;
+  margin-bottom: 15px;
 }
+
 .paginationStyle {
   text-align: center;
   margin: 10px;
@@ -123,6 +148,7 @@
   white-space: nowrap;
   width: 140px;
 }
+
 .dsCss2 {
   display: inline-block;
   overflow: hidden;
@@ -130,6 +156,7 @@
   white-space: nowrap;
   width: 240px;
 }
+
 .dhsl {
   display: block;
   height: 40px;
@@ -139,11 +166,13 @@
   overflow: hidden;
   width: 240px;
 }
+
 .ovfAut {
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .AddOrder {
   position: fixed;
   right: 0;
@@ -157,17 +186,20 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
+
 .jdBtn {
   text-align: center;
   border-top: 1px solid #e8e8e8;
   padding-top: 10px;
 }
+
 .deleteIcon {
   margin: 0 5px 0 10px;
   color: red;
   cursor: pointer;
   margin-top: 1px;
 }
+
 .dbBtn {
   position: absolute;
   bottom: 0;
@@ -179,15 +211,18 @@
   background: #fff;
   border-radius: 0 0 4px 4px;
 }
+
 .zjCard {
   text-align: right;
   border-top: 1px solid #e8e8e8;
   padding-top: 20px;
 }
+
 .zhekou {
   padding: 10px 10px 0;
   border-top: 1px solid #e8e8e8;
 }
+
 .jsCard {
   padding-bottom: 150px;
 }

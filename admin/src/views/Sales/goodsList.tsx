@@ -101,115 +101,116 @@ class CardList extends React.Component<{}, CardListState> {
     );
 
     return (
-      <PageWrapper
-        title={'销售商品页面'}
-        subTitle={'点击立即立即结算，弹出订单结算页进行结算，或加入购物车，统一结算。'}
-        extraContent={ExtraContent}
-        // content={Content}
-      >
-        <AddOrder />
-        <div style={{ paddingRight: '180px' }}>
-          <div className={styles.SearchBtn}>
-            <Search
-              placeholder="搜索商品列表"
-              enterButton="搜索"
-              onSearch={this.handleSearch}
-              style={{ width: 300, float: 'right', marginLeft: '8px' }}
-            />
-          </div>
+      // <PageWrapper
+      //   title={'销售商品页面'}
+      //   subTitle={'点击立即立即结算，弹出订单结算页进行结算，或加入购物车，统一结算。'}
+      //   extraContent={ExtraContent}
+      //   // content={Content}
+      // >
+      <div style={{ paddingRight: '200px', paddingLeft: '5px' }}>
+        <div className={styles.SearchBtn}>
+          <div className={styles.headerTitle}>销售商品</div>
+          <Search
+            placeholder="搜索商品列表"
+            enterButton="搜索"
+            onSearch={this.handleSearch}
+            style={{ width: 300, float: 'right', marginLeft: '8px' }}
+          />
+        </div>
 
-          <List
-            rowKey="id"
-            loading={!list.length}
-            grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-            dataSource={[...list]}
-            renderItem={(item: any) => (
-              // item ? (
-              <List.Item key={item.id}>
-                <Card
-                  hoverable
-                  actions={[
+        <AddOrder updataFun={this.initData.bind(this)} />
+        <List
+          rowKey="id"
+          loading={!list.length}
+          grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
+          dataSource={[...list]}
+          renderItem={(item: any) => (
+            // item ? (
+            <List.Item key={item.id}>
+              <Card
+                hoverable
+                actions={[
+                  <Button
+                    type="link"
+                    key={item.id + 1}
+                    onClick={this.jsNow.bind(this, item)}
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      color: '#555'
+                    }}
+                  >
+                    {/* <Icon type="setting" />  */}
+                    立即结算
+                  </Button>,
+                  <Button
+                    type="link"
+                    key={item.id + 2}
+                    onClick={addGoods.bind(this, item)}
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      color: '#722ed1'
+                    }}
+                  >
+                    {/* <Icon type="edit" /> */}
+                    加入订单
+                  </Button>
+                ]}
+              >
+                <Card.Meta
+                  avatar={<Avatar src={item.image_file} shape="square" size={70} />}
+                  title={
                     <Button
                       type="link"
-                      key={item.id + 1}
-                      onClick={this.jsNow.bind(this, item)}
                       style={{
-                        fontSize: '15px',
                         fontWeight: 'bold',
+                        padding: 0,
+                        fontSize: '17px',
+                        marginBottom: '5px',
                         color: '#555'
                       }}
                     >
-                      {/* <Icon type="setting" />  */}
-                      立即结算
-                    </Button>,
-                    <Button
-                      type="link"
-                      key={item.id + 2}
-                      onClick={addGoods.bind(this, item)}
-                      style={{
-                        fontSize: '15px',
-                        fontWeight: 'bold',
-                        color: '#722ed1'
-                      }}
-                    >
-                      {/* <Icon type="edit" /> */}
-                      加入订单
+                      {item.good_name}
                     </Button>
-                  ]}
-                >
-                  <Card.Meta
-                    avatar={<Avatar src={item.image_file} shape="square" size={80} />}
-                    title={
-                      <Button
-                        type="link"
-                        style={{
-                          fontWeight: 'bold',
-                          padding: 0,
-                          fontSize: '17px',
-                          marginBottom: '5px',
-                          color: '#555'
-                        }}
-                      >
-                        {item.good_name}
-                      </Button>
-                    }
-                    description={
-                      <div className={styles.goodInfo}>
-                        <div className={styles.goodInfoSales}>
-                          <div className={styles.goodInfoSalesNum}>
-                            售价：
-                            <span className={styles.goodInfoSalesNumNumer}>￥{item.price}</span>
-                          </div>
-                          <div className={styles.goodInfoSalesNum}>
-                            已售：
-                            <span className={styles.goodInfoSalesNumNumer}>{item.sales_num}</span>
-                            {item.spec}
-                          </div>
-                          <div className={styles.goodInfoSalesNum}>
-                            库存：
-                            <span className={styles.goodInfoSalesNumNumer}>{item.stock_num}</span>
-                            {item.spec}
-                          </div>
+                  }
+                  description={
+                    <div className={styles.goodInfo}>
+                      <div className={styles.goodInfoSales}>
+                        <div className={styles.goodInfoSalesNum}>
+                          售价：
+                          <span className={styles.goodInfoSalesNumNumer}>￥{item.price}</span>
                         </div>
-                        <div className={styles.description}>{item.dec}</div>
+                        <div className={styles.goodInfoSalesNum}>
+                          已售：
+                          <span className={styles.goodInfoSalesNumNumer}>{item.sales_num}</span>
+                          {item.spec}
+                        </div>
+                        <div className={styles.goodInfoSalesNum}>
+                          库存：
+                          <span className={styles.goodInfoSalesNumNumer}>{item.stock_num}</span>
+                          {item.spec}
+                        </div>
                       </div>
-                    }
-                  />
-                </Card>
-              </List.Item>
-            )}
+                      <div className={styles.description}>{item.dec}</div>
+                    </div>
+                  }
+                />
+              </Card>
+            </List.Item>
+          )}
+        />
+        <div className={styles.paginationStyle}>
+          <Pagination
+            showQuickJumper
+            current={meta.current_page}
+            total={meta.total}
+            pageSize={meta.per_page}
+            onChange={this.onChange.bind(this)}
           />
-          <div className={styles.paginationStyle}>
-            <Pagination
-              showQuickJumper
-              current={meta.current_page}
-              total={meta.total}
-              pageSize={meta.per_page}
-              onChange={this.onChange.bind(this)}
-            />
-          </div>
         </div>
-      </PageWrapper>
+      </div>
+      // </PageWrapper>
     );
   }
 }

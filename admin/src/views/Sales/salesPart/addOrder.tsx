@@ -17,6 +17,8 @@ import styles from '../list.module.scss';
 import { Link } from 'react-router-dom';
 import salesStore from '../salesStore';
 import { observer } from 'mobx-react';
+import Item from 'antd/lib/list/Item';
+import { debounce } from '@utils/tools';
 
 interface State {
   visible: boolean;
@@ -32,10 +34,15 @@ interface State {
     Remarks: string;
   };
 }
-interface Props {}
+interface Props {
+  updataFun: Function;
+}
 
 @observer
 class AddOrder extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+  }
   state = {
     visible: false,
     zkJe: 0,
@@ -63,14 +70,29 @@ class AddOrder extends React.Component<Props, State> {
         this.openNotification();
         salesStore.settlementFun(false);
         salesStore.clearGoods();
+        setTimeout(() => {
+          this.props.updataFun();
+        }, 500);
       })
       .catch((res: any) => {
         console.log(res);
       });
   };
 
-  onChange(value: any) {
-    console.log(value);
+  onChange(item: any, value: any) {
+    let goods = JSON.parse(JSON.stringify(item));
+    let sales_num_now = goods.sales_num_now;
+    let num = value - sales_num_now;
+    if (num > 0) {
+      for (let a = 0; a < num; a++) {
+        salesStore.addGoods(goods);
+      }
+    } else if (num < 0) {
+      for (let a = 0; a < -num; a++) {
+        salesStore.delGoods(goods);
+      }
+    }
+    this.allSalesFun();
   }
 
   showDrawer = () => {
@@ -131,13 +153,18 @@ class AddOrder extends React.Component<Props, State> {
                   avatar={<Avatar style={{ marginRight: '-5px' }} src={item.image_file} />}
                   title={<a className={styles.dsCss}>{item.good_name}</a>}
                   description={
-                    <div>
+                    <div
+                      style={{
+                        marginTop: '-5px'
+                      }}
+                    >
                       数量：
-                      <Input
+                      <InputNumber
                         style={{ width: '50px' }}
                         size="small"
+                        defaultValue={item.sales_num_now}
                         value={item.sales_num_now}
-                        onChange={this.onChange.bind(this)}
+                        onChange={debounce(this.onChange.bind(this, item), 500)}
                       />
                       <Icon
                         className={styles.deleteIcon}
@@ -189,11 +216,12 @@ class AddOrder extends React.Component<Props, State> {
                     </div>
                     <div>
                       数量：
-                      <Input
+                      <InputNumber
                         style={{ width: '50px' }}
                         size="small"
+                        defaultValue={item.sales_num_now}
                         value={item.sales_num_now}
-                        onChange={this.onChange.bind(this)}
+                        onChange={debounce(this.onChange.bind(this, item), 500)}
                       />
                       <Icon
                         className={styles.deleteIcon}
