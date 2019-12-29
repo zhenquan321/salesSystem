@@ -42,7 +42,9 @@ const sequelize = new Sequelize(dbName, user, password, {
 sequelize.sync({
   force: false
 });
-
+sequelize.sync({
+  logging: console.log
+});
 module.exports = {
   sequelize
 };

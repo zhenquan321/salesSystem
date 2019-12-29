@@ -166,7 +166,7 @@ class CardList extends React.Component<{}, CardListState> {
                           style={{
                             fontSize: '15px',
                             fontWeight: 'bold',
-                            color: '#888'
+                            color: 'red'
                           }}
                         >
                           已售完

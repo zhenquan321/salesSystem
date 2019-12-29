@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const { Orders } = require("../models/orders");
 const { Category } = require("../models/category");
 const { GoodsService } = require("./goods");
+const { format } = require("../../core/tools");
 // 定义订单模型
 class OrdersService {
   // 创建订单
@@ -158,6 +159,48 @@ class OrdersService {
       ordersVolume,
       originalVolume,
       goodsAmount
+    };
+  }
+
+  static async dailyData() {
+    const orders = await Orders.findAndCountAll({
+      where: {
+        deleted_at: null
+      }
+    });
+
+    let time = []; //日期
+    let orderQuantity = []; //订单量
+    let salesVolume = []; //销售额
+    let salesProfit = []; //利润
+    let allData = JSON.parse(JSON.stringify(orders.rows));
+
+    let nowTimes = new Date().getTime();
+    for (let i = 30; i > -1; i--) {
+      let setTime = nowTimes - 24 * 60 * 60 * 1000 * i;
+      time.push(format(setTime, "yyyy-MM-dd"));
+    }
+    for (let i = 0; i < time.length; i++) {
+      let orderQuantityDay = 0; //订单量
+      let salesVolumeDay = 0; //销售额
+      let salesProfitDay = 0; //利润
+      for (let d = 0; d < allData.length; d++) {
+        if (time[i] == allData[d].created_at) {
+          orderQuantityDay += 1;
+          salesVolumeDay += allData[d].sales_amount;
+          salesProfitDay +=
+            allData[d].sales_amount - allData[d].original_amount;
+        }
+      }
+      orderQuantity.push(orderQuantityDay);
+      salesVolume.push(salesVolumeDay);
+      salesProfit.push(salesProfitDay);
+    }
+    return {
+      orderQuantity,
+      salesVolume,
+      salesProfit,
+      time
     };
   }
 }

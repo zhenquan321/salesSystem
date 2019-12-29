@@ -60,3 +60,13 @@ export function ordersAnalysis() {
     path: '/api/v1/ordersAnalysis'
   });
 }
+
+/**
+ * 每日销售概况
+ */
+
+export function dailyDataAnalysis() {
+  return request.sendRequest('get', {
+    path: '/api/v1/dailyData'
+  });
+}

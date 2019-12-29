@@ -105,6 +105,17 @@ router.get("/orders/:id", async ctx => {
 /**
  * 返回商品库分析
  */
+router.get("/dailyData", async ctx => {
+  // 查询商品
+  const dailyData = await OrdersService.dailyData();
+  // 返回结果
+  ctx.response.status = 200;
+
+  ctx.body = res.json(dailyData);
+});
+/**
+ * 返回商品库分析
+ */
 router.get("/ordersAnalysis", async ctx => {
   // 查询商品
   const ordersAnalysis = await OrdersService.analysis();
@@ -112,10 +123,22 @@ router.get("/ordersAnalysis", async ctx => {
   ctx.response.status = 200;
 
   ctx.body = res.json({
-    goodsAmount: { title: "已售商品数", value: ordersAnalysis.goodsAmount },
-    salesVolume: { title: "销售总额", value: ordersAnalysis.salesVolume },
-    ordersAmount: { title: "总订单数", value: ordersAnalysis.ordersAmount },
-    ordersVolume: { title: "订单总原价", value: ordersAnalysis.ordersVolume },
+    goodsAmount: {
+      title: "已售商品数",
+      value: ordersAnalysis.goodsAmount
+    },
+    salesVolume: {
+      title: "销售总额",
+      value: ordersAnalysis.salesVolume
+    },
+    ordersAmount: {
+      title: "总订单数",
+      value: ordersAnalysis.ordersAmount
+    },
+    ordersVolume: {
+      title: "订单总原价",
+      value: ordersAnalysis.ordersVolume
+    },
     originalVolume: {
       title: "订单总成本",
       value: ordersAnalysis.originalVolume

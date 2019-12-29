@@ -4,7 +4,7 @@ import RowInfoCard from './RowInfoCard';
 import Weather from './Weather';
 import Performance from './Performance';
 import SaleTable from './SaleTable';
-import GlobalTrends from './GlobalTrends';
+import DaySales from './daySales';
 import './dashboard.scss';
 
 const Dashboard: React.FC = () => (
@@ -17,17 +17,17 @@ const Dashboard: React.FC = () => (
       <Col xl={10} lg={10} md={24} sm={24} xs={24}>
         <Performance />
       </Col>
-    </Row>
+    </Row> */}
     <Row>
       <Col span={24}>
-        <GlobalTrends />
+        <DaySales />
       </Col>
     </Row>
     <Row>
       <Col span={24}>
         <SaleTable />
       </Col>
-    </Row> */}
+    </Row>
   </div>
 );
 

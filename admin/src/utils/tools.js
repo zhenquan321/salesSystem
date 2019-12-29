@@ -40,6 +40,7 @@ export function halfAdjust(value, fixedLength = 2) {
   return roundNum / power;
 }
 
+//日期格式化
 export function format(time, fmt) {
   let data = new Date(time);
   var o = {
