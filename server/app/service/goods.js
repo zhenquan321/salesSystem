@@ -24,8 +24,8 @@ class GoodsService {
     const goods = new Goods();
 
     goods.good_name = v.get("body.goodName");
-    goods.price = v.get("body.price");
-    goods.original_price = v.get("body.originalPrice");
+    goods.price = Number(v.get("body.price").toFixed(2));
+    goods.original_price = Number(v.get("body.originalPrice").toFixed(2));
     goods.dec = v.get("body.dec");
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
@@ -53,6 +53,8 @@ class GoodsService {
         stockOriginalValue +
         goods.rows[i].stock_num * goods.rows[i].original_price;
     }
+    stockAllValue = stockAllValue.toFixed(2);
+    stockOriginalValue = stockOriginalValue.toFixed(2);
     return {
       stockGoodsNum: goods.count,
       stockAllNum,

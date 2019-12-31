@@ -57,7 +57,7 @@ class RowInfoCard extends React.Component<{}, RowInfoCardStage> {
     ordersAnalysis().then((res: any) => {
       let data = res.data.data;
       details[0].num = '￥' + data.salesVolume.value;
-      details[1].num = '￥' + (data.salesVolume.value - data.originalVolume.value);
+      details[1].num = '￥' + (data.salesVolume.value - data.originalVolume.value).toFixed(2);
       details[2].num = data.ordersAmount.value;
       this.setState({
         details: details
