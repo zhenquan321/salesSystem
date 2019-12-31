@@ -20,25 +20,25 @@ Orders.init(
       comment: "流水号"
     },
     sales_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "实际销售金额"
     },
     orders_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "销售总价"
     },
     discount_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "折扣金额"
     },
     original_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "成本总价"

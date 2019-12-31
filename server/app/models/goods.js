@@ -26,13 +26,13 @@ Goods.init(
       comment: "商品图片"
     },
     price: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "商品销售价格"
     },
     original_price: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
       allowNull: false,
       defaultValue: 0,
       comment: "商品进货价格"
