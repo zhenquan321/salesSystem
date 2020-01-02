@@ -133,7 +133,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
         title: '利润(￥)',
         key: 'id',
         render: (tag: any) => {
-          return <span>{tag.sales_amount - tag.original_amount}</span>;
+          return <span>{(tag.sales_amount - tag.original_amount).toFixed(2)}</span>;
         }
       },
       {

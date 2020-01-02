@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    revision: 'f39df71d2bd58dd10e916a209adf8362',
+    revision: '4b1bf8654177202a317d02a49d11464b',
     url: './index.html'
   },
   {
@@ -104,7 +104,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     url: './static/css/15.8f08b2cf.chunk.css'
   },
   {
-    revision: '73ee6705c36b5580b850',
+    revision: 'a4ebd97498c0fba897d2',
     url: './static/css/27.dfff57e1.chunk.css'
   },
   {
@@ -512,8 +512,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     url: './static/js/26.3c0acd96.chunk.js'
   },
   {
-    revision: '73ee6705c36b5580b850',
-    url: './static/js/27.c4920ea9.chunk.js'
+    revision: 'a4ebd97498c0fba897d2',
+    url: './static/js/27.c2f85d3f.chunk.js'
   },
   {
     revision: '29922ad2b8b8b0e20257',
@@ -904,8 +904,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     url: './static/js/npm.zrender.8c08dd0f.chunk.js'
   },
   {
-    revision: 'da004685abf722827626',
-    url: './static/js/runtime~main.f60beb18.js'
+    revision: '79ac9cc07c08468f7189',
+    url: './static/js/runtime~main.a8c9d4a7.js'
   },
   {
     revision: '50541fc3c094e9012be0',

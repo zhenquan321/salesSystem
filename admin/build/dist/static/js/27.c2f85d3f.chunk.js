@@ -15059,7 +15059,7 @@
                           return m.a.createElement(
                             'span',
                             null,
-                            e.sales_amount - e.original_amount
+                            (e.sales_amount - e.original_amount).toFixed(2)
                           );
                         }
                       },
