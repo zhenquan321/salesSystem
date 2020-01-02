@@ -194,7 +194,7 @@ class OrdersService {
       }
       orderQuantity.push(orderQuantityDay);
       salesVolume.push(salesVolumeDay);
-      salesProfit.push(salesProfitDay);
+      salesProfit.push(salesProfitDay.toFixed(2));
     }
     return {
       orderQuantity,
