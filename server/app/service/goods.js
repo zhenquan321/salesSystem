@@ -148,12 +148,12 @@ class GoodsService {
 
     // 更新商品
     goods.good_name = v.get("body.goodName");
-    goods.price = v.get("body.price");
-    goods.original_price = v.get("body.originalPrice");
-    goods.sales_num = v.get("body.salesNum");
+    goods.price = Number(v.get("body.price").toFixed(2));
+    goods.original_price = Number(v.get("body.originalPrice").toFixed(2));
+    goods.dec = v.get("body.dec");
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
-    goods.dec = v.get("body.dec");
+    goods.stock_num = v.get("body.stockNum");
 
     goods.save();
   }
