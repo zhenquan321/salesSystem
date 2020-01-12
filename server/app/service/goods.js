@@ -24,8 +24,11 @@ class GoodsService {
     const goods = new Goods();
 
     goods.good_name = v.get("body.goodName");
-    goods.price = Number(v.get("body.price").toFixed(2));
-    goods.original_price = Number(v.get("body.originalPrice").toFixed(2));
+    goods.price = Number(Number(v.get("body.price")).toFixed(2));
+    goods.original_price = Number(
+      Number(v.get("body.originalPrice")).toFixed(2)
+    );
+    goods.replenishment_num = v.get("body.replenishmentNum");
     goods.dec = v.get("body.dec");
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
@@ -148,9 +151,12 @@ class GoodsService {
 
     // 更新商品
     goods.good_name = v.get("body.goodName");
-    goods.price = Number(v.get("body.price").toFixed(2));
-    goods.original_price = Number(v.get("body.originalPrice").toFixed(2));
+    goods.price = Number(Number(v.get("body.price")).toFixed(2));
+    goods.original_price = Number(
+      Number(v.get("body.originalPrice")).toFixed(2)
+    );
     goods.dec = v.get("body.dec");
+    goods.replenishment_num = v.get("body.replenishmentNum");
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
     goods.stock_num = v.get("body.stockNum");

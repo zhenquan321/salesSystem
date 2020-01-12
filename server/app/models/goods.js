@@ -49,6 +49,12 @@ Goods.init(
       defaultValue: 0,
       comment: "库存"
     },
+    replenishment_num: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      comment: "补货预警线"
+    },
     spec: {
       type: Sequelize.STRING(50),
       allowNull: true,

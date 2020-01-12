@@ -19,6 +19,7 @@ interface StepData {
   spec: string;
   dec: string;
   id?: number;
+  replenishmentNum: number;
 }
 
 class FormStore {
@@ -33,7 +34,8 @@ class FormStore {
     stockNum: 0,
     spec: '',
     dec: '',
-    id: 0
+    id: 0,
+    replenishmentNum: 0
   };
   steps: Array<StepObj>;
 

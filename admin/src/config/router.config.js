@@ -67,9 +67,20 @@ export const asyncRouteConfig = [
         name: '商品列表',
         path: '/form/goodsList',
         component: ['/views/Goods/GoodsList']
+      },
+      {
+        name: '创建补货单',
+        path: '/form/replenishment',
+        component: ['/views/Replenishment/create']
+      },
+      {
+        name: '补货记录',
+        path: '/form/list',
+        component: ['/views/Replenishment/list']
       }
     ]
   },
+
   {
     name: '订单',
     icon: 'ordered-list',

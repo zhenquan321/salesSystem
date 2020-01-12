@@ -1,18 +1,18 @@
 const { Op } = require("sequelize");
 
-const { Orders } = require("../models/orders");
+const { Replenishment } = require("../models/replenishment");
 const { Category } = require("../models/category");
 const { GoodsService } = require("./goods");
 const { format } = require("../../core/tools");
 // 定义订单模型
-class OrdersService {
+class ReplenishmentService {
   // 创建订单
   static async create(v) {
     let myDate = new Date();
     // 创建订单
-    const orders = new Orders();
-    orders.serial_number =
-      "XSD" +
+    const replenishment = new Replenishment();
+    replenishment.serial_number =
+      "JH" +
       myDate.getFullYear().toString() +
       myDate.getMonth().toString() +
       myDate.getDate().toString() +
@@ -20,15 +20,10 @@ class OrdersService {
       myDate.getHours().toString() +
       myDate.getMinutes().toString() +
       myDate.getSeconds().toString();
-    orders.sales_amount = v.get("body.sales_amount");
-    orders.orders_amount = v.get("body.orders_amount");
-    orders.discount_amount = v.get("body.discount_amount");
-    orders.original_amount = v.get("body.original_amount");
-    orders.sale_goods = v.get("body.sale_goods");
-    orders.sale_goods_count = v.get("body.sale_goods_count");
-    orders.order_status = v.get("body.order_status");
-    orders.Remarks = v.get("body.Remarks");
-    orders.save();
+    replenishment.replenishment_goods = v.get("body.replenishment_goods");
+    replenishment.replenishment_status = v.get("body.replenishment_status");
+    replenishment.Remarks = v.get("body.Remarks");
+    replenishment.save();
 
     let saleGoodsArr = JSON.parse(v.get("body.sale_goods"));
     for (let i = 0; i < saleGoodsArr.length; i++) {
@@ -51,7 +46,7 @@ class OrdersService {
         [Op.like]: `%${keyword}%`
       };
     }
-    const orders = await Orders.findAndCountAll({
+    const replenishment = await Replenishment.findAndCountAll({
       //
       limit: pageSize, //每页10条
       offset: (page - 1) * pageSize,
@@ -60,14 +55,14 @@ class OrdersService {
     });
 
     return {
-      data: orders.rows,
+      data: replenishment.rows,
       // 分页
       meta: {
         current_page: parseInt(page),
         per_page: 10,
-        count: orders.count,
-        total: orders.count,
-        total_pages: Math.ceil(orders.count / 10)
+        count: replenishment.count,
+        total: replenishment.count,
+        total_pages: Math.ceil(replenishment.count / 10)
       }
     };
   }
@@ -75,43 +70,39 @@ class OrdersService {
   // 删除订单
   static async destroy(id) {
     // 检测是否存在订单
-    const orders = await Orders.findOne({
+    const replenishment = await Replenishment.findOne({
       where: {
         id,
         deleted_at: null
       }
     });
     // 不存在抛出错误
-    if (!orders) {
+    if (!replenishment) {
       throw new global.errs.NotFound("没有找到相关订单");
     }
     // 软删除订单
-    orders.destroy();
+    replenishment.destroy();
   }
 
   // 更新订单
   static async update(id, v) {
     // 查询订单
-    const orders = await Orders.findByPk(id);
-    if (!orders) {
+    const replenishment = await Replenishment.findByPk(id);
+    if (!replenishment) {
       throw new global.errs.NotFound("没有找到相关订单");
     }
-
     // 更新订单
-    orders.sales_amount = v.get("body.sales_amount");
-    orders.orders_amount = v.get("body.orders_amount");
-    orders.discount_amount = v.get("body.discount_amount");
-    orders.original_amount = v.get("body.original_amount");
-    orders.sale_goods = v.get("body.sale_goods");
-    orders.order_status = v.get("body.order_status");
-    orders.Remarks = v.get("body.Remarks");
+    replenishment.serial_number = v.get("body.serial_number");
+    replenishment.replenishment_goods = v.get("body.replenishment_goods");
+    replenishment.replenishment_status = v.get("body.replenishment_status");
+    replenishment.Remarks = v.get("body.Remarks");
 
-    orders.save();
+    replenishment.save();
   }
 
   // 订单详情
   static async detail(id) {
-    const orders = await Orders.findOne({
+    const replenishment = await Replenishment.findOne({
       where: {
         id
       },
@@ -127,17 +118,17 @@ class OrdersService {
       ]
     });
 
-    if (!orders) {
+    if (!replenishment) {
       throw new global.errs.NotFound("没有找到相关订单");
     }
 
-    return orders;
+    return replenishment;
   }
 
   // 订单概况
   static async analysis() {
     const desc = "created_at";
-    const orders = await Orders.findAndCountAll({
+    const replenishment = await Replenishment.findAndCountAll({
       order: [[desc, "DESC"]]
       // where: {
       //   created_at:{
@@ -147,28 +138,28 @@ class OrdersService {
     });
 
     let salesVolume = 0;
-    let ordersVolume = 0;
+    let replenishmentVolume = 0;
     let originalVolume = 0;
     let goodsAmount = 0;
-    let ordersAmount = orders.count;
+    let replenishmentAmount = replenishment.count;
 
-    for (let i = 0; i < orders.rows.length; i++) {
-      salesVolume += orders.rows[i].sales_amount;
-      ordersVolume += orders.rows[i].orders_amount;
-      originalVolume += orders.rows[i].original_amount;
-      goodsAmount += orders.rows[i].sale_goods_count;
+    for (let i = 0; i < replenishment.rows.length; i++) {
+      salesVolume += replenishment.rows[i].sales_amount;
+      replenishmentVolume += replenishment.rows[i].replenishment_amount;
+      originalVolume += replenishment.rows[i].original_amount;
+      goodsAmount += replenishment.rows[i].sale_goods_count;
     }
     return {
       salesVolume,
-      ordersAmount,
-      ordersVolume,
+      replenishmentAmount,
+      replenishmentVolume,
       originalVolume,
       goodsAmount
     };
   }
 
   static async dailyData() {
-    const orders = await Orders.findAndCountAll({
+    const replenishment = await Replenishment.findAndCountAll({
       where: {
         deleted_at: null
       }
@@ -178,7 +169,7 @@ class OrdersService {
     let orderQuantity = []; //订单量
     let salesVolume = []; //销售额
     let salesProfit = []; //利润
-    let allData = JSON.parse(JSON.stringify(orders.rows));
+    let allData = JSON.parse(JSON.stringify(replenishment.rows));
 
     let nowTimes = new Date().getTime();
     for (let i = 30; i > -1; i--) {
@@ -211,5 +202,5 @@ class OrdersService {
 }
 
 module.exports = {
-  OrdersService
+  ReplenishmentService
 };

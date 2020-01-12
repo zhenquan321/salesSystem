@@ -57,6 +57,18 @@ const Step2: React.FC = () => {
             />
           )}
         </Form.Item>
+        <Form.Item label="库存预警线">
+          {getFieldDecorator('replenishmentNum', {
+            initialValue: data.replenishmentNum,
+            rules: [{ required: true, message: '请输入库存预警线' }]
+          })(
+            <Input
+              placeholder="请输入库存预警线"
+              disabled={data.id ? true : false}
+              autoComplete="off"
+            />
+          )}
+        </Form.Item>
 
         <Form.Item label="计量单位">
           {getFieldDecorator('spec', {

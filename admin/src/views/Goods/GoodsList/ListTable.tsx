@@ -118,7 +118,8 @@ class ListTable extends React.Component<any, ListTableState> {
       stockNum: data.stock_num,
       spec: data.spec,
       dec: data.dec,
-      id: data.id
+      id: data.id,
+      replenishmentNum: data.replenishment_num
     };
     StepFormStore.setValue(goData);
     StepFormStore.changeUpdateGoods(true);
@@ -149,7 +150,17 @@ class ListTable extends React.Component<any, ListTableState> {
       <div className={styles.content}>
         <div>
           <span>库存 </span>
-          <p className={styles.pText}>{data.stock_num || 0}</p>
+          <p className={styles.pText}>
+            {data.stock_num || 0}
+            {data.spec}
+          </p>
+        </div>
+        <div className={styles.handleTime}>
+          <span>补货预警线 </span>
+          <p className={styles.pText}>
+            {data.replenishment_num || 0}
+            {data.spec}
+          </p>
         </div>
         <div className={styles.handleTime}>
           <span>销量</span>
