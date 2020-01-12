@@ -101,7 +101,13 @@ const Step1: React.FC = () => {
           {getFieldDecorator('originalPrice', {
             initialValue: data.originalPrice,
             rules: [{ required: true, message: '请输入进货价格！' }]
-          })(<Input placeholder="请输入进货价格" autoComplete="off" />)}
+          })(
+            <Input
+              placeholder="请输入进货价格"
+              disabled={data.id ? true : false}
+              autoComplete="off"
+            />
+          )}
         </Form.Item>
         <Form.Item label="上传封面" extra="">
           {getFieldDecorator('imageFile', {

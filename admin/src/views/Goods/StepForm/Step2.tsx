@@ -49,7 +49,13 @@ const Step2: React.FC = () => {
           {getFieldDecorator('stockNum', {
             initialValue: data.stockNum,
             rules: [{ required: true, message: '请输入商品库存！' }]
-          })(<Input placeholder="请输入商品库存" autoComplete="off" />)}
+          })(
+            <Input
+              placeholder="请输入商品库存"
+              disabled={data.id ? true : false}
+              autoComplete="off"
+            />
+          )}
         </Form.Item>
 
         <Form.Item label="计量单位">

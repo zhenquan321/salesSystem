@@ -56,6 +56,7 @@ export const asyncRouteConfig = [
     name: 'form',
     icon: 'form',
     path: '/form',
+    authority: ['admin'],
     routes: [
       {
         name: '添加商品',
