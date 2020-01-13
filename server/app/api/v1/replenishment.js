@@ -20,58 +20,58 @@ const router = new Router({
 });
 
 /**
- * 创建订单
+ * 创建进货单
  */
 router.post("/replenishment", new Auth(AUTH_ADMIN).m, async ctx => {
   // 通过验证器校验参数是否通过
   const v = await new ReplenishmentValidator().validate(ctx);
 
-  // 创建订单
+  // 创建进货单
   await ReplenishmentService.create(v);
 
   // 返回结果
   ctx.response.status = 200;
-  ctx.body = res.success("创建订单成功");
+  ctx.body = res.success("创建进货单成功");
 });
 
 /**
- * 删除订单
+ * 删除进货单
  */
 router.delete("/replenishment/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 通过验证器校验参数是否通过
   const v = await new PositiveIdParamsValidator().validate(ctx);
 
-  // 获取订单ID参数
+  // 获取进货单ID参数
   const id = v.get("path.id");
-  // 删除订单
+  // 删除进货单
   await ReplenishmentService.destroy(id);
 
   ctx.response.status = 200;
-  ctx.body = res.success("删除订单成功");
+  ctx.body = res.success("删除进货单成功");
 });
 
 /**
- * 更新订单
+ * 更新进货单
  */
 router.put("/replenishment/:id", new Auth(AUTH_ADMIN).m, async ctx => {
   // 通过验证器校验参数是否通过
   const v = await new PositiveIdParamsValidator().validate(ctx);
 
-  // 获取订单ID参数
+  // 获取进货单ID参数
   const id = v.get("path.id");
-  // 更新订单
+  // 更新进货单
   await ReplenishmentService.update(id, v);
 
   ctx.response.status = 200;
-  ctx.body = res.success("更新订单成功");
+  ctx.body = res.success("更新进货单成功");
 });
 
 /**
- * 获取订单列表
+ * 获取进货单列表
  */
 router.get("/replenishment", async ctx => {
   // 获取页码，排序方法，分类ID，搜索关键字
-  // 查询订单列表
+  // 查询进货单列表
   const replenishmentList = await ReplenishmentService.list(ctx.query);
 
   // 返回结果
@@ -80,18 +80,18 @@ router.get("/replenishment", async ctx => {
 });
 
 /**
- * 查询订单详情
+ * 查询进货单详情
  */
 router.get("/replenishment/:id", async ctx => {
   // 通过验证器校验参数是否通过
   const v = await new PositiveIdParamsValidator().validate(ctx);
 
-  // 获取订单ID参数
+  // 获取进货单ID参数
   const id = v.get("path.id");
-  // 查询订单
+  // 查询进货单
   const replenishment = await ReplenishmentService.detail(id);
 
-  // 获取关联此订单的评论列表
+  // 获取关联此进货单的评论列表
   const commentList = await CommentService.targetComment({
     target_id: id,
     target_type: "replenishment"
@@ -121,15 +121,15 @@ router.get("/replenishmentAnalysis", async ctx => {
       value: replenishmentAnalysis.salesVolume
     },
     replenishmentAmount: {
-      title: "总订单数",
+      title: "总进货单数",
       value: replenishmentAnalysis.replenishmentAmount
     },
     replenishmentVolume: {
-      title: "订单总原价",
+      title: "进货单总原价",
       value: replenishmentAnalysis.replenishmentVolume
     },
     originalVolume: {
-      title: "订单总成本",
+      title: "进货单总成本",
       value: replenishmentAnalysis.originalVolume
     }
   });
