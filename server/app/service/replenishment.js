@@ -24,11 +24,6 @@ class ReplenishmentService {
     replenishment.replenishment_status = v.get("body.replenishment_status");
     replenishment.Remarks = v.get("body.Remarks");
     replenishment.save();
-
-    let saleGoodsArr = JSON.parse(v.get("body.sale_goods"));
-    for (let i = 0; i < saleGoodsArr.length; i++) {
-      GoodsService.salesGood(saleGoodsArr[i].id, saleGoodsArr[i].sales_num_now);
-    }
   }
 
   // 获取进货单列表

@@ -28,7 +28,7 @@ Replenishment.init(
     replenishment_status: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      defaultValue: 1, //"1:已完成,2:已取消",
+      defaultValue: 1, //"1:已确认补货单,2:商品入库核实,3已完成入库",
       comment: "进货状态"
     },
     Remarks: {

@@ -12,7 +12,7 @@ import {
   Form,
   notification
 } from 'antd';
-import { createOrders } from '@api/orders';
+import { createReplenishment } from '@api/replenishment';
 import styles from '../list.module.scss';
 import { Link } from 'react-router-dom';
 import replenishmentStore from '../replenishmentStore';
@@ -24,14 +24,10 @@ interface State {
   visible: boolean;
   zkJe: number;
   orderInfo: {
-    sales_amount: number;
-    orders_amount: number;
-    discount_amount: number;
-    original_amount: number;
-    sale_goods: string;
-    sale_goods_count: number;
-    order_status: number; //"1:已完成,2:已取消",
+    replenishment_goods: string;
+    replenishment_status: number;
     Remarks: string;
+    orders_amount: number;
   };
 }
 interface Props {
@@ -47,14 +43,10 @@ class AddOrder extends React.Component<Props, State> {
     visible: false,
     zkJe: 0,
     orderInfo: {
-      sales_amount: 0,
-      orders_amount: 0,
-      discount_amount: 0,
-      original_amount: 0,
-      sale_goods: '',
-      sale_goods_count: 0,
-      order_status: 1,
-      Remarks: ''
+      replenishment_goods: '',
+      replenishment_status: 1,
+      Remarks: '',
+      orders_amount: 0
     }
   };
 
@@ -65,14 +57,11 @@ class AddOrder extends React.Component<Props, State> {
   async initData() {}
 
   createOrders = () => {
-    createOrders(this.state.orderInfo)
+    createReplenishment(this.state.orderInfo)
       .then((res: any) => {
         this.openNotification();
         replenishmentStore.settlementFun(false);
-        replenishmentStore.clearGoods();
-        setTimeout(() => {
-          this.props.updataFun();
-        }, 500);
+        // replenishmentStore.clearGoods();
       })
       .catch((res: any) => {
         console.log(res);
@@ -81,16 +70,8 @@ class AddOrder extends React.Component<Props, State> {
 
   onChange(item: any, value: any) {
     let goods = JSON.parse(JSON.stringify(item));
-    let sales_num_now = goods.sales_num_now;
-    if (value >= goods.stock_num) {
-      notification.error({
-        message: '库存不足',
-        duration: 5,
-        description: `库存仅剩余${goods.stock_num}${goods.spec}`
-      });
-      value = goods.stock_num;
-    }
-    let num = value - sales_num_now;
+    let replenishment_num_now = goods.replenishment_num_now;
+    let num = value - replenishment_num_now;
     if (num > 0) {
       for (let a = 0; a < num; a++) {
         replenishmentStore.addGoods(goods);
@@ -102,7 +83,12 @@ class AddOrder extends React.Component<Props, State> {
     }
     this.allSalesFun();
   }
-
+  onChangeJg = (item: any, e: any) => {
+    let goods = JSON.parse(JSON.stringify(item));
+    goods.original_price = e.target.value;
+    replenishmentStore.updateGoods(goods);
+    this.allSalesFun();
+  };
   showDrawer = () => {
     replenishmentStore.settlementFun(true);
     this.allSalesFun();
@@ -110,20 +96,11 @@ class AddOrder extends React.Component<Props, State> {
 
   allSalesFun = () => {
     let orderInfo = this.state.orderInfo;
-    orderInfo.sales_amount = 0;
-    orderInfo.orders_amount = 0;
-    orderInfo.original_amount = 0;
     let list = replenishmentStore.goodsList;
     for (let i = 0; i < list.length; i++) {
-      orderInfo.orders_amount += list[i].price * list[i].sales_num_now;
-      orderInfo.original_amount += list[i].original_price * list[i].sales_num_now;
-      orderInfo.sale_goods_count += list[i].sales_num_now;
+      orderInfo.orders_amount += list[i].original_price * list[i].replenishment_num_now;
     }
-    orderInfo.sales_amount = orderInfo.orders_amount - this.state.zkJe;
-    orderInfo.sales_amount = Number(orderInfo.sales_amount.toFixed(2));
-    orderInfo.discount_amount = this.state.zkJe;
-    orderInfo.sale_goods = JSON.stringify(list);
-
+    orderInfo.replenishment_goods = JSON.stringify(list);
     this.setState({
       orderInfo: orderInfo
     });
@@ -140,8 +117,8 @@ class AddOrder extends React.Component<Props, State> {
   };
   openNotification = () => {
     notification.open({
-      message: '下单成功',
-      description: '该订单已完成结算，可前往订单列表查看',
+      message: '已创建补货单',
+      description: '已创建补货单，后续商品采购完成，入库需再次确认商品细节',
       icon: <Icon type="smile" style={{ color: 'green' }} />
     });
   };
@@ -166,14 +143,15 @@ class AddOrder extends React.Component<Props, State> {
                         marginTop: '-5px'
                       }}
                     >
-                      数量：
+                      补货：
                       <InputNumber
                         style={{ width: '50px' }}
                         size="small"
-                        defaultValue={item.sales_num_now}
-                        value={item.sales_num_now}
+                        defaultValue={item.replenishment_num_now}
+                        value={item.replenishment_num_now}
                         onChange={debounce(this.onChange.bind(this, item), 500)}
                       />
+                      {item.spec}
                       <Icon
                         className={styles.deleteIcon}
                         onClick={delGoods.bind(this, item, 'all')}
@@ -186,19 +164,13 @@ class AddOrder extends React.Component<Props, State> {
             )}
           />
           <div className={styles.jdBtn}>
-            <Button
-              type="primary"
-              size="small"
-              shape="round"
-              icon="money-collect"
-              onClick={this.showDrawer}
-            >
-              结算
+            <Button type="primary" size="small" shape="round" onClick={this.showDrawer}>
+              创建补货单
             </Button>
           </div>
         </div>
         <Drawer
-          title="订单结算"
+          title="确认补货单"
           width={520}
           closable={false}
           onClose={settlementFun.bind(this, false)}
@@ -216,21 +188,25 @@ class AddOrder extends React.Component<Props, State> {
                     description={<div className={styles.dhsl}>{item.dec}</div>}
                   />
                   <div>
-                    <div>
-                      金额：{' '}
-                      <span style={{ color: '#f35a1e', fontWeight: 'bold', fontSize: '20px' }}>
-                        ￥{item.price}
-                      </span>
+                    <div style={{ marginBottom: '10px' }}>
+                      进货成本价：
+                      <Input
+                        style={{ width: '50px' }}
+                        size="small"
+                        defaultValue={item.original_price}
+                        onChange={this.onChangeJg.bind(this, item)}
+                      />
                     </div>
                     <div>
                       数量：
                       <InputNumber
                         style={{ width: '50px' }}
                         size="small"
-                        defaultValue={item.sales_num_now}
-                        value={item.sales_num_now}
+                        defaultValue={item.replenishment_num_now}
+                        value={item.replenishment_num_now}
                         onChange={debounce(this.onChange.bind(this, item), 500)}
                       />
+                      {item.spec}
                       <Icon
                         className={styles.deleteIcon}
                         onClick={delGoods.bind(this, item, 'all')}
@@ -241,17 +217,17 @@ class AddOrder extends React.Component<Props, State> {
                 </List.Item>
               )}
             />
-            <div className={styles.zhekou}>
+            {/* <div className={styles.zhekou}>
               <Form>
                 <Form.Item label="折扣">
                   <Input placeholder="请输入此单折扣金额" onChange={this.zkFun} />
                 </Form.Item>
               </Form>
-            </div>
+            </div> */}
             <div className={styles.zjCard}>
-              总计：
+              成本总计：
               <span style={{ color: '#f35a1e', fontWeight: 'bold', fontSize: '20px' }}>
-                ￥{orderInfo.sales_amount}
+                ￥{orderInfo.orders_amount}
               </span>
             </div>
           </div>
@@ -265,7 +241,7 @@ class AddOrder extends React.Component<Props, State> {
               取消
             </Button>
             <Button onClick={this.createOrders} type="primary">
-              完成
+              确认
             </Button>
           </div>
         </Drawer>

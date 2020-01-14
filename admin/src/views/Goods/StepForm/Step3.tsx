@@ -11,18 +11,18 @@ const Step3: React.FC = () => {
     <div className={styles.step}>
       <Result status="success" title="操作成功" subTitle="商品库操作成功" />,
       <div className={styles.buttonGroup}>
-        <Button type="primary" onClick={initStep}>
-          添加商品
-        </Button>
         <Link to={'/form/goodsList'} replace>
           <Button
             style={{
-              marginLeft: '8px'
+              marginRight: '8px'
             }}
           >
             <FormatterLocale id="step3.checkList" defaultMessage="查看商品列表" />
           </Button>
         </Link>
+        <Button type="primary" onClick={initStep}>
+          添加商品
+        </Button>
       </div>
     </div>
   );

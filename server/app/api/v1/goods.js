@@ -131,18 +131,4 @@ router.get("/goodsAnalysis", async ctx => {
   });
 });
 
-/**
- * 返回首页的商品和专栏
- */
-router.get("/home", async ctx => {
-  // 查询商品
-  const goods = await GoodsService.list();
-
-  // 返回结果
-  ctx.response.status = 200;
-  ctx.body = res.json({
-    goods: goods.data
-  });
-});
-
 module.exports = router;

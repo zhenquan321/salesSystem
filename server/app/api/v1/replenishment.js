@@ -8,6 +8,7 @@ const {
 
 const { Auth } = require("../../../middlewares/auth");
 const { ReplenishmentService } = require("../../service/replenishment");
+const { goodsService } = require("../../service/goods");
 const { CommentService } = require("../../service/comment");
 
 const { Resolve } = require("../../lib/helper");
@@ -59,11 +60,28 @@ router.put("/replenishment/:id", new Auth(AUTH_ADMIN).m, async ctx => {
 
   // 获取进货单ID参数
   const id = v.get("path.id");
+
   // 更新进货单
   await ReplenishmentService.update(id, v);
-
+  if (v.get("body.replenishment_status") == 3) {
+    let goods = v.get("body.replenishment_goods");
+    goods = JSON.parse(goods) || [];
+    for (let i = 0; i < goods.length; i++) {
+      let oldGoods = await goodsService.detail(goods[i].id);
+      let newGoods = goods[i];
+      newGoods.stock_num = newGoods.stock_num + oldGoods.stock_num;
+      newGoods.original_price = Number(
+        (
+          (newGoods.original_price * newGoods.stock_num +
+            oldGoods.stock_num * oldGoods.original_price) /
+          newGoods.stock_num
+        ).toFixed(2)
+      );
+      await goodsService.update(newGoods.id, newGoods, "ht");
+    }
+  }
   ctx.response.status = 200;
-  ctx.body = res.success("更新进货单成功");
+  ctx.body = res.success("入库成功");
 });
 
 /**
@@ -79,6 +97,26 @@ router.get("/replenishment", async ctx => {
   ctx.body = res.json(replenishmentList);
 });
 
+/**
+ * 获取正在进行中的进货单
+ */
+router.get("/replenishmentGoing", async ctx => {
+  // 获取页码，排序方法，分类ID，搜索关键字
+  // 查询进货单列表
+  const replenishmentListGet = await ReplenishmentService.list(ctx.query);
+  let rtReplenishment = {};
+  let replenishmentList = replenishmentListGet.data;
+  console.log(replenishmentList);
+  for (let i = 0; i < replenishmentList.length; i++) {
+    if (replenishmentList[i].replenishment_status != 3) {
+      rtReplenishment = replenishmentList[i];
+      break;
+    }
+  }
+  // 返回结果
+  ctx.response.status = 200;
+  ctx.body = res.json(rtReplenishment);
+});
 /**
  * 查询进货单详情
  */
@@ -103,7 +141,7 @@ router.get("/replenishment/:id", async ctx => {
 });
 
 /**
- * 返回商品库分析
+ * 返回进货库分析
  */
 router.get("/replenishmentAnalysis", async ctx => {
   // 查询商品

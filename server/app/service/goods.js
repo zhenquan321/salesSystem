@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-
+const sequelize = require("sequelize");
 const { Goods } = require("../models/goods");
 const { Category } = require("../models/category");
 
@@ -33,6 +33,7 @@ class GoodsService {
     goods.image_file = v.get("body.imageFile");
     goods.spec = v.get("body.spec");
     goods.stock_num = v.get("body.stockNum");
+    goods.sort_num = goods.replenishment_num - goods.stock_num;
 
     // goods.category_id = v.get("body.category_id");
 
@@ -71,6 +72,7 @@ class GoodsService {
     const {
       // category_id,
       keyword,
+      type,
       page = 1,
       pageSize = 10,
       desc = "created_at"
@@ -80,12 +82,12 @@ class GoodsService {
     let filter = {
       deleted_at: null
     };
-
-    // 筛选方式：存在分类ID
-    // if (category_id) {
-    //   filter.category_id = category_id;
-    // }
-
+    let order = [];
+    // 排序方式 待补货排在前
+    if (type == "replenishment") {
+      order = [["sort_num", "DESC"]];
+    }
+    console.log(order);
     // 筛选方式：存在搜索关键字
     if (keyword) {
       filter.good_name = {
@@ -97,7 +99,7 @@ class GoodsService {
       limit: Number(pageSize), //每页10条
       offset: (page - 1) * Number(pageSize),
       where: filter,
-      order: [[desc, "DESC"]]
+      order: order
       // 查询每个商品下关联的分类
       // include: [
       //   {
@@ -142,24 +144,37 @@ class GoodsService {
   }
 
   // 更新商品
-  static async update(id, v) {
+  static async update(id, v, type) {
     // 查询商品
     const goods = await Goods.findByPk(id);
     if (!goods) {
       throw new global.errs.NotFound("没有找到相关商品");
     }
 
-    // 更新商品
-    goods.good_name = v.get("body.goodName");
-    goods.price = Number(Number(v.get("body.price")).toFixed(2));
-    goods.original_price = Number(
-      Number(v.get("body.originalPrice")).toFixed(2)
-    );
-    goods.dec = v.get("body.dec");
-    goods.replenishment_num = v.get("body.replenishmentNum");
-    goods.image_file = v.get("body.imageFile");
-    goods.spec = v.get("body.spec");
-    goods.stock_num = v.get("body.stockNum");
+    if (type == "ht") {
+      goods.good_name = v.good_name;
+      goods.price = v.price;
+      goods.original_price = v.original_price;
+      goods.dec = v.dec;
+      goods.replenishment_num = v.replenishment_num;
+      goods.image_file = v.image_file;
+      goods.spec = v.spec;
+      goods.stock_num = v.stock_num;
+      goods.sort_num = v.replenishment_num - v.stock_num;
+    } else {
+      // 更新商品
+      goods.good_name = v.get("body.goodName");
+      goods.price = Number(Number(v.get("body.price")).toFixed(2));
+      goods.original_price = Number(
+        Number(v.get("body.originalPrice")).toFixed(2)
+      );
+      goods.dec = v.get("body.dec");
+      goods.replenishment_num = v.get("body.replenishmentNum");
+      goods.image_file = v.get("body.imageFile");
+      goods.spec = v.get("body.spec");
+      goods.stock_num = v.get("body.stockNum");
+      goods.sort_num = goods.replenishment_num - goods.stock_num;
+    }
 
     goods.save();
   }
@@ -196,17 +211,7 @@ class GoodsService {
     const goods = await Goods.findOne({
       where: {
         id
-      },
-      // 查询每篇商品下关联的分类
-      include: [
-        {
-          model: Category,
-          as: "category",
-          attributes: {
-            exclude: ["deleted_at", "updated_at"]
-          }
-        }
-      ]
+      }
     });
 
     if (!goods) {

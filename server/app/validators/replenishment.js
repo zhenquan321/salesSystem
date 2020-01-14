@@ -2,7 +2,7 @@ const { Rule, LinValidator } = require("../../core/lin-validator-v2");
 
 const { Category } = require("../models/category");
 
-class replenishmentValidator extends LinValidator {
+class ReplenishmentValidator extends LinValidator {
   constructor() {
     super();
     this.replenishment_goods = [
@@ -18,7 +18,7 @@ class PositiveIdParamsValidator extends LinValidator {
   }
 }
 
-class replenishmentSearchValidator extends LinValidator {
+class ReplenishmentSearchValidator extends LinValidator {
   constructor() {
     super();
     this.keyword = [new Rule("isLength", "必须传入搜索关键字", { min: 1 })];
@@ -26,7 +26,7 @@ class replenishmentSearchValidator extends LinValidator {
 }
 
 module.exports = {
-  replenishmentValidator,
+  ReplenishmentValidator,
   PositiveIdParamsValidator,
-  replenishmentSearchValidator
+  ReplenishmentSearchValidator
 };

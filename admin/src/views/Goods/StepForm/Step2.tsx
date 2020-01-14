@@ -80,16 +80,16 @@ const Step2: React.FC = () => {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={submitting}>
-            <FormatterLocale id="button.submit" defaultMessage="提交" />
-          </Button>
           <Button
             onClick={onPrev}
             style={{
-              marginLeft: '8px'
+              marginRight: '8px'
             }}
           >
             <FormatterLocale id="button.prevStep" defaultMessage="上一步" />
+          </Button>
+          <Button type="primary" htmlType="submit" loading={submitting}>
+            <FormatterLocale id="button.submit" defaultMessage="提交" />
           </Button>
         </Form.Item>
       </Form>

@@ -3,6 +3,7 @@ import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
 import { Icon, Card, List, Button, Pagination, Input, Avatar, Steps } from 'antd';
 import { goodsList } from '@api/goods';
+import { replenishmentGoing } from '@api/replenishment';
 import AddOrder from './part/addOrder';
 import styles from './list.module.scss';
 import { observable, observe } from 'mobx';
@@ -11,10 +12,12 @@ const { Step } = Steps;
 
 import replenishmentStore from './replenishmentStore';
 import { observer } from 'mobx-react';
+import { relative } from 'path';
 
 interface CardListState {
   list: any[];
   meta: any;
+  current: number;
   searchData: {
     keyword: string;
     page: number;
@@ -29,18 +32,19 @@ class CardList extends React.Component<{}, CardListState> {
     searchData: {
       keyword: '',
       page: 1,
-      pageSize: 12
+      pageSize: 12,
+      type: 'replenishment'
     },
     current: 0,
     steps: [
       {
         id: 'form.stepTitle1',
-        title: '选择进货商品'
+        title: '添加补货商品'
         // component: React.lazy(() => import(/* webpackChunkName: "Step1" */ './Step1'))
       },
       {
         id: 'form.stepTitle2',
-        title: '确认进货单'
+        title: '进行中的进货单'
         // component: React.lazy(() => import(/* webpackChunkName: "Step2" */ './Step2'))
       },
       {
@@ -68,10 +72,19 @@ class CardList extends React.Component<{}, CardListState> {
   }
 
   async initData() {
+    //获取进行中的进货单
+    replenishmentGoing().then((res: any) => {
+      console.log(res.data.data);
+      if (res.data.code == 200 && res.data.data) {
+        replenishmentStore.setReplenishmentStatus(res.data.data.replenishment_status);
+        replenishmentStore.setGoodsList(JSON.parse(res.data.data.replenishment_goods));
+      }
+    });
+
+    //商品列表
     let {
       data: { data: _data }
     } = await goodsList(this.state.searchData);
-
     this.setState({
       list: _data.data,
       meta: _data.meta
@@ -103,8 +116,7 @@ class CardList extends React.Component<{}, CardListState> {
 
   render() {
     const { list, meta, steps, current } = this.state;
-    const { addGoods, goodsList } = replenishmentStore;
-
+    const { addGoods, goodsList, replenishmentStatus } = replenishmentStore;
     const ExtraContent = (
       <div className={styles.extraContent}>
         <img alt="" src={require('@assets/image/cardlist.png')} />
@@ -133,125 +145,128 @@ class CardList extends React.Component<{}, CardListState> {
       // >
       <div>
         <Card>
-          <Steps current={current}>
+          <Steps current={replenishmentStatus}>
             {steps.map(item => (
               <Step key={item.id} title={item.title} />
             ))}
           </Steps>
         </Card>
+        {replenishmentStatus == 0 ? (
+          <div style={{ paddingRight: '200px', paddingLeft: '5px', marginTop: '10px' }}>
+            <AddOrder updataFun={this.initData.bind(this)} />
+            <List
+              rowKey="id"
+              loading={!list.length}
+              grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
+              dataSource={[...list]}
+              renderItem={(item: any) => (
+                <List.Item key={item.id} style={{ position: 'relative', overflow: 'hidden' }}>
+                  {item.sort_num > 0 ? (
+                    <div
+                      style={{
+                        backgroundColor: 'rgb(247, 138, 35)',
+                        color: '#fff',
+                        position: 'absolute',
+                        height: '20px',
+                        lineHeight: '20px',
+                        fontSize: '14px',
+                        transform: 'rotate(-45deg)',
+                        zIndex: 100,
+                        top: '18px',
+                        width: '100px',
+                        textAlign: 'center',
+                        left: '-22px',
+                        boxShadow: '0 0px 4px rgba(0, 0, 0,0.2)'
+                      }}
+                    >
+                      建议补货
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                  <Card
+                    hoverable
+                    actions={[
+                      <Button
+                        type="link"
+                        key={item.id + 3}
+                        onClick={addGoods.bind(this, item)}
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                          color: 'rgb(114, 46, 209)'
+                        }}
+                      >
+                        加入进货单
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta
+                      avatar={<Avatar src={item.image_file} shape="square" size={70} />}
+                      title={
+                        <Button
+                          type="link"
+                          style={{
+                            fontWeight: 'bold',
+                            padding: 0,
+                            fontSize: '17px',
+                            marginBottom: '5px',
+                            color: '#555'
+                          }}
+                        >
+                          {item.good_name}
+                        </Button>
+                      }
+                      description={
+                        <div className={styles.goodInfo}>
+                          <div className={styles.goodInfoSales}>
+                            <div className={styles.goodInfoSalesNum}>
+                              进货成本价：
+                              <span className={styles.goodInfoSalesNumNumer}>
+                                ￥{item.original_price}
+                              </span>
+                            </div>
+                            <div className={styles.goodInfoSalesNum}>
+                              已售：
+                              <span className={styles.goodInfoSalesNumNumer}>{item.sales_num}</span>
+                              {item.spec}
+                            </div>
+                          </div>
+                          <div className={styles.goodInfoSales} style={{ marginTop: 0 }}>
+                            <div className={styles.goodInfoSalesNum}>
+                              库存预警线：
+                              <span className={styles.goodInfoSalesNumNumer}>
+                                {item.replenishment_num}
+                              </span>
+                            </div>
+                            <div className={styles.goodInfoSalesNum}>
+                              剩余库存：
+                              <span className={styles.goodInfoSalesNumNumer}>{item.stock_num}</span>
+                              {item.spec}
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    />
+                  </Card>
+                </List.Item>
+              )}
+            />
+            <div className={styles.paginationStyle}>
+              <Pagination
+                showQuickJumper
+                current={meta.current_page}
+                total={meta.total}
+                pageSize={meta.per_page}
+                onChange={this.onChange.bind(this)}
+              />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
-
-      // <div style={{ paddingRight: '200px', paddingLeft: '5px' }}>
-
-      //   <AddOrder updataFun={this.initData.bind(this)} />
-      //   <List
-      //     rowKey="id"
-      //     loading={!list.length}
-      //     grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-      //     dataSource={[...list]}
-      //     renderItem={(item: any) => (
-      //       // item ? (
-      //       <List.Item key={item.id}>
-      //         <Card
-      //           hoverable
-      //           actions={
-      //             item.stock_num > 1
-      //               ? [
-      //                   <Button
-      //                     type="link"
-      //                     key={item.id + 1}
-      //                     onClick={this.jsNow.bind(this, item)}
-      //                     style={{
-      //                       fontSize: '15px',
-      //                       fontWeight: 'bold',
-      //                       color: '#555'
-      //                     }}
-      //                   >
-      //                     {/* <Icon type="setting" />  */}
-      //                     立即结算
-      //                   </Button>,
-      //                   <Button
-      //                     type="link"
-      //                     key={item.id + 2}
-      //                     onClick={addGoods.bind(this, item)}
-      //                     style={{
-      //                       fontSize: '15px',
-      //                       fontWeight: 'bold',
-      //                       color: '#722ed1'
-      //                     }}
-      //                   >
-      //                     {/* <Icon type="edit" /> */}
-      //                     加入订单
-      //                   </Button>
-      //                 ]
-      //               : [
-      //                   <Button
-      //                     type="link"
-      //                     key={item.id + 3}
-      //                     style={{
-      //                       fontSize: '15px',
-      //                       fontWeight: 'bold',
-      //                       color: 'red'
-      //                     }}
-      //                   >
-      //                     已售完
-      //                   </Button>
-      //                 ]
-      //           }
-      //         >
-      //           <Card.Meta
-      //             avatar={<Avatar src={item.image_file} shape="square" size={70} />}
-      //             title={
-      //               <Button
-      //                 type="link"
-      //                 style={{
-      //                   fontWeight: 'bold',
-      //                   padding: 0,
-      //                   fontSize: '17px',
-      //                   marginBottom: '5px',
-      //                   color: '#555'
-      //                 }}
-      //               >
-      //                 {item.good_name}
-      //               </Button>
-      //             }
-      //             description={
-      //               <div className={styles.goodInfo}>
-      //                 <div className={styles.goodInfoSales}>
-      //                   <div className={styles.goodInfoSalesNum}>
-      //                     售价：
-      //                     <span className={styles.goodInfoSalesNumNumer}>￥{item.price}</span>
-      //                   </div>
-      //                   <div className={styles.goodInfoSalesNum}>
-      //                     已售：
-      //                     <span className={styles.goodInfoSalesNumNumer}>{item.sales_num}</span>
-      //                     {item.spec}
-      //                   </div>
-      //                   <div className={styles.goodInfoSalesNum}>
-      //                     库存：
-      //                     <span className={styles.goodInfoSalesNumNumer}>{item.stock_num}</span>
-      //                     {item.spec}
-      //                   </div>
-      //                 </div>
-      //                 <div className={styles.description}>{item.dec}</div>
-      //               </div>
-      //             }
-      //           />
-      //         </Card>
-      //       </List.Item>
-      //     )}
-      //   />
-      //   <div className={styles.paginationStyle}>
-      //     <Pagination
-      //       showQuickJumper
-      //       current={meta.current_page}
-      //       total={meta.total}
-      //       pageSize={meta.per_page}
-      //       onChange={this.onChange.bind(this)}
-      //     />
-      //   </div>
-      // </div>
-      // // </PageWrapper>
+      // </PageWrapper>
     );
   }
 }

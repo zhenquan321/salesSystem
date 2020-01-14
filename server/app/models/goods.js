@@ -49,6 +49,12 @@ Goods.init(
       defaultValue: 0,
       comment: "库存"
     },
+    sort_num: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      comment: "库存补货排序依据"
+    },
     replenishment_num: {
       type: Sequelize.INTEGER,
       allowNull: true,
