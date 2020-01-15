@@ -1,4 +1,4 @@
-importScripts('./precache-manifest.b20b2e95de48890e5bb85e14ded118e4.js');
+importScripts('./precache-manifest.d0da3c44dfb1e77ad8a8cbf38a900871.js');
 
 // 引入workbox全局变量
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js');

@@ -45944,7 +45944,7 @@
                         }
                       },
                       {
-                        title: '\u4e0b\u5355\u65f6\u95f4',
+                        title: '\u521b\u5efa\u65f6\u95f4',
                         key: 'updated_at',
                         render: function(e) {
                           return p.a.createElement(
