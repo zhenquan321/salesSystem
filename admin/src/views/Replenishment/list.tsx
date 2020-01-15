@@ -119,7 +119,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
         }
       },
       {
-        title: '下单时间',
+        title: '创建时间',
         key: 'updated_at',
         render: (tag: any) => {
           return <span>{format(tag.updated_at, 'yyyy.MM.dd hh:mm:ss')}</span>;
