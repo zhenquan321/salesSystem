@@ -5,6 +5,7 @@ import { Icon, Card, List, Button, Pagination, Input, Avatar, Steps } from 'antd
 import { goodsList } from '@api/goods';
 import { replenishmentGoing } from '@api/replenishment';
 import AddOrder from './part/addOrder';
+import ReplenishmentGoodsList from './part/replenishmentGoodsList';
 import styles from './list.module.scss';
 import { observable, observe } from 'mobx';
 const Search = Input.Search;
@@ -144,7 +145,7 @@ class CardList extends React.Component<{}, CardListState> {
       //   // content={Content}
       // >
       <div>
-        <Card>
+        <Card bordered={false}>
           <Steps current={replenishmentStatus}>
             {steps.map(item => (
               <Step key={item.id} title={item.title} />
@@ -152,7 +153,7 @@ class CardList extends React.Component<{}, CardListState> {
           </Steps>
         </Card>
         {replenishmentStatus == 0 ? (
-          <div style={{ paddingRight: '200px', paddingLeft: '5px', marginTop: '10px' }}>
+          <div style={{ paddingRight: '200px', paddingLeft: '5px', marginTop: '20px' }}>
             <AddOrder updataFun={this.initData.bind(this)} />
             <List
               rowKey="id"
@@ -265,6 +266,7 @@ class CardList extends React.Component<{}, CardListState> {
         ) : (
           ''
         )}
+        {replenishmentStatus == 1 ? <ReplenishmentGoodsList></ReplenishmentGoodsList> : ''}
       </div>
       // </PageWrapper>
     );

@@ -61,6 +61,7 @@ class AddOrder extends React.Component<Props, State> {
       .then((res: any) => {
         this.openNotification();
         replenishmentStore.settlementFun(false);
+        replenishmentStore.setReplenishmentStatus(1);
         // replenishmentStore.clearGoods();
       })
       .catch((res: any) => {

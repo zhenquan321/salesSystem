@@ -1,5 +1,5 @@
 {
-  "name": "RA-TURBO",
+  "name": "dayaofang",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,7 +23,8 @@
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.0.1",
-    "size-sensor": "^0.2.4"
+    "size-sensor": "^0.2.4",
+    "xlsx": "^0.15.4"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
