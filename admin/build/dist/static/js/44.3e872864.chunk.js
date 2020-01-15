@@ -11755,14 +11755,6 @@
                         { style: { textAlign: 'center', margin: '30px 0 10px' } },
                         m.a.createElement(
                           r.a,
-                          {
-                            onClick: this.changeOrder.bind(this, 0),
-                            style: { marginRight: '15px' }
-                          },
-                          '\u4fee\u6539\u8fdb\u8d27\u5355'
-                        ),
-                        m.a.createElement(
-                          r.a,
                           { type: 'primary', onClick: this.updateReplenishmentNow.bind(this) },
                           '\u786e\u5b9a\u5165\u5e93'
                         )

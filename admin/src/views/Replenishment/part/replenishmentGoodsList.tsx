@@ -87,14 +87,14 @@ class ReplenishmentGoodsList extends React.Component<{}, ReplenishmentGoodsListS
           dataSource={goodsList}
         />
         <div style={{ textAlign: 'center', margin: '30px 0 10px' }}>
-          {/* <Button
+          <Button
             onClick={this.changeOrder.bind(this, 0)}
             style={{
               marginRight: '15px'
             }}
           >
             修改进货单
-          </Button> */}
+          </Button>
           <Button type="primary" onClick={this.changeOrder.bind(this, 2)}>
             商品入库
           </Button>

@@ -48351,6 +48351,14 @@
                         { style: { textAlign: 'center', margin: '30px 0 10px' } },
                         d.a.createElement(
                           o.a,
+                          {
+                            onClick: this.changeOrder.bind(this, 0),
+                            style: { marginRight: '15px' }
+                          },
+                          '\u4fee\u6539\u8fdb\u8d27\u5355'
+                        ),
+                        d.a.createElement(
+                          o.a,
                           { type: 'primary', onClick: this.changeOrder.bind(this, 2) },
                           '\u5546\u54c1\u5165\u5e93'
                         )
@@ -48489,14 +48497,6 @@
                       g.a.createElement(
                         'div',
                         { style: { textAlign: 'center', margin: '30px 0 10px' } },
-                        g.a.createElement(
-                          a.a,
-                          {
-                            onClick: this.changeOrder.bind(this, 0),
-                            style: { marginRight: '15px' }
-                          },
-                          '\u4fee\u6539\u8fdb\u8d27\u5355'
-                        ),
                         g.a.createElement(
                           a.a,
                           { type: 'primary', onClick: this.updateReplenishmentNow.bind(this) },

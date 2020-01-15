@@ -120,14 +120,14 @@ class Warehousing extends React.Component<{}, WarehousingState> {
           dataSource={goodsList}
         />
         <div style={{ textAlign: 'center', margin: '30px 0 10px' }}>
-          <Button
+          {/* <Button
             onClick={this.changeOrder.bind(this, 0)}
             style={{
               marginRight: '15px'
             }}
           >
             修改进货单
-          </Button>
+          </Button> */}
           <Button type="primary" onClick={this.updateReplenishmentNow.bind(this)}>
             确定入库
           </Button>
