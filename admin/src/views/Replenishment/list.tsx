@@ -2,7 +2,7 @@ import React from 'react';
 import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
 import { Card, Table, Button, Input, Divider, Pagination, Modal, notification, Icon } from 'antd';
-import { ordersList, deleteOrders } from '@api/orders';
+import { replenishmentList } from '@api/replenishment';
 import styles from './list.module.scss';
 import { format } from '@utils/tools';
 const { confirm } = Modal;
@@ -18,7 +18,6 @@ interface BasicTableState {
 
 const Search = Input.Search;
 class BasicTable extends React.Component<{}, BasicTableState> {
-  status = ['正常', '维护', '已下线', '异常'];
   styles = ['progress', 'maintain', 'offline', 'error'];
   state = {
     olderList: [],
@@ -39,7 +38,7 @@ class BasicTable extends React.Component<{}, BasicTableState> {
     this.initData();
   }
   initData = () => {
-    ordersList(this.state.searchData).then((res: any) => {
+    replenishmentList(this.state.searchData).then((res: any) => {
       console.log(res.data.data.data);
       const data = res.data.data.data;
       this.setState({
@@ -66,27 +65,6 @@ class BasicTable extends React.Component<{}, BasicTableState> {
     });
     this.initData();
   }
-  delOrder = (id: string) => {
-    confirm({
-      title: '删除订单',
-      content: '是否确定删除订单',
-      onOk: () => {
-        deleteOrders(id).then((res: any) => {
-          console.log(res.data);
-          if (res.data.code == 200) {
-            notification.open({
-              message: '操作成功',
-              description: res.data.msg,
-              icon: <Icon type="smile" style={{ color: '#108ee9' }} />
-            });
-            this.initData();
-          }
-        });
-      },
-      onCancel: () => {}
-    });
-  };
-
   render() {
     const Extra = (
       <div>
@@ -109,11 +87,12 @@ class BasicTable extends React.Component<{}, BasicTableState> {
         render: (tag: any) => {
           return (
             <span>
-              {JSON.parse(tag.sale_goods).map((item: any) => {
+              {JSON.parse(tag.replenishment_goods).map((item: any) => {
                 return (
                   <div key={item.id}>
                     {item.good_name}{' '}
-                    <span style={{ color: 'green' }}>{'x' + item.sales_num_now}</span>
+                    <span style={{ color: 'green' }}>{'x' + item.replenishment_num_now}</span>
+                    {item.spec}
                   </div>
                 );
               })}
@@ -122,18 +101,21 @@ class BasicTable extends React.Component<{}, BasicTableState> {
         }
       },
       {
-        title: '销售额(￥)',
-        dataIndex: 'sales_amount'
-      },
-      {
-        title: '成本(￥)',
-        dataIndex: 'original_amount'
-      },
-      {
-        title: '利润(￥)',
-        key: 'id',
+        title: '进货价(￥)',
+        key: 'original_price',
         render: (tag: any) => {
-          return <span>{(tag.sales_amount - tag.original_amount).toFixed(2)}</span>;
+          return (
+            <span>
+              {JSON.parse(tag.replenishment_goods).map((item: any) => {
+                return (
+                  <div key={item.id}>
+                    {item.good_name}{' '}
+                    <span style={{ color: 'green' }}>-{'￥' + item.original_price}</span>
+                  </div>
+                );
+              })}
+            </span>
+          );
         }
       },
       {
@@ -142,25 +124,11 @@ class BasicTable extends React.Component<{}, BasicTableState> {
         render: (tag: any) => {
           return <span>{format(tag.updated_at, 'yyyy.MM.dd hh:mm:ss')}</span>;
         }
-      },
-      {
-        title: '操作',
-        key: 'discount_amount',
-        render: (tag: any) => {
-          return (
-            <span>
-              {/* <Divider type="vertical" /> */}
-              <Button onClick={this.delOrder.bind(this, tag.id)} type="link">
-                删除
-              </Button>
-            </span>
-          );
-        }
       }
     ];
     const { olderList, meta } = this.state;
     return (
-      <PageWrapper title={'订单列表'}>
+      <PageWrapper title={'补货单列表'}>
         <Card className="fat-card" bordered={false} extra={Extra}>
           <Table
             className="no-head-border"

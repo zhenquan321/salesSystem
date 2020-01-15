@@ -12,7 +12,7 @@ import {
   Form,
   notification
 } from 'antd';
-import { createReplenishment } from '@api/replenishment';
+import { createReplenishment, updateReplenishment } from '@api/replenishment';
 import styles from '../list.module.scss';
 import { Link } from 'react-router-dom';
 import replenishmentStore from '../replenishmentStore';
@@ -54,19 +54,34 @@ class AddOrder extends React.Component<Props, State> {
     this.initData();
   }
 
-  async initData() {}
+  async initData() {
+    this.allSalesFun();
+  }
 
   createOrders = () => {
-    createReplenishment(this.state.orderInfo)
-      .then((res: any) => {
-        this.openNotification();
-        replenishmentStore.settlementFun(false);
-        replenishmentStore.setReplenishmentStatus(1);
-        // replenishmentStore.clearGoods();
-      })
-      .catch((res: any) => {
-        console.log(res);
+    let orderInfo: any = this.state.orderInfo;
+    if (replenishmentStore.replenishmentId) {
+      orderInfo.id = replenishmentStore.replenishmentId;
+      updateReplenishment(replenishmentStore.replenishmentId, orderInfo).then((res: any) => {
+        if (res.data.code == 200) {
+          replenishmentStore.setReplenishmentStatus(1);
+        }
       });
+    } else {
+      createReplenishment(orderInfo)
+        .then((res: any) => {
+          console.log(res);
+          if (res.data.code == 200) {
+            this.openNotification();
+            replenishmentStore.settlementFun(false);
+            replenishmentStore.setReplenishmentStatus(1);
+            replenishmentStore.setReplenishmentId(res.data.data.id);
+          }
+        })
+        .catch((res: any) => {
+          console.log(res);
+        });
+    }
   };
 
   onChange(item: any, value: any) {
@@ -101,6 +116,7 @@ class AddOrder extends React.Component<Props, State> {
     for (let i = 0; i < list.length; i++) {
       orderInfo.orders_amount += list[i].original_price * list[i].replenishment_num_now;
     }
+    orderInfo.orders_amount = Number(orderInfo.orders_amount.toFixed(2));
     orderInfo.replenishment_goods = JSON.stringify(list);
     this.setState({
       orderInfo: orderInfo

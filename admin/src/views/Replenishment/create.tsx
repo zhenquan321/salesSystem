@@ -1,15 +1,17 @@
 import React from 'react';
 import PageWrapper from '@components/PageWrapper';
 import FormatterLocale from '@components/FormatterLocale';
-import { Icon, Card, List, Button, Pagination, Input, Avatar, Steps } from 'antd';
+import { Icon, Card, List, Button, Pagination, Input, Avatar, Steps, Result } from 'antd';
 import { goodsList } from '@api/goods';
 import { replenishmentGoing } from '@api/replenishment';
 import AddOrder from './part/addOrder';
 import ReplenishmentGoodsList from './part/replenishmentGoodsList';
+import Warehousing from './part/Warehousing';
 import styles from './list.module.scss';
 import { observable, observe } from 'mobx';
 const Search = Input.Search;
 const { Step } = Steps;
+import { Link } from 'react-router-dom';
 
 import replenishmentStore from './replenishmentStore';
 import { observer } from 'mobx-react';
@@ -75,10 +77,13 @@ class CardList extends React.Component<{}, CardListState> {
   async initData() {
     //获取进行中的进货单
     replenishmentGoing().then((res: any) => {
-      console.log(res.data.data);
-      if (res.data.code == 200 && res.data.data) {
+      if (res.data.code == 200 && res.data.data && res.data.data.replenishment_goods) {
         replenishmentStore.setReplenishmentStatus(res.data.data.replenishment_status);
         replenishmentStore.setGoodsList(JSON.parse(res.data.data.replenishment_goods));
+        replenishmentStore.setReplenishmentId(res.data.data.id);
+      } else {
+        replenishmentStore.setReplenishmentStatus(0);
+        replenishmentStore.setGoodsList([]);
       }
     });
 
@@ -93,7 +98,6 @@ class CardList extends React.Component<{}, CardListState> {
   }
 
   handleSearch = (value: string) => {
-    console.log(value);
     let searchData = this.state.searchData;
     searchData.keyword = value;
     this.setState({
@@ -140,7 +144,7 @@ class CardList extends React.Component<{}, CardListState> {
     return (
       // <PageWrapper
       //   title={'销售商品页面'}
-      //   subTitle={'点击立即立即结算，弹出订单结算页进行结算，或加入购物车，统一结算。'}
+      //   subTitle={'点击立即结算，弹出订单结算页进行结算，或加入购物车，统一结算。'}
       //   extraContent={ExtraContent}
       //   // content={Content}
       // >
@@ -267,7 +271,21 @@ class CardList extends React.Component<{}, CardListState> {
           ''
         )}
         {replenishmentStatus == 1 ? <ReplenishmentGoodsList></ReplenishmentGoodsList> : ''}
+        {replenishmentStatus == 2 ? <Warehousing></Warehousing> : ''}
+        {replenishmentStatus == 3 ? (
+          <Card className="fat-card" bordered={false} style={{ marginTop: '20px' }}>
+            <Result status="success" title="操作成功" subTitle="商品库操作成功" />
+            <div style={{ textAlign: 'center' }}>
+              <Link to={'/form/goodsList'} replace>
+                <Button type="primary">查看商品列表</Button>
+              </Link>
+            </div>
+          </Card>
+        ) : (
+          ''
+        )}
       </div>
+
       // </PageWrapper>
     );
   }

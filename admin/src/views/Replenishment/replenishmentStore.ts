@@ -9,6 +9,7 @@ class ReplenishmentStore {
   @observable goodsList: any[] = [];
   @observable settlementNow: boolean = false;
   @observable replenishmentStatus: number = 0;
+  @observable replenishmentId: number = 0;
   constructor() {}
 
   @action setReplenishmentStatus = (type: number) => {
@@ -20,8 +21,13 @@ class ReplenishmentStore {
   @action settlementFun = (type: boolean) => {
     this.settlementNow = type;
   };
+  @action setReplenishmentId = (id: number) => {
+    this.replenishmentId = id;
+  };
+
   @action addGoods = (good: any): void => {
-    good.replenishment_num_now = good.replenishment_num * 2 - good.stock_num;
+    let replenishment_num_now: number = good.replenishment_num * 2 - good.stock_num;
+    good.replenishment_num_now = replenishment_num_now > 0 ? replenishment_num_now : 10;
     let goodList: any[] = JSON.parse(JSON.stringify(this.goodsList));
     let included = false;
     for (let i = 0; i < goodList.length; i++) {

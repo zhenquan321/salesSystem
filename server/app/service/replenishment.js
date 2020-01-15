@@ -23,7 +23,9 @@ class ReplenishmentService {
     replenishment.replenishment_goods = v.get("body.replenishment_goods");
     replenishment.replenishment_status = v.get("body.replenishment_status");
     replenishment.Remarks = v.get("body.Remarks");
-    replenishment.save();
+    let createdReplenishment = replenishment.save();
+
+    return createdReplenishment;
   }
 
   // 获取进货单列表
@@ -37,7 +39,7 @@ class ReplenishmentService {
 
     // 筛选方式：存在搜索关键字
     if (keyword) {
-      filter.sale_goods = {
+      filter.replenishment_goods = {
         [Op.like]: `%${keyword}%`
       };
     }
@@ -87,7 +89,6 @@ class ReplenishmentService {
       throw new global.errs.NotFound("没有找到相关进货单");
     }
     // 更新进货单
-    replenishment.serial_number = v.get("body.serial_number");
     replenishment.replenishment_goods = v.get("body.replenishment_goods");
     replenishment.replenishment_status = v.get("body.replenishment_status");
     replenishment.Remarks = v.get("body.Remarks");

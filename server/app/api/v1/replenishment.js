@@ -8,7 +8,7 @@ const {
 
 const { Auth } = require("../../../middlewares/auth");
 const { ReplenishmentService } = require("../../service/replenishment");
-const { goodsService } = require("../../service/goods");
+const { GoodsService } = require("../../service/goods");
 const { CommentService } = require("../../service/comment");
 
 const { Resolve } = require("../../lib/helper");
@@ -28,11 +28,11 @@ router.post("/replenishment", new Auth(AUTH_ADMIN).m, async ctx => {
   const v = await new ReplenishmentValidator().validate(ctx);
 
   // 创建进货单
-  await ReplenishmentService.create(v);
+  let replenishment = await ReplenishmentService.create(v);
 
   // 返回结果
   ctx.response.status = 200;
-  ctx.body = res.success("创建进货单成功");
+  ctx.body = res.json(replenishment);
 });
 
 /**
@@ -67,17 +67,19 @@ router.put("/replenishment/:id", new Auth(AUTH_ADMIN).m, async ctx => {
     let goods = v.get("body.replenishment_goods");
     goods = JSON.parse(goods) || [];
     for (let i = 0; i < goods.length; i++) {
-      let oldGoods = await goodsService.detail(goods[i].id);
+      let oldGoods = await GoodsService.detail(goods[i].id);
       let newGoods = goods[i];
-      newGoods.stock_num = newGoods.stock_num + oldGoods.stock_num;
-      newGoods.original_price = Number(
+      let goodsNum = newGoods.replenishment_num_now + oldGoods.stock_num;
+      oldGoods.original_price = Number(
         (
-          (newGoods.original_price * newGoods.stock_num +
+          (newGoods.original_price * newGoods.replenishment_num_now +
             oldGoods.stock_num * oldGoods.original_price) /
-          newGoods.stock_num
+          goodsNum
         ).toFixed(2)
       );
-      await goodsService.update(newGoods.id, newGoods, "ht");
+      oldGoods.stock_num = goodsNum;
+
+      await GoodsService.update(oldGoods.id, oldGoods, "ht");
     }
   }
   ctx.response.status = 200;

@@ -26,7 +26,7 @@ export function deleteReplenishment(id) {
  */
 
 export function updateReplenishment(id, replenishmentInfo) {
-  return request.sendRequest('post', {
+  return request.sendRequest('put', {
     path: '/api/v1/replenishment/' + id,
     params: replenishmentInfo
   });
