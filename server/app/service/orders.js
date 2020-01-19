@@ -38,7 +38,13 @@ class OrdersService {
 
   // 获取订单列表
   static async list(params = {}) {
-    const { keyword, page = 1, pageSize = 10, desc = "created_at" } = params;
+    const {
+      keyword,
+      page = 1,
+      pageSize = 10,
+      desc = "created_at",
+      time
+    } = params;
 
     // 筛选方式
     let filter = {
@@ -49,6 +55,12 @@ class OrdersService {
     if (keyword) {
       filter.sale_goods = {
         [Op.like]: `%${keyword}%`
+      };
+    }
+    if (time) {
+      let timeArr = time.split(",");
+      filter.created_at = {
+        [Op.in]: [timeArr[0], timeArr[1]]
       };
     }
     const orders = await Orders.findAndCountAll({
@@ -135,16 +147,23 @@ class OrdersService {
   }
 
   // 订单概况
-  static async analysis() {
+  static async analysis(ctx) {
     const desc = "created_at";
-    const orders = await Orders.findAndCountAll({
-      order: [[desc, "DESC"]]
-      // where: {
-      //   created_at:{
-      //     [Op.in]: ['2019-12-27 11:37:14', '2019-12-28 11:37:14']
-      //   },
-      // }
-    });
+    let body = ctx.query;
+    let timeArr = [];
+    let qurey = {
+      order: [[desc, "DESC"]],
+      where: {
+        deleted_at: null
+      }
+    };
+    if (body.time) {
+      timeArr = body.time.split(",");
+      qurey.where.created_at = {
+        [Op.in]: [timeArr[0], timeArr[1]]
+      };
+    }
+    const orders = await Orders.findAndCountAll(qurey);
 
     let salesVolume = 0;
     let ordersVolume = 0;
@@ -167,22 +186,36 @@ class OrdersService {
     };
   }
 
-  static async dailyData() {
-    const orders = await Orders.findAndCountAll({
+  static async dailyData(ctx) {
+    let body = ctx.query;
+    let timeArr = [];
+    let qurey = {
       where: {
         deleted_at: null
       }
-    });
-
+    };
+    if (body.time) {
+      timeArr = body.time.split(",");
+      qurey.where.created_at = {
+        [Op.in]: [timeArr[0], timeArr[1]]
+      };
+    }
+    const orders = await Orders.findAndCountAll(qurey);
     let time = []; //日期
     let orderQuantity = []; //订单量
     let salesVolume = []; //销售额
     let salesProfit = []; //利润
     let allData = JSON.parse(JSON.stringify(orders.rows));
 
-    let nowTimes = new Date().getTime();
-    for (let i = 30; i > -1; i--) {
-      let setTime = nowTimes - 24 * 60 * 60 * 1000 * i;
+    let nowTimes1 = timeArr[0] ? new Date(timeArr[0]).getTime() : 0;
+    let nowTimes2 = timeArr[1]
+      ? new Date(timeArr[1]).getTime()
+      : new Date().getTime();
+    let num = timeArr[0]
+      ? parseInt((nowTimes2 - nowTimes1) / (24 * 60 * 60 * 1000))
+      : 30;
+    for (let i = num; i > -1; i--) {
+      let setTime = nowTimes2 - 24 * 60 * 60 * 1000 * i;
       time.push(format(setTime, "yyyy-MM-dd"));
     }
     for (let i = 0; i < time.length; i++) {

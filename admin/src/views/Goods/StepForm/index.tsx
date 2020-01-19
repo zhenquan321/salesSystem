@@ -12,6 +12,22 @@ const { Step } = Steps;
 class StepForm extends React.Component {
   componentDidMount() {
     formStore.initStep();
+    if (!formStore.updateGoods) {
+      let data = {
+        goodName: '',
+        imageFile: '',
+        price: 0,
+        originalPrice: 0,
+        stockNum: 0,
+        spec: '',
+        dec: '',
+        id: 0,
+        replenishmentNum: 0
+      };
+      formStore.setValue(data);
+    } else {
+      formStore.changeUpdateGoods(false);
+    }
   }
 
   render() {

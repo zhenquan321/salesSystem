@@ -5,6 +5,7 @@ import { BoxSvg, EmpolyeesSvg, OrdersSvg, SalesSvg } from '@components/SvgIcon';
 import FormatterLocale from '@components/FormatterLocale';
 import { goodsAnalysis } from '@api/goods';
 import { ordersAnalysis } from '@api/orders';
+import emitter from '@utils/ev';
 
 interface InfoCardProps {
   icon: React.ComponentType<CustomIconComponentProps>;
@@ -16,28 +17,30 @@ interface InfoCardProps {
 }
 interface RowInfoCardStage {
   details: InfoCardProps[];
+  eventEmitter: any;
 }
 
 class RowInfoCard extends React.Component<{}, RowInfoCardStage> {
   state: RowInfoCardStage = {
+    eventEmitter: '',
     details: [
       {
         icon: SalesSvg,
-        tips: '所有商品营业',
+        tips: '当前商品营业',
         title: '营业额',
         num: '￥0',
         tipIcon: 'fund'
       },
       {
         icon: OrdersSvg,
-        tips: '所有已售商品毛利',
+        tips: '已售商品毛利',
         title: '毛利',
         num: '￥0',
         tipIcon: 'shake'
       },
       {
         icon: EmpolyeesSvg,
-        tips: '所有成交订单',
+        tips: '成交订单数量',
         title: '订单量 ',
         num: '0',
         tipIcon: 'redo'
@@ -51,10 +54,9 @@ class RowInfoCard extends React.Component<{}, RowInfoCardStage> {
       }
     ]
   };
-
-  componentDidMount() {
+  initData(time: any) {
     let details = this.state.details;
-    ordersAnalysis().then((res: any) => {
+    ordersAnalysis({ time }).then((res: any) => {
       let data = res.data.data;
       details[0].num = '￥' + data.salesVolume.value;
       details[1].num = '￥' + (data.salesVolume.value - data.originalVolume.value).toFixed(2);
@@ -71,7 +73,18 @@ class RowInfoCard extends React.Component<{}, RowInfoCardStage> {
       });
     });
   }
-
+  componentDidMount() {
+    this.initData('');
+    let eventEmitter = emitter.addListener('timeChange', time => {
+      this.initData(time);
+    });
+    this.setState({
+      eventEmitter
+    });
+  }
+  componentWillUnmount() {
+    emitter.removeListener(this.state.eventEmitter, res => {});
+  }
   render() {
     const InfoCard = (props: InfoCardProps) => {
       const { icon, tips, title, num, tipIcon, index } = props;

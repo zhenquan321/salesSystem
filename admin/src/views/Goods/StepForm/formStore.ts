@@ -83,7 +83,7 @@ class FormStore {
   @action onSubmit = (): void => {
     this.submitting = true;
     let goodsData = JSON.parse(JSON.stringify(this.data));
-    if (this.updateGoods) {
+    if (goodsData.id) {
       updateGoods(goodsData.id, goodsData)
         .then((res: any) => {
           if (res.data.code == 200) {

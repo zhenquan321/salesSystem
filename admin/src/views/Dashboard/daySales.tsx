@@ -4,12 +4,16 @@ import EchartsReact from '@components/Echarts';
 import { globalTrendsOption } from '@assets/chartOption';
 import FormatterLocale from '@components/FormatterLocale';
 import { dailyDataAnalysis } from '@api/orders';
+import emitter from '@utils/ev';
+
 interface DaySalesState {
   option: any;
+  eventEmitter: any;
 }
 
 class DaySales extends React.Component<{}, DaySalesState> {
   state = {
+    eventEmitter: '',
     option: {
       title: {
         text: '日销售概况',
@@ -82,8 +86,8 @@ class DaySales extends React.Component<{}, DaySalesState> {
       ]
     }
   };
-  initData = () => {
-    dailyDataAnalysis().then((res: any) => {
+  initData = (time: any) => {
+    dailyDataAnalysis({ time: time }).then((res: any) => {
       console.log(res.data);
       if (res.data.code == 200) {
         let option = this.state.option;
@@ -98,7 +102,16 @@ class DaySales extends React.Component<{}, DaySalesState> {
     });
   };
   componentDidMount() {
-    this.initData();
+    this.initData('');
+    let eventEmitter = emitter.addListener('timeChange', time => {
+      this.initData(time);
+    });
+    this.setState({
+      eventEmitter
+    });
+  }
+  componentWillUnmount() {
+    emitter.removeListener(this.state.eventEmitter, res => {});
   }
   render() {
     let { option } = this.state;

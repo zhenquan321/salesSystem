@@ -77,6 +77,18 @@ class Warehousing extends React.Component<{}, WarehousingState> {
         dataIndex: 'good_name'
       },
       {
+        title: '当前库存',
+        key: 'stock_num',
+        render: (item: any) => {
+          return (
+            <span>
+              {item.stock_num}
+              {item.spec}
+            </span>
+          );
+        }
+      },
+      {
         title: '进货成本价(￥)',
         key: 'original_price',
         // dataIndex: 'original_price',
@@ -120,14 +132,14 @@ class Warehousing extends React.Component<{}, WarehousingState> {
           dataSource={goodsList}
         />
         <div style={{ textAlign: 'center', margin: '30px 0 10px' }}>
-          {/* <Button
-            onClick={this.changeOrder.bind(this, 0)}
+          <Button
+            onClick={this.changeOrder.bind(this, 1)}
             style={{
               marginRight: '15px'
             }}
           >
-            修改进货单
-          </Button> */}
+            上一步
+          </Button>
           <Button type="primary" onClick={this.updateReplenishmentNow.bind(this)}>
             确定入库
           </Button>

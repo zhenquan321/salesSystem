@@ -107,7 +107,7 @@ router.get("/orders/:id", async ctx => {
  */
 router.get("/dailyData", async ctx => {
   // 查询商品
-  const dailyData = await OrdersService.dailyData();
+  const dailyData = await OrdersService.dailyData(ctx);
   // 返回结果
   ctx.response.status = 200;
 
@@ -118,7 +118,7 @@ router.get("/dailyData", async ctx => {
  */
 router.get("/ordersAnalysis", async ctx => {
   // 查询商品
-  const ordersAnalysis = await OrdersService.analysis();
+  const ordersAnalysis = await OrdersService.analysis(ctx);
   // 返回结果
   ctx.response.status = 200;
 

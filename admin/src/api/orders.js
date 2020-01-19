@@ -55,9 +55,9 @@ export function ordersDetail(id) {
  * 查询商品分析
  */
 
-export function ordersAnalysis() {
-  return request.sendRequest('get', {
-    path: '/api/v1/ordersAnalysis'
+export function ordersAnalysis(qurey) {
+  return request.get('/api/v1/ordersAnalysis', {
+    params: qurey
   });
 }
 
@@ -65,8 +65,8 @@ export function ordersAnalysis() {
  * 每日销售概况
  */
 
-export function dailyDataAnalysis() {
-  return request.sendRequest('get', {
-    path: '/api/v1/dailyData'
+export function dailyDataAnalysis(qurey) {
+  return request.get('/api/v1/dailyData', {
+    params: qurey
   });
 }

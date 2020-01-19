@@ -5,14 +5,17 @@ import { Card, Table, Button, Input, Divider, Pagination, Modal, notification, I
 import { ordersList, deleteOrders } from '@api/orders';
 import styles from '../Order/list.module.scss';
 import { format } from '@utils/tools';
+import emitter from '@utils/ev';
 const { confirm } = Modal;
 
 interface BasicTableState {
   olderList: any[];
   meta: any;
+  eventEmitter: any;
   searchData: {
     page: number;
     keyword: string;
+    time: any;
   };
 }
 
@@ -22,9 +25,11 @@ class BasicTable extends React.Component<{}, BasicTableState> {
   styles = ['progress', 'maintain', 'offline', 'error'];
   state = {
     olderList: [],
+    eventEmitter: '',
     searchData: {
       page: 0,
-      keyword: ''
+      keyword: '',
+      time: ''
     },
     meta: {
       current_page: 1,
@@ -37,6 +42,26 @@ class BasicTable extends React.Component<{}, BasicTableState> {
 
   componentDidMount() {
     this.initData();
+    let eventEmitter = emitter.addListener('timeChange', time => {
+      this.setState(
+        {
+          searchData: {
+            page: 0,
+            keyword: '',
+            time: time
+          }
+        },
+        () => {
+          this.initData();
+        }
+      );
+    });
+    this.setState({
+      eventEmitter
+    });
+  }
+  componentWillUnmount() {
+    emitter.removeListener(this.state.eventEmitter, res => {});
   }
   initData = () => {
     ordersList(this.state.searchData).then((res: any) => {

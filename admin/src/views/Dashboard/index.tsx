@@ -5,10 +5,12 @@ import Weather from './Weather';
 import Performance from './Performance';
 import SaleTable from './SaleTable';
 import DaySales from './daySales';
+import DaySet from './daySet';
 import './dashboard.scss';
 
 const Dashboard: React.FC = () => (
   <div className="dashboard">
+    <DaySet></DaySet>
     <RowInfoCard />
     {/* <Row gutter={24}>
       <Col xl={14} lg={14} md={24} sm={24} xs={24}>

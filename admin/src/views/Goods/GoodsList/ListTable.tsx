@@ -121,6 +121,7 @@ class ListTable extends React.Component<any, ListTableState> {
       id: data.id,
       replenishmentNum: data.replenishment_num
     };
+
     StepFormStore.setValue(goData);
     StepFormStore.changeUpdateGoods(true);
   };

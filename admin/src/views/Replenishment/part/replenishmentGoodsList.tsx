@@ -7,6 +7,7 @@ import styles from '../list.module.scss';
 import { format, exportExcel } from '@utils/tools';
 const { confirm } = Modal;
 import replenishmentStore from '../replenishmentStore';
+import { updateReplenishment } from '@api/replenishment';
 
 interface ReplenishmentGoodsListState {
   olderList: any[];
@@ -52,6 +53,33 @@ class ReplenishmentGoodsList extends React.Component<{}, ReplenishmentGoodsListS
     exportExcel(header, data, '补货清单.xlsx');
   };
 
+  onChangeCbj = (item: any, e: any) => {
+    let goods = JSON.parse(JSON.stringify(item));
+    goods.original_price = e.target.value;
+    replenishmentStore.updateGoods(goods);
+  };
+  onChangeJhsl = (item: any, e: any) => {
+    let goods = JSON.parse(JSON.stringify(item));
+    goods.replenishment_num_now = e.target.value;
+    replenishmentStore.updateGoods(goods);
+  };
+  updateReplenishmentNow = () => {
+    let data = {
+      id: replenishmentStore.replenishmentId,
+      replenishment_status: 1,
+      replenishment_goods: JSON.stringify(replenishmentStore.goodsList)
+    };
+    updateReplenishment(replenishmentStore.replenishmentId, data).then((res: any) => {
+      if (res.data.code == 200) {
+        notification.open({
+          message: '补货单更新成功',
+          description: '已更新补货单，如有疑问，可手动验证',
+          icon: <Icon type="smile" style={{ color: 'green' }} />
+        });
+        this.changeOrder(1);
+      }
+    });
+  };
   render() {
     let { goodsList } = replenishmentStore;
     const columns = [
@@ -60,12 +88,49 @@ class ReplenishmentGoodsList extends React.Component<{}, ReplenishmentGoodsListS
         dataIndex: 'good_name'
       },
       {
-        title: '进货成本价',
-        dataIndex: 'original_price'
+        title: '当前库存',
+        key: 'stock_num',
+        render: (item: any) => {
+          return (
+            <span>
+              {item.stock_num}
+              {item.spec}
+            </span>
+          );
+        }
+      },
+      {
+        title: '进货成本价(￥)',
+        key: 'original_price',
+        // dataIndex: 'original_price',
+        render: (item: any) => {
+          return (
+            <Input
+              style={{ width: '80px' }}
+              size="small"
+              defaultValue={item.original_price}
+              onChange={this.onChangeCbj.bind(this, item)}
+            />
+          );
+        }
       },
       {
         title: '数量',
-        dataIndex: 'replenishment_num_now'
+        // dataIndex: 'replenishment_num_now',
+        key: 'replenishment_num_now',
+        render: (item: any) => {
+          return (
+            <span>
+              <Input
+                style={{ width: '80px', marginRight: '5px' }}
+                size="small"
+                defaultValue={item.replenishment_num_now}
+                onChange={this.onChangeJhsl.bind(this, item)}
+              />
+              {item.spec}
+            </span>
+          );
+        }
       }
     ];
     return (
@@ -88,7 +153,7 @@ class ReplenishmentGoodsList extends React.Component<{}, ReplenishmentGoodsListS
         />
         <div style={{ textAlign: 'center', margin: '30px 0 10px' }}>
           <Button
-            onClick={this.changeOrder.bind(this, 0)}
+            onClick={this.updateReplenishmentNow.bind(this)}
             style={{
               marginRight: '15px'
             }}
