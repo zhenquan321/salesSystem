@@ -60,7 +60,7 @@ class OrdersService {
     if (time) {
       let timeArr = time.split(",");
       filter.created_at = {
-        [Op.in]: [timeArr[0], timeArr[1]]
+        [Op.between]: [timeArr[0], timeArr[1]]
       };
     }
     const orders = await Orders.findAndCountAll({
@@ -160,7 +160,7 @@ class OrdersService {
     if (body.time) {
       timeArr = body.time.split(",");
       qurey.where.created_at = {
-        [Op.in]: [timeArr[0], timeArr[1]]
+        [Op.between]: [timeArr[0], timeArr[1]]
       };
     }
     const orders = await Orders.findAndCountAll(qurey);
@@ -197,7 +197,7 @@ class OrdersService {
     if (body.time) {
       timeArr = body.time.split(",");
       qurey.where.created_at = {
-        [Op.in]: [timeArr[0], timeArr[1]]
+        [Op.between]: [timeArr[0], timeArr[1]]
       };
     }
     const orders = await Orders.findAndCountAll(qurey);
