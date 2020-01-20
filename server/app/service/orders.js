@@ -230,9 +230,9 @@ class OrdersService {
             allData[d].sales_amount - allData[d].original_amount;
         }
       }
-      orderQuantity.push(orderQuantityDay);
-      salesVolume.push(salesVolumeDay);
-      salesProfit.push(salesProfitDay.toFixed(2));
+      orderQuantity[i] = orderQuantityDay;
+      salesVolume[i] = salesVolumeDay;
+      salesProfit[i] = salesProfitDay;
     }
     return {
       orderQuantity,

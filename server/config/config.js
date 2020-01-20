@@ -2,7 +2,8 @@ module.exports = {
   environment: "dev",
   database: {
     dbName: "salesystem",
-    host: "127.0.0.1", //106.12.28.41
+    host: "127.0.0.1", //本地
+    // host: "106.12.28.41", //服务器
     port: 3306,
     user: "root",
     password: "Quan5.20"
