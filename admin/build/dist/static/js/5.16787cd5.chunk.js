@@ -51013,10 +51013,10 @@
               {
                 key: 'onChange',
                 value: function(e, t) {
-                  console.log('From: ', t[0], ', to: ', t[1]),
-                    t[0]
-                      ? d.default.emit('timeChange', [t[0], t[1]])
-                      : d.default.emit('timeChange', '');
+                  var n = t[0] + ' 00:00:00',
+                    r = t[1] + ' 23:59:59';
+                  console.log(n, r),
+                    t[0] ? d.default.emit('timeChange', [n, r]) : d.default.emit('timeChange', '');
                 }
               },
               {

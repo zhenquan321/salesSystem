@@ -14,9 +14,11 @@ class DaySet extends React.Component<{}, DaySetState> {
   state = {};
   initData = () => {};
   onChange(dates: any, dateStrings: any) {
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    let start = dateStrings[0] + ' 00:00:00';
+    let end = dateStrings[1] + ' 23:59:59';
+    console.log(start, end);
     if (dateStrings[0]) {
-      emitter.emit('timeChange', [dateStrings[0], dateStrings[1]]);
+      emitter.emit('timeChange', [start, end]);
     } else {
       emitter.emit('timeChange', '');
     }
