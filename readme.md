@@ -1,8 +1,10 @@
 # 🔥 商铺售货系统
 
+- 网站地址：<a href="https://p.fengzq.cn/" >https://p.fengzq.cn/ <a /> 账号：admin@qq.com 密码：admin123
 - 服务端：基于 `Node.js`,`koa2`实战开发的一套完整的商铺售货系统，采用 RESTful API 接口设计方案。
 - 前端：采用`react`、`antd`、`react-router`、`mobx`、`typeScript`等框架开发
 - 小程序：采用`Taro`框架开发
+
 
 ## 后端
 
